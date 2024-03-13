@@ -1,0 +1,118 @@
+[15-Feb-2024 17:56:24 Africa/Johannesburg] PHP Warning:  Undefined variable $rows in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 79
+[15-Feb-2024 17:56:24 Africa/Johannesburg] PHP Warning:  foreach() argument must be of type array|object, null given in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 79
+[15-Feb-2024 18:20:15 Africa/Johannesburg] PHP Warning:  Undefined variable $rows in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 82
+[15-Feb-2024 18:20:15 Africa/Johannesburg] PHP Warning:  foreach() argument must be of type array|object, null given in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 82
+[25-Feb-2024 05:42:05 Africa/Johannesburg] PHP Warning:  SQLite3::prepare(): Unable to prepare statement: 1, no such table: users in /home/donno/Documents/Donno_projects/donnotec-main/public_html/login.php on line 15
+[25-Feb-2024 05:42:05 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Call to a member function bindValue() on bool in /home/donno/Documents/Donno_projects/donnotec-main/public_html/login.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/login.php on line 16
+[25-Feb-2024 06:09:31 Africa/Johannesburg] PHP Warning:  Undefined array key "page" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:09:31 Africa/Johannesburg] PHP Warning:  Undefined array key "rows" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:09:31 Africa/Johannesburg] PHP Warning:  Undefined array key "sidx" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:09:31 Africa/Johannesburg] PHP Warning:  Undefined array key "sord" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:09:31 Africa/Johannesburg] PHP Warning:  Undefined variable $con in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 28
+[25-Feb-2024 06:09:31 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:28
+Stack trace:
+#0 /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php(18): Private_Grid()
+#1 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 28
+[25-Feb-2024 06:10:50 Africa/Johannesburg] PHP Warning:  Undefined array key "page" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:10:50 Africa/Johannesburg] PHP Warning:  Undefined array key "rows" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:10:50 Africa/Johannesburg] PHP Warning:  Undefined array key "sidx" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:10:50 Africa/Johannesburg] PHP Warning:  Undefined array key "sord" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:10:50 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_fetch_array() in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:29
+Stack trace:
+#0 /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php(18): Private_Grid()
+#1 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 29
+[25-Feb-2024 06:11:07 Africa/Johannesburg] PHP Warning:  Undefined array key "page" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:11:07 Africa/Johannesburg] PHP Warning:  Undefined array key "rows" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:11:07 Africa/Johannesburg] PHP Warning:  Undefined array key "sidx" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:11:07 Africa/Johannesburg] PHP Warning:  Undefined array key "sord" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:11:07 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Attempt to modify property "rows" on null in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:40
+Stack trace:
+#0 /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php(18): Private_Grid()
+#1 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 40
+[25-Feb-2024 06:15:45 Africa/Johannesburg] PHP Warning:  Undefined array key "page" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:15:45 Africa/Johannesburg] PHP Warning:  Undefined array key "rows" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:15:45 Africa/Johannesburg] PHP Warning:  Undefined array key "sidx" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:15:45 Africa/Johannesburg] PHP Warning:  Undefined array key "sord" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 18
+[25-Feb-2024 06:15:45 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Attempt to modify property "rows" on null in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:40
+Stack trace:
+#0 /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php(18): Private_Grid()
+#1 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 40
+[25-Feb-2024 19:58:36 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Call to undefined method SQLite3Result::fetchAll() in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 21
+[25-Feb-2024 19:58:56 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Call to undefined method SQLite3Result::fetchAll() in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 21
+[25-Feb-2024 19:59:35 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Call to undefined method SQLite3Result::fetchAll() in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 21
+[26-Feb-2024 14:06:37 Africa/Johannesburg] PHP Fatal error:  Uncaught TypeError: array_merge(): Argument #1 must be of type array, bool given in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:25
+Stack trace:
+#0 /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php(25): array_merge()
+#1 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 25
+[26-Feb-2024 14:09:53 Africa/Johannesburg] PHP Fatal error:  Uncaught TypeError: array_key_exists(): Argument #2 ($array) must be of type array, bool given in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:25
+Stack trace:
+#0 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 25
+[26-Feb-2024 14:35:19 Africa/Johannesburg] PHP Warning:  Undefined array key "page" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:35:19 Africa/Johannesburg] PHP Warning:  Undefined array key "rows" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:35:19 Africa/Johannesburg] PHP Warning:  Undefined array key "sidx" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:35:19 Africa/Johannesburg] PHP Warning:  Undefined array key "sord" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:35:19 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Attempt to modify property "rows" on null in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:57
+Stack trace:
+#0 /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php(34): Private_Grid()
+#1 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 57
+[26-Feb-2024 14:35:51 Africa/Johannesburg] PHP Warning:  Undefined array key "page" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:35:51 Africa/Johannesburg] PHP Warning:  Undefined array key "rows" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:35:51 Africa/Johannesburg] PHP Warning:  Undefined array key "sidx" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:35:51 Africa/Johannesburg] PHP Warning:  Undefined array key "sord" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:35:51 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Attempt to modify property "rows" on null in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:57
+Stack trace:
+#0 /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php(34): Private_Grid()
+#1 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 57
+[26-Feb-2024 14:36:14 Africa/Johannesburg] PHP Warning:  Undefined array key "page" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:36:14 Africa/Johannesburg] PHP Warning:  Undefined array key "rows" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:36:14 Africa/Johannesburg] PHP Warning:  Undefined array key "sidx" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:36:14 Africa/Johannesburg] PHP Warning:  Undefined array key "sord" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:36:14 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Attempt to modify property "rows" on null in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:57
+Stack trace:
+#0 /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php(34): Private_Grid()
+#1 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 57
+[26-Feb-2024 14:37:18 Africa/Johannesburg] PHP Warning:  Undefined array key "page" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:37:18 Africa/Johannesburg] PHP Warning:  Undefined array key "rows" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:37:18 Africa/Johannesburg] PHP Warning:  Undefined array key "sidx" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:37:18 Africa/Johannesburg] PHP Warning:  Undefined array key "sord" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:37:18 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Attempt to modify property "rows" on null in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:57
+Stack trace:
+#0 /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php(34): Private_Grid()
+#1 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 57
+[26-Feb-2024 14:45:15 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Call to undefined method SQLite3Result::fetch() in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:31
+Stack trace:
+#0 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 31
+[26-Feb-2024 14:51:52 Africa/Johannesburg] PHP Warning:  Array to string conversion in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 14:52:44 Africa/Johannesburg] PHP Warning:  Array to string conversion in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 34
+[26-Feb-2024 15:00:17 Africa/Johannesburg] PHP Warning:  Undefined array key "draw" in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 27
+[26-Feb-2024 15:00:17 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Call to undefined method SQLite3Result::changes() in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:28
+Stack trace:
+#0 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 28
+[26-Feb-2024 15:00:27 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Call to undefined method SQLite3Result::changes() in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php:28
+Stack trace:
+#0 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 28

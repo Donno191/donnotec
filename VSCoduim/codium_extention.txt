@@ -1,0 +1,11 @@
+Atom One Dark Theme                     -   akamud
+SQLite                                  -   alexcvzz
+Path Intellisense                       -   christian-kohler
+Composer                                -   devsense
+IntelliPHP - AI Autocomplete for PHP    -   devsense
+PHP                                     -   devsense
+Prettier - Code formatter               -   esbenp
+Auto Rename Tag                         -   formulahendry
+CSS Peek                                -   pranaygp
+vscode-icons                            -   vscode-icons-team
+Continue - CodeLlama, GPT-4, and more   -   Continue

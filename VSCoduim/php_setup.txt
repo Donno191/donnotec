@@ -1,0 +1,5 @@
+sudo apt install php-cli
+sudo apt-get install php8.1-sqlite3
+sudo apt install sqlite3
+cd /home/donno/Documents/Donno_projects/donnotec-main/public_html/
+php -S localhost:8000

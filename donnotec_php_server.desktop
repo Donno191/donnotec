@@ -1,0 +1,19 @@
+[Desktop Entry]
+Comment[en_ZA]=
+Comment=
+Exec=/home/donno/Documents/Donno_projects/donnotec-main/start_php_server.sh
+GenericName[en_ZA]=
+GenericName=
+Icon=/home/donno/Documents/Donno_projects/donnotec-main/public_html/icon/donnotec.ico
+MimeType=
+Name[en_ZA]=donnotec_php_server
+Name=donnotec_php_server
+Path=
+StartupNotify=true
+Terminal=true
+TerminalOptions=\s--noclose
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=none
+X-KDE-SubstituteUID=false
+X-KDE-Username=
