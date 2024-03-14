@@ -116,3 +116,5 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home/donno/Documents/Donno_projects/donnotec-main/public_html/biller.php on line 28
+[14-Mar-2024 09:05:54 Africa/Johannesburg] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_add.php on line 8
+[14-Mar-2024 09:05:54 Africa/Johannesburg] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/donno/Documents/Donno_projects/donnotec/private/config.php:1) in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_add.php on line 12
