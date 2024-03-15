@@ -31,6 +31,9 @@
             echo '{"data": '.json_encode($data).'}';
             die();
         }
+        if($_REQUEST['FORM'] == "ADDBILLER"){
+            
+        }
     }
 
 ?>
@@ -81,6 +84,7 @@
         <script type="text/javascript">
             // Initialize the DataTable with id "example"
             $(document).ready(function() {
+                
                 new DataTable('#example', {
                     info: false,
                     ordering: true,

@@ -1,10 +1,11 @@
 <?php
 
-// This file is part of Donnotec System - Small Business, licensed under the MIT License. See the LICENSE file in the project root for full license information.
-// Copyright (C) 2023, Donovan R Fourie, Donnotec
-// http://donnotec.com
+    // This file is part of Donnotec System - Small Business, licensed under the MIT License. See the LICENSE file in the project root for full license information.
+    // Copyright (C) 2024, Donovan R Fourie, Donnotec"
+    // http://donnotec.com
 
     include '../private/config.php';
+
     session_start();
     $database = new SQLite3('../private/database.db');
 
@@ -21,6 +22,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel='icon' type='image/png' href='icon/donnotec.ico' />
         <title>Dashboard</title>
+        <link href="css/light-theme.min.css" rel="stylesheet">
+        <link href="css/dark-theme.min.css" rel="stylesheet">
+        <link href="css/colored-theme.min.css" rel="stylesheet">
         <style>
             @font-face {
                 font-family: 'Exo';
@@ -60,17 +64,17 @@
                 margin-left:15px;
             }          
             .content_header a {
-                background-color: #007BFF; /* Custom background color */
-                color: #ffffff; /* Text color */
-                border: none; /* Remove borders */
-                cursor: pointer; /* Cursor style */
-                padding: 10px 20px; /* Padding for the button */
-                border-radius: 5px; /* Rounded corners */
-                font-size: 16px; /* Font size */
-                transition: background-color 0.3s; /* Transition for hover effect */
+                background-color: #007BFF;
+                color: #ffffff;
+                border: none;
+                cursor: pointer;
+                padding: 10px 20px;
+                border-radius: 5px; 
+                font-size: 16px;
+                transition: background-color 0.3s;
                 text-align: center;
                 text-decoration: none;
-                cursor: pointer; 
+                cursor: pointer;
                 margin-top:5px;
                 margin-right:15px;
                 float:right;
@@ -110,20 +114,37 @@
                 margin-left:15px;
                 margin-top:5px;
                 margin-right:10px;
-                background-color: #007BFF; /* Custom background color */
-                color: #ffffff; /* Text color */
-                border: none; /* Remove borders */
-                cursor: pointer; /* Cursor style */
-                padding: 10px 20px; /* Padding for the button */
-                border-radius: 5px; /* Rounded corners */
-                font-size: 16px; /* Font size */
-                transition: background-color 0.3s; /* Transition for hover effect */   
-            }                                
+                background-color: #007BFF;
+                color: #ffffff;
+                border: none;
+                cursor: pointer;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 16px; 
+                transition: background-color 0.3s;  
+            }  
+            .invalid{
+                color:red;
+            }                              
         </style>
         <script type="text/javascript" src="javascript/jquery-3.7.1.min.js"></script>
         <script type="text/javascript" src="javascript/accounting.min.js"></script>
+        <script type="text/javascript" src="javascript/validation.js"></script>
+        <script type="text/javascript" src="javascript/growl-notification.min.js"></script>
         <script language="JavaScript" type="text/javascript">
+            /* Javascript onload */
             $( document ).ready(function() {
+                /* Prevent Form Submit with Validation attribute*/
+                $('form').submit(function(e) {
+		            var target = $(this).attr('validation');
+		            if (typeof window[target] == 'function') {
+			            if(!window[target]()){
+				            e.preventDefault();
+				            return false;
+			            }
+		            }
+	            });
+                /* Default Currency Format Settings*/
                 accounting.settings = {
 	                currency: {
 		                symbol : "$",
@@ -143,7 +164,7 @@
 	                neg : "%s (%v)",
 	                zero: "%s  -- "
                 };
-
+                /*Apply Default Currency Format*/
                 accounting.settings.currency.symbol = document.getElementById('Currency_symbol').options[document.getElementById('Currency_symbol').selectedIndex].innerHTML;
                 accounting.settings.currency.decimal = document.getElementById('Currency_decimal_symbol').options[document.getElementById('Currency_decimal_symbol').selectedIndex].innerHTML;
                 accounting.settings.currency.precision = document.getElementById('Currency_decimal_digit').options[document.getElementById('Currency_decimal_digit').selectedIndex].innerHTML;
@@ -160,7 +181,7 @@
 
                 document.getElementById('Example_cur_pos').value = accounting.formatMoney(1234.578);
                 document.getElementById('Example_cur_neg').value = accounting.formatMoney(-1234.578);
-
+                /*Apply onchange Currency Format*/
                 document.getElementById('Currency_symbol').onchange=function(){
 	                accounting.settings.currency.symbol = document.getElementById('Currency_symbol').options[document.getElementById('Currency_symbol').selectedIndex].innerHTML;
 	                document.getElementById('Example_cur_pos').value = accounting.formatMoney(1234.578);
@@ -202,7 +223,45 @@
 	                document.getElementById('Example_cur_pos').value = accounting.formatMoney(1234.578);
 	                document.getElementById('Example_cur_neg').value = accounting.formatMoney(-1234.578);
                 };
-            });    
+                /*Form validation in Javascript pure for user aesthetics/experience main validation server-side*/
+                $("#ADDBILLER input").keydown(function() {
+	                if($(this).parent().hasClass("state-success")){
+		                $(this).parent().removeClass("state-success");
+	                }
+	                if($(this).parent().hasClass("state-error")){
+		                $(this).parent().removeClass("state-error");
+		                $(this).parent().next().remove();
+	                }
+                });
+                $("#ADDBILLER input").change(function() {
+	                if($(this).parent().hasClass("state-success")){
+		                $(this).parent().removeClass("state-success");
+	                }
+	                if($(this).parent().hasClass("state-error")){
+		                $(this).parent().removeClass("state-error");
+		                $(this).parent().next().remove();
+	                }
+                });
+            });
+            FormValidation = function(){
+	            var ValidationVarible = true;
+                var TestError = false;
+	            $("#ADDBILLER em").each(function() {
+		            if ( $(this).addClass("invalid") ){	
+			            TestError = true;
+		            }
+	            });
+	            if (TestError){
+		            GrowlNotification.notify({title: 'Warning!', description: 'Please clear errors before submitting form.',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});
+		            return false;
+	            }
+
+                $('input[name=billerName]').parent().addClass("state-success");
+	            if ($('input[name=billerName]').val() == '' ){ ValidationVarible = CreateError('billerName',"Biller/Company Name cannot be blank !" ,ValidationVarible); };
+	            if (!BillerNameValidation($('input[name=billerName').val()) ){ ValidationVarible = CreateError('billerName',"Biller/Company Name Not valid !<br />don't start with space<br />don't end with space<br />atleast one alpha or numeric character<br />characters match a-z A-Z 0-9 '~?! <br />minimum 2 characters" ,ValidationVarible); };
+
+                return ValidationVarible;
+            };
 		</script>
     </head>
     <body>
@@ -220,12 +279,14 @@
                     <!-- Button with fixed width -->
                     <a href="biller.php">Back</a>
                 </div>
-
-                <form>
+                <form action='/biller.php' id="ADDBILLER" validation='FormValidation'>
                     <h3>Basic Information</h3>
+
+                    <input type='hidden' name="FORM" value="ADDBILLER"/>
+
                     <div class="form-group">
                         <label for="billerName">Biller/Company Name</label>
-                        <input type="text" id="billerName" value="VRC Prospects" />
+                        <input type="text" id="billerName" name="billerName"/>
                     </div>
 
                     <h3>Business Currency Format</h3>
