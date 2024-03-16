@@ -1,8 +1,7 @@
 <?php
-
-// This file is part of Donnotec System - Small Business, licensed under the MIT License. See the LICENSE file in the project root for full license information.
-// Copyright (C) 2023, Donovan R Fourie, Donnotec
-// http://donnotec.com
+    // This file is part of Donnotec System - Small Business, licensed under the MIT License. See the LICENSE file in the project root for full license information.
+    // Copyright (C) 2024, Donovan R Fourie, Donnotec
+    // http://donnotec.com
 
     include '../private/config.php';
     session_start();
@@ -12,6 +11,7 @@
         header("Location: login.php");
         exit();
     }
+    $output_notification = false;
     //REQUEST
     if (isset($_REQUEST['FORM'])) {
         if($_REQUEST['FORM'] == "PRIVATE"){
@@ -31,8 +31,21 @@
             echo '{"data": '.json_encode($data).'}';
             die();
         }
+        //TEST_URL_STRING : http://localhost:8001/biller.php?FORM=ADDBILLER&billerName=VRC+Prospects+cc&Currency_symbol=32&Account_type=1
         if($_REQUEST['FORM'] == "ADDBILLER"){
-            
+            $ValidationTest = AddBillerValidation($_REQUEST['billerName'],$_REQUEST['Currency_symbol'],$_REQUEST['Account_type']);
+            if ($ValidationTest == "PASS"){
+                $ValidationTest = AddBiller($_REQUEST['billerName'],$_REQUEST['Currency_symbol'],$_REQUEST['Account_type']);
+                if($ValidationTest == "PASS"){
+                    $output_notification_type = 'success';
+                }else{
+                    $output_notification_type = 'error';    
+                }
+            }else{
+                $output_notification_type = 'error';
+            }
+            $output_notification = true;
+            $output_notification_message = $ValidationTest;
         }
     }
 
@@ -46,8 +59,12 @@
         <link rel='icon' type='image/png' href='icon/donnotec.ico' />
         <title>Biller/Company</title>
         <link rel="stylesheet" href="css/datatables.min.css?v=123123123"/>
+        <link href="css/light-theme.min.css" rel="stylesheet">
+        <link href="css/dark-theme.min.css" rel="stylesheet">
+        <link href="css/colored-theme.min.css" rel="stylesheet">
         <script src="javascript/jquery-3.7.1.min.js"></script>
         <script src="javascript/datatables.min.js?v=123123123"></script>
+        <script src="javascript/growl-notification.min.js"></script>
         <style>
             @font-face {
                 font-family: 'Exo';
@@ -84,7 +101,12 @@
         <script type="text/javascript">
             // Initialize the DataTable with id "example"
             $(document).ready(function() {
-                
+                /*  <?php if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?> */
+                <?php 
+                    if ($output_notification){
+                        echo "GrowlNotification.notify({title: '".$output_notification_type."!', description: '".$output_notification_message."',image: 'images/danger-outline.svg',type: '".$output_notification_type."',position: 'top-center',closeTimeout: 0});";
+                    }
+                ?>
                 new DataTable('#example', {
                     info: false,
                     ordering: true,
@@ -142,3 +164,96 @@
         </div>
     </body>
 </html>
+
+<?php
+    function Test(){
+        return "Hello";
+    }
+    function AddBillerValidation($billerName,$Currency_symbol,$Account_type){
+        if ($billerName == ""){
+            return "Biller/Company Name cannot be blank !";
+        }
+        $regex = '/^(?!\s)(?!.*\s$)(?=.*[a-zA-Z0-9])[\p{L}\p{N}\s"~!@#%^&*()_+={}[]|;:,.<>?-\/]+$/u';
+        if (preg_match($regex, $billerName) !== 1){
+            return "Biller/Company Name Not valid !<br />- don&apos;t start with space<br />- don&apos;t end with space<br />- atleast one alpha or numeric character<br />- characters match a-z A-Z 0-9 &apos;~?! <br />- minimum 2 characters";
+        }
+        $pattern = '/^[0-9]+$/'; //digit from 0 to 9 
+        if (preg_match($pattern, $Currency_symbol)) { 
+            if ($Currency_symbol >= 0 && $Currency_symbol <= 32) {
+            } else {
+                return "Symbol must be a value between 0 and 32";  
+            }
+        } else {
+            return "Symbol has unknown value";  
+        }    
+        $pattern = '/^(0|1)$/'; // Regular expression for 0 or 1
+        if (preg_match($pattern, $Account_type)) {
+        } else {
+            return "Business type unknown value ! Value must be 0 or 1"; 
+        }           
+        return "PASS";
+    }
+    function AddBiller($billerName,$Currency_symbol,$Account_type){
+        $Currency = [
+            ["AUD", "AUD$", ".", 2, "", "%s%v", "-%s%v"],
+            ["BGN", "лв", ",", 2, "", "%v %s", "-%v %s"],
+            ["BRL", "R$", ".", 2, ".","%s%v","-%s%v"],
+            ["CAD", "$", ",", 2, "", "%v %s", "-%v %s"],
+            ["CHF", "CHF", ".", 2, "'","'%s %v','-%s %v"],
+            ["CNY", "¥", ".", 2, ",", "%s %v", "-%s %v"],
+            ["CZK", "Kč", ",", 2, "", "%v %s", "-%v %s"],
+            ["DKK", "kr.","", 2, ".", "%s%v","-%s%v"],
+            ["EUR", "€", ".", 2, "", "%s %v", "-%s %v"],
+            ["GBP", "£", ".", 2, "", "%s%v","-%s%v"],
+            ["HKD", "HK$", ".", 2, ",","%s%v","-%s%v"],
+            ["HRK", "kn", ",", 2, ".","%v %s","-%v %s"],
+            ["HUF", "Ft", ",", 2, "", "%v %s","-%v %s"],
+            ["IDR", "Rp", ".", 0, "", "%s%v", "-%s%v"],
+            ["ILS", "₪", ".", 2, ",","%v %s", "-%v %s"],
+            ["INR", "₹", ".", 2, ",", "%s%v", "-%s%v"],
+            ["ISK", "kr", ",", 2, ".","%v %s", "-%v %s"],
+            ["JPY", "¥", ".", 0, ",", "%s %v", "-%s %v"],
+            ["KRW", "₩", ".", 0, ",","%s%v","-%s%v"],
+            ["MXN", "Mex$", ".", 2, "", "%s%v","-%s%v"],
+            ["MYR", "RM", ".", 2, ",", "%s %v", "-%s %v"],
+            ["NOK", "kr", ",", 2, "", "%v %s", "-%v %s"],
+            ["NZD", "NZ$", ".", 2, ",","%s%v", "-%s%v"],
+            ["PHP", "₱", ".", 2, ",","%s%v", "-%s%v"],
+            ["PLN", "zł", ".", 2, ",","%v %s", "-%v %s"],
+            ["RON", "lei", ",", 2, ".","%v %s", "-%v %s"],
+            ["RUB", "₽.","", 2, "", "%s %v", "-%s %v"],
+            ["SEK", "kr", ",", 2, "", "%v %s", "-%v %s"],
+            ["SGD", "$", ".", 2, ",","%s %v", "-%s %v"],
+            ["THB", "฿", ".", 2, "", "%s %v", "-%s %v"],
+            ["TRY", "₺", ",", 2, ".","%s%v", "-%s%v"],
+            ["USD", "$", ".", 2, ",","%s%v", "-%s%v"],
+            ["ZAR", "R", ".", 2, " ","%s %v", "-%s %v"],
+        ];
+        // Database connection
+        $database = new SQLite3('../private/database.db');
+        // Prepare the INSERT statement with parameterized query to prevent SQL injection
+        $stmt_insert = $database->prepare("INSERT INTO donnotec_biller (biller_name, Currency_symbol, Currency_decimal_symbol, 
+                           Currency_decimal_digit, Currency_digital_grouping, Currency_pos_format, Currency_neg_format, Account_type,System_user_id) VALUES (:billerName, :currencySymbol, 
+                            :currencyDecimalSymbol, :currencyDecimalDigit, :currencyDigitalGrouping, :posFormat, :negFormat, :accountType, :user_id)");
+
+        // Set the parameters for the prepared statement
+        $stmt_insert->bindParam(':billerName', $billerName);
+        $stmt_insert->bindParam(':currencySymbol', $Currency[$Currency_symbol][1]);
+        $stmt_insert->bindParam(':currencyDecimalSymbol', $Currency[$Currency_symbol][2]);
+        $stmt_insert->bindParam(':currencyDecimalDigit', $Currency[$Currency_symbol][3]);
+        $stmt_insert->bindParam(':currencyDigitalGrouping', $Currency[$Currency_symbol][4]);
+        $stmt_insert->bindParam(':posFormat', $Currency[$Currency_symbol][5]);
+        $stmt_insert->bindParam(':negFormat', $Currency[$Currency_symbol][6]);
+        $stmt_insert->bindParam(':accountType', $Account_type);
+        $stmt_insert->bindParam(':user_id', $_SESSION['user_id']);
+
+        // Execute the prepared statement with provided URL parameters and get last inserted row id
+        if ($stmt_insert->execute()) {
+            $billerId = $database->lastInsertRowID(); // Get the ID of the newly inserted record
+            return "PASS";
+            //echo "The biller id for the newly inserted record is: " . $billerId;
+        } else {
+            return "An error occurred while creating Biller/Company.";
+        }
+    }
+?>
