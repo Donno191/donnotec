@@ -17,14 +17,14 @@
         if($_REQUEST['FORM'] == "PRIVATE"){
             // Database configuration
             $database = new SQLite3('../private/database.db');
-            $result = $database->query("SELECT biller_id,biller_name FROM donnotec_biller");
+            $result = $database->query("SELECT biller_id,biller_name FROM donnotec_biller WHERE System_del = 0 and System_user_id = '".$_SESSION['user_id']."'");
             $data = array();
             while ($row = $result->fetchArray(SQLITE3_ASSOC)) { // Use fetchArray() instead of fetch()
                 $editButton = '1';//<button type="button" class="btn btn-primary editBtn" data-id="' . $row['biller_id'] . '">Edit</button>
                 $data[] = [
                     'biller_id' => $row['biller_id'],
                     'biller_name' => $row['biller_name'],
-                    'action' => '<form action="biller_settings.php?biller_id='.$row['biller_id'].'"><input type="submit" value="Settings" /></form>', // Set this value to 1 since the Edit button is present in all rows
+                    'action' => '<form class="inline_form" action="biller_settings.php"><input type="hidden" name="biller_id" value="'.$row['biller_id'].'"><input type="submit" value="Settings" /></form><form class="inline_form" action="biller.php" onSubmit="return confirm(\'Are you sure to delete '.$row['biller_name'].'?\')" ><input type="hidden" name="FORM" value="DELBILLER"><input type="hidden" name="biller_id" value="'.$row['biller_id'].'"><input type="submit" value="Delete"></form>', // Set this value to 1 since the Edit button is present in all rows
                 ];
             }
             header('Content-Type: application/json; charset=utf-8');
@@ -47,6 +47,40 @@
             $output_notification = true;
             $output_notification_message = $ValidationTest;
         }
+        if($_REQUEST['FORM'] == "DELBILLER"){
+            if (isset($_REQUEST['biller_id'])) { //TEST is there biller_id
+                if(is_numeric($_REQUEST['biller_id'])) { //TEST is biller_id a number 
+                    $database = new SQLite3('../private/database.db');
+                    $stmt = $database->prepare("SELECT * FROM donnotec_biller WHERE biller_id=? AND system_del = 0 AND system_user_id=?");
+                    $stmt->bindParam(1, $_REQUEST['biller_id']);
+                    $stmt->bindParam(2, $_SESSION['user_id']);
+                    $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+                    if ($result) {  // Check if a record was found in the database
+                        $billerName = $result['biller_name'];
+                        $database = new SQLite3('../private/database.db');
+                        $stmt = $database->prepare("UPDATE donnotec_biller SET system_del = 1 WHERE biller_id = ".$_REQUEST['biller_id']);
+                        if ($stmt->execute()) {
+                            $output_notification_type = 'success';
+                            $ValidationTest = $billerName." has been successfully deleted !";
+                        } else {
+                            $ValidationTest = "An error occurred while updating the database";
+                            $output_notification_type = 'error';                            
+                        }
+                    } else {
+                        $ValidationTest = "No matching records were found in the database.";
+                        $output_notification_type = 'error';
+                    }                                       
+                }else{
+                    $ValidationTest = "No Biller/Company ID must be a number";
+                    $output_notification_type = 'error';
+                }
+            } else {
+                $ValidationTest = "No Biller/Company ID was provided in the request.";
+                $output_notification_type = 'error';
+            }
+            $output_notification = true;
+            $output_notification_message = $ValidationTest;
+        }
     }
 
 ?>
@@ -56,9 +90,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel='icon' type='image/png' href='icon/donnotec.ico' />
+        <link rel='icon' type='image/png' href='icon/donnotec.ico'>
         <title>Biller/Company</title>
-        <link rel="stylesheet" href="css/datatables.min.css?v=123123123"/>
+        <link rel="stylesheet" href="css/datatables.min.css">
         <link href="css/light-theme.min.css" rel="stylesheet">
         <link href="css/dark-theme.min.css" rel="stylesheet">
         <link href="css/colored-theme.min.css" rel="stylesheet">
@@ -94,17 +128,31 @@
                 background-color: #f4f4f4;
             }
             .table_action{
-
-                width:100px;
+                width:230px;
             }
+            .inline_form{
+                display: inline-block;
+                margin:5px;
+            }
+            .inline_form input{
+                background-color: #007BFF;
+                color: #ffffff;
+                border: none;
+                cursor: pointer;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 16px; 
+                transition: background-color 0.3s; 
+            }            
         </style>
-        <script type="text/javascript">
+        <script>
             // Initialize the DataTable with id "example"
             $(document).ready(function() {
-                /*  <?php if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?> */
+                /* <?php if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?> */
                 <?php 
                     if ($output_notification){
                         echo "GrowlNotification.notify({title: '".$output_notification_type."!', description: '".$output_notification_message."',image: 'images/danger-outline.svg',type: '".$output_notification_type."',position: 'top-center',closeTimeout: 0});";
+                        echo "window.history.replaceState({}, '', window.location.href.split('?')[0]);";
                     }
                 ?>
                 new DataTable('#example', {
@@ -173,7 +221,7 @@
         if ($billerName == ""){
             return "Biller/Company Name cannot be blank !";
         }
-        $regex = '/^(?!\s)(?!.*\s$)(?=.*[a-zA-Z0-9])[\p{L}\p{N}\s"~!@#%^&*()_+={}[]|;:,.<>?-\/]+$/u';
+        $regex = "/^(?!\s)(?!.*\s$)(?=.*[a-zA-Z0-9])[a-zA-Z0-9 '~?!]{2,}$/u";
         if (preg_match($regex, $billerName) !== 1){
             return "Biller/Company Name Not valid !<br />- don&apos;t start with space<br />- don&apos;t end with space<br />- atleast one alpha or numeric character<br />- characters match a-z A-Z 0-9 &apos;~?! <br />- minimum 2 characters";
         }

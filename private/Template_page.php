@@ -1,7 +1,7 @@
 <?php
 
 // This file is part of Donnotec System - Small Business, licensed under the MIT License. See the LICENSE file in the project root for full license information.
-// Copyright (C) 2023, Donovan R Fourie, Donnotec
+// Copyright (C) 2024, Donovan R Fourie, Donnotec
 // http://donnotec.com
 
     include '../private/config.php';
@@ -19,7 +19,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel='icon' type='image/png' href='icon/donnotec.ico' />
+        <link rel='icon' type='image/png' href='icon/donnotec.ico'>
         <title>Dashboard</title>
         <style>
             @font-face {
@@ -45,9 +45,16 @@
             }
             <?php include "../private/sidebar_css.php"; ?>
             .content {
+            /*
+            Tables
                 flex: 1;
                 padding: 20px;
                 background-color: #f4f4f4;
+
+            Forms
+                width:100%;
+                text-align: center;
+            */
             }
         </style>
     </head>

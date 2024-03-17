@@ -154,3 +154,8 @@ Stack trace:
 [16-Mar-2024 20:09:02 Africa/Johannesburg] PHP Warning:  Undefined array key 32 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 240
 [16-Mar-2024 20:09:02 Africa/Johannesburg] PHP Warning:  Trying to access array offset on value of type null in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 240
 [16-Mar-2024 20:10:56 Africa/Johannesburg] PHP Warning:  SQLite3Stmt::execute(): Unable to execute statement: database is locked in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 252
+[17-Mar-2024 09:25:48 Africa/Johannesburg] PHP Warning:  Undefined variable $db in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 54
+[17-Mar-2024 09:25:48 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php:54
+Stack trace:
+#0 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 54
