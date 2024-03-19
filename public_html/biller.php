@@ -148,7 +148,8 @@
         <script>
             // Initialize the DataTable with id "example"
             $(document).ready(function() {
-                /* <?php if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?> */
+                /* */
+                <?php if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?> 
                 <?php 
                     if ($output_notification){
                         echo "GrowlNotification.notify({title: '".$output_notification_type."!', description: '".$output_notification_message."',image: 'images/danger-outline.svg',type: '".$output_notification_type."',position: 'top-center',closeTimeout: 0});";
