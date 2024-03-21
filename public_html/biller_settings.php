@@ -129,7 +129,7 @@
                 transition: background-color 0.3s;  
             } 
             /* Table Buttons */
-            a.add{
+            a.add, a.edit, a.del{
                 background-color: #007BFF;
                 color: #ffffff;
                 border: none;
@@ -139,18 +139,8 @@
                 font-size: 16px; 
                 transition: background-color 0.3s;   
                 float:left;     
-                text-decoration: none;         
-            } 
-            button.edit, button.delete{
-                background-color: #007BFF;
-                color: #ffffff;
-                border: none;
-                cursor: pointer;
-                padding: 10px 20px;
-                border-radius: 5px;
-                font-size: 16px; 
-                transition: background-color 0.3s;
-                margin-left:5px;                 
+                text-decoration: none;  
+                margin-left:5px;        
             } 
             /* Validation */
             .invalid{
@@ -182,49 +172,64 @@
                 font-size: 16px; 
                 transition: background-color 0.3s;   
                 float:left;             
+            }   
+            .modal a.close {
+                background-color: #C70039 ;
+                color: #ffffff;
+                border: none;
+                cursor: pointer;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 16px; 
+                transition: background-color 0.3s;   
+                float:right; 
+                text-decoration: none;            
             }                          
         </style>
         <script>  
             $(document).ready(function() {
                 var JSON_VAT = [{  // replace with your own JSON data
-                    "tax_des": "15% VAT",
-                    "tax_per": 15,
-                    "action": "<button class='edit'>Edit</button><button class='delete'>Delete</button>"
+                    "tax_des": "VAT",
+                    "tax_per": 15
                 }, {
-                    "tax_des": "0% Export",
-                    "tax_per": 0,
-                    "action": "<button class='edit'>Edit</button><button class='delete'>Delete</button>"
+                    "tax_des": "Export",
+                    "tax_per": 0
                 }];
-    
-                var table_vat = $('#Vat').DataTable({
-                    info: false,
-                    ordering: false,
-                    paging: false,
-                    data: JSON_VAT, // use the JSON data instead of a URL
-                    columns: [
-                        { title: 'Tax Description', data: 'tax_des' },
-                        { title: 'Amount %', data: 'tax_per' },
-                        { title: 'Action', data: 'action' }
-                    ],
-                    columnDefs: [
-                        { target: 0, searchable: false, orderable: false },
-                        { target: 1, searchable: false, orderable: false, width: '120px' },
-                        { target: 2, searchable: false, orderable: false, width: '200px' }
-                    ],
-                    // remove the search functionality
-                    searching: false
+                window.table_vat = Table_VAT(JSON_VAT);
+                $("#Vat_del_model_submit").click(function(){
+                    GrowlNotification.notify({title: 'Done', description: 'Tax type '+JSON_VAT[document.getElementById('Vat_del_index').value].tax_des+" has been Edited!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
+                    JSON_VAT.splice(document.getElementById('Vat_del_index').value, 1);
+                    $('#Vat_tag').text(JSON.stringify(JSON_VAT));
+                    JSON_VAT_processed = processJsonData(JSON.stringify(JSON_VAT));
+                    window.table_vat = Table_VAT(JSON_VAT);
+                    $.modal.close();
                 });
+                $("#Vat_edit_model_submit").click(function(){
+                    var RegEXP_amount = /^(?:\d*\.\d{1,2}|\d+)$/;
+                    if (document.getElementById('Vat_edit_amount').value == "" ){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Tax amount field cannot be blank!',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 8000});    
+                        return false;
+                    }else if(!RegEXP_amount.test(document.getElementById('Vat_edit_amount').value)){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Tax amount value invalid!<br>Must be valid number<br>Can be up to two decimal places<br>Ex. 123, 123.45, 123.50',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});    
+                        return false;
+                    }else{
+                        GrowlNotification.notify({title: 'Done', description: 'Tax type '+document.getElementById('Vat_edit_tax_des').value+" has been Edited!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
+                        JSON_VAT[document.getElementById('Vat_edit_index').value].tax_per = document.getElementById('Vat_edit_amount').value;
+                        $('#Vat_tag').text(JSON.stringify(JSON_VAT));
+                        JSON_VAT_processed = processJsonData(JSON.stringify(JSON_VAT));
+                        window.table_vat = Table_VAT(JSON_VAT);
+                        document.getElementById('Vat_edit_tax_des').value = "";
+                        document.getElementById('Vat_edit_amount').value = "";
+                    }
+                    var RegEXP_amount = /^(?:\d*\.\d{1,2}|\d+)$/;
+                    $.modal.close();
+                });   
                 $("#Vat_add_model_submit").click(function(){
-                    //var json = JSON.stringify( $('#Vat').DataTable().rows().data().toArray() );
-                    //console.log(json);
-
                     var RegEXP_description = /^[- ':;,\./@\%\(\)a-zA-Z0-9]*$/;
                     var RegEXP_amount = /^(?:\d*\.\d{1,2}|\d+)$/;
                     function Duplication(Value){
                         if(JSON_VAT.length !=0){
                             for(var i=0; i<JSON_VAT.length; i++){
-                                //console.log("Row " + JSON.stringify(jsonData[i]));
-                                //console.log("JSON " + jsonData[i]["tax_des"] + " FIELD VALUE " + Value);
                                 if(JSON_VAT[i]["tax_des"] == Value){
                                     return true;
                                 }
@@ -249,46 +254,19 @@
                         return false;
                     }else{
                         GrowlNotification.notify({title: 'Done', description: 'Tax type '+document.getElementById('Vat_add_tax_des').value+" has been added!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
-                        var table = $('#Vat').DataTable();
-                        table.row.add({
-                            tax_des: document.getElementById('Vat_add_tax_des').value,
-                            tax_per: document.getElementById('Vat_add_amount').value,
-                            action: "<button class='edit'>Edit</button><button class='delete'>Delete</button>"
-                        }).draw();
+                        JSON_VAT.push({
+                            "tax_des": document.getElementById('Vat_add_tax_des').value,
+                            "tax_per": document.getElementById('Vat_add_amount').value
+                        });
+                        $('#Vat_tag').text(JSON.stringify(JSON_VAT));
+                        JSON_VAT_processed = processJsonData(JSON.stringify(JSON_VAT));
+                        window.table_vat = Table_VAT(JSON_VAT);
                         document.getElementById('Vat_add_tax_des').value = "";
                         document.getElementById('Vat_add_amount').value = "";
                     }
                     $.modal.close();
                 });               
-                table_vat.on( 'click', '.edit', function () {
-                    var data = table_vat.row($(this).parents('tr')).data();
-                    console.log("Editing row:", data);
-    
-                    // Update the corresponding element in your JSON_VAT array
-                    for(var i=0; i<JSON_VAT.length; i++){
-                        if(JSON_VAT[i].tax_des == data.tax_des){
-                            JSON_VAT[i] = data;
-                            break;
-                        }
-                    }
-                    // Update the row in the DataTable (optional)
-                    table_vat.row($(this).parents('tr')).data(data);
-                } ); 
-                table_vat.on( 'click', '.delete', function () {
-                    var data = table_vat.row($(this).parents('tr')).data();
-                    console.log("Deleting row:", data);
-    
-                    // Find and remove the corresponding element in your JSON_VAT array
-                    for(var i=0; i<JSON_VAT.length; i++){
-                        if(JSON_VAT[i].tax_des == data.tax_des){
-                            JSON_VAT.splice(i, 1);
-                            break;
-                        }
-                    }
-    
-                    // Remove the row from the DataTable (optional)
-                    table_vat.row($(this).parents('tr')).remove().draw();
-                } );   
+
 
                 var jsonData1 = [{  // replace with your own JSON data
                     "equity_name": "Donovan R Fourie",
@@ -315,8 +293,75 @@
                     searching: false
                 });  
 
-            });       
-
+            }); 
+            function Vat_del_onload(index){
+                var json = JSON.parse($('#Vat_tag').text());
+                $("#Vat_del_index").val(index);
+                $("#Vat_del_model h3").text('Delete tax type "'+json[document.getElementById('Vat_del_index').value].tax_des+'"');
+            }
+            function Vat_edit_onload(index){
+                $("#Vat_edit_index").val(index);
+                var json = window.table_vat.rows().data().toArray();
+                for (var i = 0; i < json.length; i++) {
+                    if (json[i].index === index) {
+                        $('#Vat_edit_tax_des').val(json[i].tax_des);
+                        $('#Vat_edit_amount').val(json[i].tax_per);
+                    }
+                }
+            }                 
+            function processJsonData(jsonString) {
+                // Iterate over each entry in the JSON array and add the "row_index" property
+                var jsonString_temp = JSON.parse(jsonString);
+                var newJsonData = [];
+                for (var i = 0; i < jsonString_temp.length; i++) {
+                    var rowIndex = newJsonData.length;
+                    jsonString_temp[i]["index"] = rowIndex; // Add a new "row_index" property to each entry in the JSON array
+                    jsonString_temp[i]["action"] = "<a class='edit' href='#Vat_edit_model' rel='modal:open' onclick='Vat_edit_onload("+rowIndex+");'>Edit</a><a class='del' href='#Vat_del_model' rel='modal:open' onclick='Vat_del_onload("+rowIndex+");'>Delete</a>";
+                    newJsonData.push(jsonString_temp[i]); // Include this modified entry in the new JSON array
+                }
+                return newJsonData;
+            }
+            function unprocessJsonData(jsonString) {
+                // Iterate over each entry in the JSON array and remove the "row_index" property
+                var newJsonData = [];
+                for (var i = 0; i < jsonString.length; i++) {
+                    var tempObj = {};
+                    for (var key in jsonString[i]) {
+                        if (key !== "row_index" && key !== "action") {// Check if the current property is not "row_index"                        
+                            tempObj[key] = jsonString[i][key]; // If it's not "row_index", include this property in a new object
+                        }
+                    }
+                    newJsonData.push(tempObj); // Include this modified object (without the "row_index" property) in the new JSON array
+                }
+                return newJsonData;
+            }
+            function Table_VAT(JSON_VAT){
+                $('#Vat').text('');
+                $('#Vat_tag').text(JSON.stringify(JSON_VAT));
+                var JSON_VAT_processed = processJsonData(JSON.stringify(JSON_VAT));
+                var table_vat = $('#Vat').DataTable({
+                    info: false,
+                    ordering: false,
+                    paging: false,
+                    data: JSON_VAT_processed,
+                    columns: [
+                        { title: 'ID', data: 'index' },
+                        { title: 'Tax Description', data: 'tax_des' },
+                        { title: 'Amount %', data: 'tax_per' },
+                        { title: 'Action', data: 'action' }
+                    ],
+                    columnDefs: [
+                        { target: 0, visible: false, searchable: false, orderable: false, width: '20px' },
+                        { target: 1, searchable: false, orderable: false },
+                        { target: 2, searchable: false, orderable: false, width: '120px' },
+                        { target: 3, searchable: false, orderable: false, width: '200px' }
+                    ],
+                    // remove the search functionality
+                    searching: false,
+                    "bDestroy": true
+                });
+                return table_vat;
+            }            
         </script>        
     </head>
     <body>
@@ -588,18 +633,8 @@
                     <br><h3>Value Added Tax List</h3> 
                     <div class="form-group">
                     <textarea id="Vat_tag" name="Vat" style="display: none;"></textarea>
-                        <table id="Vat" class="display" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Tax Description</th>
-                                    <th>Amount</th>
-                                    <th class="table_action">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                        <a class="add" href="#Vat_add_model" rel="modal:open">Add Tax Type</a>
+                    <table id="Vat" class="display" style="width:100%"></table>
+                    <a class="add" href="#Vat_add_model" rel="modal:open">Add Tax Type</a>
                     </div>  
                     <br><br><h3>Owners Interest List (The sum of all owners must equal to 100)</h3> 
                     <div class="form-group">
@@ -838,7 +873,27 @@
                     <br>
                     <button id="Vat_add_model_submit">Add Tax Type</button>
                 </div> 
-
+                <div id="Vat_edit_model" class="modal">
+                    <h3>Edit tax type</h3>
+                    <input type="hidden" id="Vat_edit_index" value="">
+                    <div class="form-group">
+                        <label>Tax description</label>
+                        <input type="text" id="Vat_edit_tax_des" disabled>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" id="Vat_edit_amount">
+                    </div>
+                    <br>
+                    <button id="Vat_edit_model_submit">Edit Tax Type</button>
+                </div>                 
+                <div id="Vat_del_model" class="modal">
+                    <h3>Delete tax type []</h3>
+                    <input type="hidden" id="Vat_del_index" value="">
+                    <button id="Vat_del_model_submit">Yes</button>
+                    <a class="close" href="#" rel="modal:close">NO</a>
+                </div>
             </div>
         </div>
     </body>
