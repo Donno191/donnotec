@@ -324,7 +324,6 @@
                             <option value="1">Corporation</option>
                         </select><br>
                     </div>
-
                     <div class="form-submit">
                         <input type="submit" value="Submit Information">
                     </div>

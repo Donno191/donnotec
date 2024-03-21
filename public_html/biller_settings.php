@@ -25,9 +25,11 @@
         <link href="css/light-theme.min.css" rel="stylesheet">
         <link href="css/dark-theme.min.css" rel="stylesheet">
         <link href="css/colored-theme.min.css" rel="stylesheet">
+        <link href="css/jquery.modal.min.css" rel="stylesheet">
         <script src="javascript/jquery-3.7.1.min.js"></script>
         <script src="javascript/datatables.min.js?v=123123123"></script>
         <script src="javascript/growl-notification.min.js"></script>
+        <script src="javascript/jquery.modal.min.js.js"></script>
         <style>
             @font-face {
                 font-family: 'Exo';
@@ -126,7 +128,8 @@
                 font-size: 16px; 
                 transition: background-color 0.3s;  
             } 
-            button.add{
+            /* Table Buttons */
+            a.add{
                 background-color: #007BFF;
                 color: #ffffff;
                 border: none;
@@ -135,7 +138,8 @@
                 border-radius: 5px;
                 font-size: 16px; 
                 transition: background-color 0.3s;   
-                float:left;              
+                float:left;     
+                text-decoration: none;         
             } 
             button.edit, button.delete{
                 background-color: #007BFF;
@@ -148,33 +152,41 @@
                 transition: background-color 0.3s;
                 margin-left:5px;                 
             } 
+            /* Validation */
             .invalid{
                 color:red;
-            }     
-            .modal {
-                display: none;  /* Hidden by default */
-                position: fixed;  /* Stay in place */
-                z-index: 1;        /* Sit on top */
-                left: 0;
-                top: 0;
-                width: 100%;   /* Full width */
-                height: 100%;  /* Full height */
-                overflow: auto; /* Enable scroll if needed */
-                background-color: rgb(0,0,0);  /* Fallback color */
-                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }  
+            /* Modal Dialog */
+            .modal .form-group label, .modal .form-group input{
+                display:inline-block;
+            }   
+            .modal .form-group label{
+                width:150px;
+                text-align:right;
+                margin-right: 10px;
             }
-
-            .modal-content {
-                background-color: #fefefe;
-                margin: 15% auto;  /* 15% from the top and centered */
-                padding: 20px;
-                border: 1px solid #888;
-                width: 80%;   /* Could be more or less, depending on screen size */
-            }                           
+            .modal .form-group input{
+                width:auto;
+                min-width: 250px;
+                box-sizing: border-box;
+                padding: 5px;
+                vertical-align: middle;
+            }  
+            .modal button{
+                background-color: #007BFF;
+                color: #ffffff;
+                border: none;
+                cursor: pointer;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 16px; 
+                transition: background-color 0.3s;   
+                float:left;             
+            }                          
         </style>
         <script>  
             $(document).ready(function() {
-                var jsonData = [{  // replace with your own JSON data
+                var JSON_VAT = [{  // replace with your own JSON data
                     "tax_des": "15% VAT",
                     "tax_per": 15,
                     "action": "<button class='edit'>Edit</button><button class='delete'>Delete</button>"
@@ -184,11 +196,11 @@
                     "action": "<button class='edit'>Edit</button><button class='delete'>Delete</button>"
                 }];
     
-                var table = $('#Vat').DataTable({
+                var table_vat = $('#Vat').DataTable({
                     info: false,
                     ordering: false,
                     paging: false,
-                    data: jsonData, // use the JSON data instead of a URL
+                    data: JSON_VAT, // use the JSON data instead of a URL
                     columns: [
                         { title: 'Tax Description', data: 'tax_des' },
                         { title: 'Amount %', data: 'tax_per' },
@@ -202,6 +214,81 @@
                     // remove the search functionality
                     searching: false
                 });
+                $("#Vat_add_model_submit").click(function(){
+                    //var json = JSON.stringify( $('#Vat').DataTable().rows().data().toArray() );
+                    //console.log(json);
+
+                    var RegEXP_description = /^[- ':;,\./@\%\(\)a-zA-Z0-9]*$/;
+                    var RegEXP_amount = /^(?:\d*\.\d{1,2}|\d+)$/;
+                    function Duplication(Value){
+                        if(JSON_VAT.length !=0){
+                            for(var i=0; i<JSON_VAT.length; i++){
+                                //console.log("Row " + JSON.stringify(jsonData[i]));
+                                //console.log("JSON " + jsonData[i]["tax_des"] + " FIELD VALUE " + Value);
+                                if(JSON_VAT[i]["tax_des"] == Value){
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;                      
+                    }
+                    if(document.getElementById('Vat_add_tax_des').value == ""){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Tax description field cannot be blank!',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});    
+                        return false;
+                    }else if(Duplication(document.getElementById('Vat_add_tax_des').value)){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Tax description already exist!',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});    
+                        return false;
+                    }else if(!RegEXP_description.test(document.getElementById('Vat_add_tax_des').value)){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Tax description value invalid!<br>Tax Description match with the following set: Dash (-)<br>Single quote (&apos;)<br>Colon (:)<br>Semicolon (;)<br>Comma (,)<br>Period / full stop (.)<br>Slash (/)<br>At symbol (@)<br>Percentage sign (%)<br>Left parenthesis (()<br>Right parenthesis ())<br>Uppercase and lowercase alphabets (A-Z and a-z)<br>Digits (0-9)<br>',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 8000});    
+                        return false;
+                    }else if (document.getElementById('Vat_add_amount').value == "" ){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Tax amount field cannot be blank!',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 8000});    
+                        return false;
+                    }else if(!RegEXP_amount.test(document.getElementById('Vat_add_amount').value)){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Tax amount value invalid!<br>Must be valid number<br>Can be up to two decimal places<br>Ex. 123, 123.45, 123.50',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});    
+                        return false;
+                    }else{
+                        GrowlNotification.notify({title: 'Done', description: 'Tax type '+document.getElementById('Vat_add_tax_des').value+" has been added!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
+                        var table = $('#Vat').DataTable();
+                        table.row.add({
+                            tax_des: document.getElementById('Vat_add_tax_des').value,
+                            tax_per: document.getElementById('Vat_add_amount').value,
+                            action: "<button class='edit'>Edit</button><button class='delete'>Delete</button>"
+                        }).draw();
+                        document.getElementById('Vat_add_tax_des').value = "";
+                        document.getElementById('Vat_add_amount').value = "";
+                    }
+                    $.modal.close();
+                });               
+                table_vat.on( 'click', '.edit', function () {
+                    var data = table_vat.row($(this).parents('tr')).data();
+                    console.log("Editing row:", data);
+    
+                    // Update the corresponding element in your JSON_VAT array
+                    for(var i=0; i<JSON_VAT.length; i++){
+                        if(JSON_VAT[i].tax_des == data.tax_des){
+                            JSON_VAT[i] = data;
+                            break;
+                        }
+                    }
+                    // Update the row in the DataTable (optional)
+                    table_vat.row($(this).parents('tr')).data(data);
+                } ); 
+                table_vat.on( 'click', '.delete', function () {
+                    var data = table_vat.row($(this).parents('tr')).data();
+                    console.log("Deleting row:", data);
+    
+                    // Find and remove the corresponding element in your JSON_VAT array
+                    for(var i=0; i<JSON_VAT.length; i++){
+                        if(JSON_VAT[i].tax_des == data.tax_des){
+                            JSON_VAT.splice(i, 1);
+                            break;
+                        }
+                    }
+    
+                    // Remove the row from the DataTable (optional)
+                    table_vat.row($(this).parents('tr')).remove().draw();
+                } );   
 
                 var jsonData1 = [{  // replace with your own JSON data
                     "equity_name": "Donovan R Fourie",
@@ -209,7 +296,7 @@
                     "action": "<button class='edit'>Edit</button><button class='delete'>Delete</button>"
                 }];
     
-                var table = $('#Equity').DataTable({
+                var table_equity = $('#Equity').DataTable({
                     info: false,
                     ordering: false,
                     paging: false,
@@ -226,34 +313,10 @@
                     ],
                     // remove the search functionality
                     searching: false
-                });
-                var modal = document.getElementById("myModal");
-                var span = document.getElementsByClassName("close")[0];
-                var btn = document.getElementById("myBtn");
-                btn.onclick = function() {
-                    modal.style.display = "block";
-                    return false;
-                }
+                });  
 
-                span.onclick = function() {
-                    modal.style.display = "none";
-                }
-                window.onclick = function(event) {
-                    if (event.target == modal) {
-                        modal.style.display = "none";
-                    }
-                }   
-            });
-            function addTaxType(){
-                var table = $('#Vat').DataTable();
-                table.row.add({
-                    tax_des: "3% Export1",
-                    tax_per: 3,
-                    action: "<button class='edit'>Edit</button><button class='delete'>Delete</button>"
-                }).draw();
+            });       
 
-
-            }
         </script>        
     </head>
     <body>
@@ -270,6 +333,7 @@
                     <!-- Button with fixed width -->
                     <a href="biller.php">Back</a>
                 </div>
+                
                 <form action='/biller.php' id="SETBILLER">
                     <input type='hidden' name="FORM" value="SETBILLER">
                     <h3>Client Request Settings</h3>
@@ -535,7 +599,7 @@
                             <tbody>
                             </tbody>
                         </table>
-                        <button id="Vat_add" class="add" onclick="addTaxType();return false;">Add Tax Type</button>
+                        <a class="add" href="#Vat_add_model" rel="modal:open">Add Tax Type</a>
                     </div>  
                     <br><br><h3>Owners Interest List (The sum of all owners must equal to 100)</h3> 
                     <div class="form-group">
@@ -759,12 +823,22 @@
                         <input type="submit" value="Submit Information">
                     </div>                    
                 </form>
-                <div id="myModal1" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <p>This is a simple modal dialog using jQuery.</p>
+
+                <div id="Vat_add_model" class="modal">
+                    <h3>Add tax type</h3>
+                    <div class="form-group">
+                        <label>Tax description</label>
+                        <input type="text" id="Vat_add_tax_des">
                     </div>
-                </div>                    
+                    <br>
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" id="Vat_add_amount">
+                    </div>
+                    <br>
+                    <button id="Vat_add_model_submit">Add Tax Type</button>
+                </div> 
+
             </div>
         </div>
     </body>
