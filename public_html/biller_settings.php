@@ -197,7 +197,7 @@
                 }];
                 window.table_vat = Table_VAT(JSON_VAT);
                 $("#Vat_del_model_submit").click(function(){
-                    GrowlNotification.notify({title: 'Done', description: 'Tax type '+JSON_VAT[document.getElementById('Vat_del_index').value].tax_des+" has been Edited!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
+                    GrowlNotification.notify({title: 'Done', description: 'Tax type '+JSON_VAT[document.getElementById('Vat_del_index').value].tax_des+" has been deleted!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
                     JSON_VAT.splice(document.getElementById('Vat_del_index').value, 1);
                     $('#Vat_tag').text(JSON.stringify(JSON_VAT));
                     JSON_VAT_processed = processJsonData(JSON.stringify(JSON_VAT));
@@ -221,7 +221,6 @@
                         document.getElementById('Vat_edit_tax_des').value = "";
                         document.getElementById('Vat_edit_amount').value = "";
                     }
-                    var RegEXP_amount = /^(?:\d*\.\d{1,2}|\d+)$/;
                     $.modal.close();
                 });   
                 $("#Vat_add_model_submit").click(function(){
@@ -266,34 +265,127 @@
                     }
                     $.modal.close();
                 });               
-
-
-                var jsonData1 = [{  // replace with your own JSON data
+                var JSON_Equity = [{  // replace with your own JSON data
                     "equity_name": "Donovan R Fourie",
-                    "equity_int": 100,
-                    "action": "<button class='edit'>Edit</button><button class='delete'>Delete</button>"
+                    "equity_int": 50
+                },{  // replace with your own JSON data
+                    "equity_name": "Charlize Fourie",
+                    "equity_int": 50
                 }];
-    
+                window.table_equity = Table_Equity(JSON_Equity);
+
+                $("#Equity_del_model_submit").click(function(){
+                    GrowlNotification.notify({title: 'Done', description: 'Owner '+JSON_Equity[document.getElementById('Equity_del_index').value].equity_name+" has been deleted!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
+                    JSON_Equity.splice(document.getElementById('Equity_del_index').value, 1);
+                    $('#Equity_tag').text(JSON.stringify(JSON_Equity));
+                    JSON_Equity_processed = processJsonData(JSON.stringify(JSON_Equity),"Equity");
+                    window.table_equity = Table_Equity(JSON_Equity);
+                    $.modal.close();
+                });
+                $("#Equity_edit_model_submit").click(function(){
+                    var RegEXP_interest = /^(?:(?!.*\b\d{3}\b)(?:\d*\.\d{1,2}|\d+)|100)$/;
+                    if (document.getElementById('Equity_edit_equity_int').value == "" ){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Interest value field cannot be blank!',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 8000});    
+                        return false;
+                    }else if(!RegEXP_interest.test(document.getElementById('Equity_edit_equity_int').value)){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Interest value invalid!<br>Interest value match with the following set:<br>Must be valid number<br>Can be up to two decimal places<br>Cannot be more that 100<br>Ex. 100, 75.45, 45.50',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});    
+                        return false;
+                    }else{
+                        GrowlNotification.notify({title: 'Done', description: 'Tax type '+document.getElementById('Equity_edit_equity_name').value+" has been Edited!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
+                        JSON_Equity[document.getElementById('Equity_edit_index').value].equity_int = document.getElementById('Equity_edit_equity_int').value;
+                        $('#Equity_tag').text(JSON.stringify(JSON_Equity));
+                        JSON_Equity_processed = processJsonData(JSON.stringify(JSON_Equity),"Equity");
+                        window.table_equity = Table_Equity(JSON_Equity);
+                        document.getElementById('Equity_edit_equity_name').value = "";
+                        document.getElementById('Equity_edit_equity_int').value = "";
+                    }
+                    $.modal.close();
+                }); 
+                $("#Equity_add_model_submit").click(function(){
+                    var RegEXP_name = /^[a-z ,.'-]+$/i;
+                    var RegEXP_interest = /^(?:(?!.*\b\d{3}\b)(?:\d*\.\d{1,2}|\d+)|100)$/;
+                    function Duplication(Value){
+                        if(JSON_Equity.length !=0){
+                            for(var i=0; i<JSON_Equity.length; i++){
+                                if(JSON_Equity[i]["equity_name"] == Value){
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;                      
+                    }
+                    if(document.getElementById('Equity_add_equity_name').value == ""){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Owner name field cannot be blank!',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});    
+                        return false;
+                    }else if(Duplication(document.getElementById('Equity_add_equity_name').value)){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Owner name already exist!',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});    
+                        return false;
+                    }else if(!RegEXP_name.test(document.getElementById('Equity_add_equity_name').value)){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Owners name is invalid!<br>Owwner name match with the following set: <br>Comma (,)<br>Period / full stop (.)<br>Single quote (&apos;)<br>Dash (-)<br>Single quote (&apos;)<br>Uppercase and lowercase alphabets (A-Z and a-z)<br>',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 8000});    
+                        return false;
+                    }else if (document.getElementById('Equaty_add_equity_int').value == "" ){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Interest field cannot be blank!',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 8000});    
+                        return false;
+                    }else if(!RegEXP_interest.test(document.getElementById('Equaty_add_equity_int').value)){
+                        GrowlNotification.notify({title: 'Warning!', description: 'Interest value invalid!<br>Interest value match with the following set:<br>Must be valid number<br>Can be up to two decimal places<br>Cannot be more that 100<br>Ex. 100, 75.45, 45.50',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});    
+                        return false;
+                    }else{
+                        GrowlNotification.notify({title: 'Done', description: 'Owner '+document.getElementById('Equity_add_equity_name').value+" with interest "+document.getElementById('Equaty_add_equity_int').value+" has been added!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
+                        JSON_Equity.push({
+                            "equity_name": document.getElementById('Equity_add_equity_name').value,
+                            "equity_int": document.getElementById('Equaty_add_equity_int').value
+                        });
+                        $('#Equity_tag').text(JSON.stringify(JSON_Equity));
+                        JSON_Equity_processed = processJsonData(JSON.stringify(JSON_Equity));
+                        window.table_equity = Table_Equity(JSON_Equity);
+                        document.getElementById('Equity_add_equity_name').value = "";
+                        document.getElementById('Equaty_add_equity_int').value = "";
+                    }
+                    $.modal.close();
+                });                
+            });
+            function Equity_del_onload(index){
+                var json = JSON.parse($('#Equity_tag').text());
+                $("#Equity_del_index").val(index);
+                $("#Equity_del_model h3").text('Delete Owner "'+json[document.getElementById('Equity_del_index').value].equity_name+'"');
+            } 
+            function Equity_edit_onload(index){
+                $("#Equity_edit_index").val(index);
+                var json = window.table_equity.rows().data().toArray();
+                for (var i = 0; i < json.length; i++) {
+                    if (json[i].index === index) {
+                        $('#Equity_edit_equity_name').val(json[i].equity_name);
+                        $('#Equity_edit_equity_int').val(json[i].equity_int);
+                    }
+                }
+            } 
+            function Table_Equity(JSON_EQUITY){
+                $('#Equity').text('');
+                $('#Equity_tag').text(JSON.stringify(JSON_EQUITY));
+                var JSON_EQUITY_processed = processJsonData(JSON.stringify(JSON_EQUITY),"Equity");
                 var table_equity = $('#Equity').DataTable({
                     info: false,
                     ordering: false,
                     paging: false,
-                    data: jsonData1, // use the JSON data instead of a URL
+                    data: JSON_EQUITY_processed,
                     columns: [
+                        { title: 'ID', data: 'index' },
                         { title: 'Owner Name', data: 'equity_name' },
                         { title: 'Interest %', data: 'equity_int' },
                         { title: 'Action', data: 'action' }
                     ],
                     columnDefs: [
-                        { target: 0, searchable: false, orderable: false },
-                        { target: 1, searchable: false, orderable: false, width: '120px' },
-                        { target: 2, searchable: false, orderable: false, width: '200px' }
+                        { target: 0, visible: false, searchable: false, orderable: false, width: '20px' },
+                        { target: 1, searchable: false, orderable: false },
+                        { target: 2, searchable: false, orderable: false, width: '120px' },
+                        { target: 3, searchable: false, orderable: false, width: '200px' }
                     ],
                     // remove the search functionality
-                    searching: false
-                });  
-
-            }); 
+                    searching: false,
+                    "bDestroy": true
+                });
+                return table_equity;               
+            }               
             function Vat_del_onload(index){
                 var json = JSON.parse($('#Vat_tag').text());
                 $("#Vat_del_index").val(index);
@@ -309,14 +401,14 @@
                     }
                 }
             }                 
-            function processJsonData(jsonString) {
+            function processJsonData(jsonString,name) {
                 // Iterate over each entry in the JSON array and add the "row_index" property
                 var jsonString_temp = JSON.parse(jsonString);
                 var newJsonData = [];
                 for (var i = 0; i < jsonString_temp.length; i++) {
                     var rowIndex = newJsonData.length;
                     jsonString_temp[i]["index"] = rowIndex; // Add a new "row_index" property to each entry in the JSON array
-                    jsonString_temp[i]["action"] = "<a class='edit' href='#Vat_edit_model' rel='modal:open' onclick='Vat_edit_onload("+rowIndex+");'>Edit</a><a class='del' href='#Vat_del_model' rel='modal:open' onclick='Vat_del_onload("+rowIndex+");'>Delete</a>";
+                    jsonString_temp[i]["action"] = "<a class='edit' href='#"+name+"_edit_model' rel='modal:open' onclick='"+name+"_edit_onload("+rowIndex+");'>Edit</a><a class='del' href='#"+name+"_del_model' rel='modal:open' onclick='"+name+"_del_onload("+rowIndex+");'>Delete</a>";
                     newJsonData.push(jsonString_temp[i]); // Include this modified entry in the new JSON array
                 }
                 return newJsonData;
@@ -338,7 +430,7 @@
             function Table_VAT(JSON_VAT){
                 $('#Vat').text('');
                 $('#Vat_tag').text(JSON.stringify(JSON_VAT));
-                var JSON_VAT_processed = processJsonData(JSON.stringify(JSON_VAT));
+                var JSON_VAT_processed = processJsonData(JSON.stringify(JSON_VAT),"Vat");
                 var table_vat = $('#Vat').DataTable({
                     info: false,
                     ordering: false,
@@ -630,28 +722,21 @@
                         </select>
                         <br>
                     </div>
-                    <br><h3>Value Added Tax List</h3> 
+
+                    <br><br><h3>Value Added Tax List</h3> 
                     <div class="form-group">
-                    <textarea id="Vat_tag" name="Vat" style="display: none;"></textarea>
-                    <table id="Vat" class="display" style="width:100%"></table>
-                    <a class="add" href="#Vat_add_model" rel="modal:open">Add Tax Type</a>
-                    </div>  
+                        <textarea id="Vat_tag" name="Vat" style="display: none;"></textarea>
+                        <table id="Vat" class="display" style="width:100%"></table>
+                        <a class="add" href="#Vat_add_model" rel="modal:open">Add Tax Type</a>
+                    </div> 
+
                     <br><br><h3>Owners Interest List (The sum of all owners must equal to 100)</h3> 
                     <div class="form-group">
-                    <textarea id="Equity_tag" name="Equity" style="display: none;"></textarea>
-                        <table id="Equity" class="display" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Owner Name</th>
-                                    <th>Intrest %</th>
-                                    <th class="table_action">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                        <button id="myBtn" class="add">Add Owner Intrest</button>
-                    </div> 
+                        <textarea id="Equity_tag" name="Equity" style="display: none;"></textarea>
+                        <table id="Equity" class="display" style="width:100%"></table>
+                        <a class="add" href="#Equity_add_model" rel="modal:open">Add Owner Intrest</a>
+                    </div>
+
                     <br><h3>System Account Names</h3>                   
                     <div class="form-group">
                         <label>Inventory</label>
@@ -894,6 +979,41 @@
                     <button id="Vat_del_model_submit">Yes</button>
                     <a class="close" href="#" rel="modal:close">NO</a>
                 </div>
+                <div id="Equity_add_model" class="modal">
+                    <h3>Add Owner interest</h3>
+                    <div class="form-group">
+                        <label>Owner Name</label>
+                        <input type="text" id="Equity_add_equity_name">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Interest %</label>
+                        <input type="text" id="Equaty_add_equity_int">
+                    </div>
+                    <br>
+                    <button id="Equity_add_model_submit">Add Owner</button>
+                </div>
+                <div id="Equity_edit_model" class="modal">
+                    <h3>Edit Owner interest</h3>
+                    <input type="hidden" id="Equity_edit_index" value="">
+                    <div class="form-group">
+                        <label>Owner Name</label>
+                        <input type="text" id="Equity_edit_equity_name" disabled>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Interest %</label>
+                        <input type="text" id="Equity_edit_equity_int">
+                    </div>
+                    <br>
+                    <button id="Equity_edit_model_submit">Edit Owner interest</button>
+                </div>
+                <div id="Equity_del_model" class="modal">
+                    <h3>Delete tax type []</h3>
+                    <input type="hidden" id="Equity_del_index" value="">
+                    <button id="Equity_del_model_submit">Yes</button>
+                    <a class="close" href="#" rel="modal:close">NO</a>
+                </div>   
             </div>
         </div>
     </body>
