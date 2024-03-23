@@ -27,6 +27,8 @@
         <link href="css/colored-theme.min.css" rel="stylesheet">
         <link href="css/jquery.modal.min.css" rel="stylesheet">
         <script src="javascript/jquery-3.7.1.min.js"></script>
+        <script src="javascript/accounting.min.js"></script>
+        <script src="javascript/validation.js"></script>
         <script src="javascript/datatables.min.js?v=123123123"></script>
         <script src="javascript/growl-notification.min.js"></script>
         <script src="javascript/jquery.modal.min.js.js"></script>
@@ -195,6 +197,125 @@
                     "tax_des": "Export",
                     "tax_per": 0
                 }];
+                var JSON_Equity = [{  // replace with your own JSON data
+                    "equity_name": "Donovan R Fourie",
+                    "equity_int": 50
+                },{  // replace with your own JSON data
+                    "equity_name": "Charlize Fourie",
+                    "equity_int": 50
+                }];
+                //ALLOW ESTIMATES
+                if($("input[name='Setting_allow_estimates']").is(":checked")) { $("input[name='Setting_prefix_estimate']").prop("disabled", false);}else{ $("input[name='Setting_prefix_estimate']").prop("disabled", true);};
+                $("input[name='Setting_allow_estimates']").on("change", function() {
+                    if($("input[name='Setting_allow_estimates']").is(":checked")) {$("input[name='Setting_prefix_estimate']").prop("disabled", false);}else{$("input[name='Setting_prefix_estimate']").prop("disabled", true);};
+                });
+                //ALLOW PRO FORMA
+                if($("input[name='Setting_allow_proforma']").is(":checked")) { $("input[name='Setting_prefix_proforma']").prop("disabled", false);}else{ $("input[name='Setting_prefix_proforma']").prop("disabled", true);};
+                $("input[name='Setting_allow_proforma']").on("change", function() {
+                    if($("input[name='Setting_allow_proforma']").is(":checked")) {$("input[name='Setting_prefix_proforma']").prop("disabled", false);}else{$("input[name='Setting_prefix_proforma']").prop("disabled", true);};
+                });
+                //ALLOW Quotation
+                if($("input[name='Setting_allow_quotation']").is(":checked")) { $("input[name='Setting_prefix_quotation']").prop("disabled", false);}else{ $("input[name='Setting_prefix_quotation']").prop("disabled", true);};
+                $("input[name='Setting_allow_quotation']").on("change", function() {
+                    if($("input[name='Setting_allow_quotation']").is(":checked")) {$("input[name='Setting_prefix_quotation']").prop("disabled", false);}else{$("input[name='Setting_prefix_quotation']").prop("disabled", true);};
+                });
+                //ALLOW REQUEST AUTOINC
+                if(!$("input[name='Setting_allow_estimates']").is(":checked") && !$("input[name='Setting_allow_proforma']").is(":checked") && !$("input[name='Setting_allow_quotation']").is(":checked")) {
+                    $("input[name='Setting_request_slave_number']").prop("disabled", true);
+                }else{
+                    $("input[name='Setting_request_slave_number']").prop("disabled", false);
+                }
+                $("input[name='Setting_allow_estimates'], input[name='Setting_allow_proforma'], input[name='Setting_allow_quotation'] ").on("change", function() {
+                    if(!$("input[name='Setting_allow_estimates']").is(":checked") && !$("input[name='Setting_allow_proforma']").is(":checked") && !$("input[name='Setting_allow_quotation']").is(":checked")) {
+                        $("input[name='Setting_request_slave_number']").prop("disabled", true);
+                    }else{
+                        $("input[name='Setting_request_slave_number']").prop("disabled", false);
+                    }
+                }); 
+                //ALLOW DELNOTE
+                if($("input[name='Setting_allow_delnote']").is(":checked")) { $("input[name='Setting_prefix_delnote']").prop("disabled", false);}else{ $("input[name='Setting_prefix_delnote']").prop("disabled", true);};
+                $("input[name='Setting_allow_delnote']").on("change", function() {
+                    if($("input[name='Setting_allow_delnote']").is(":checked")) {$("input[name='Setting_prefix_delnote']").prop("disabled", false);}else{$("input[name='Setting_prefix_delnote']").prop("disabled", true);};
+                });
+                //ALLOW JOBCARD
+                if($("input[name='Setting_allow_jobcard']").is(":checked")) { $("input[name='Setting_prefix_jobcard']").prop("disabled", false);}else{ $("input[name='Setting_prefix_jobcard']").prop("disabled", true);};
+                $("input[name='Setting_allow_jobcard']").on("change", function() {
+                    if($("input[name='Setting_allow_jobcard']").is(":checked")) {$("input[name='Setting_prefix_jobcard']").prop("disabled", false);}else{$("input[name='Setting_prefix_jobcard']").prop("disabled", true);};
+                });
+                //ALLOW DEL/JOB AUTOINC
+                if(!$("input[name='Setting_allow_delnote']").is(":checked") && !$("input[name='Setting_allow_jobcard']").is(":checked") ) {
+                    $("input[name='Setting_job_slave_number']").prop("disabled", true);
+                }else{
+                    $("input[name='Setting_job_slave_number']").prop("disabled", false);
+                }
+                $("input[name='Setting_allow_delnote'], input[name='Setting_allow_jobcard']").on("change", function() {
+                    if(!$("input[name='Setting_allow_delnote']").is(":checked") && !$("input[name='Setting_allow_jobcard']").is(":checked") ) {
+                        $("input[name='Setting_job_slave_number']").prop("disabled", true);
+                    }else{
+                        $("input[name='Setting_job_slave_number']").prop("disabled", false);
+                    }
+                }); 
+                //ALLOW sOrders
+                if($("input[name='Setting_allow_orders']").is(":checked")) { $("input[name='Setting_prefix_orders'], input[name='Setting_order_slave_number']").prop("disabled", false);}else{ $("input[name='Setting_prefix_orders'], input[name='Setting_order_slave_number']").prop("disabled", true);};
+                $("input[name='Setting_allow_orders']").on("change", function() {
+                    if($("input[name='Setting_allow_orders']").is(":checked")) {$("input[name='Setting_prefix_orders'], input[name='Setting_order_slave_number']").prop("disabled", false);}else{$("input[name='Setting_prefix_orders'], input[name='Setting_order_slave_number']").prop("disabled", true);};
+                }); 
+
+                let Currency = [
+                    ["AUD","AUD$",".",2," ","%s%v","-%s%v"],
+                    ["BGN","лв",",",2," ","%v %s","-%v %s"],
+                    ["BRL","R$",".",2,".","%s%v","-%s%v"],
+                    ["CAD","$",",",2," ","%v %s","-%v %s"],
+                    ["CHF","CHF",".",2,"'","'%s %v','-%s %v"],
+                    ["CNY","¥",".",2,",", "%s %v", "-%s %v"],
+                    ["CZK","Kč",",",2," ","%v %s","-%v %s"],
+                    ["DKK","kr.","",2,".", "%s%v","-%s%v"],
+                    ["EUR","€",".",2," ","%s %v", "-%s %v"],
+                    ["GBP","£",".",2," ","%s%v","-%s%v"],
+                    ["HKD","HK$",".",2,",","%s%v","-%s%v"],
+                    ["HRK","kn",",",2,".","%v %s","-%v %s"],
+                    ["HUF","Ft",",",2," ","%v %s","-%v %s"],
+                    ["IDR","Rp",".",0,".", "%s%v", "-%s%v"],
+                    ["ILS","₪",".",2,",","%v %s", "-%v %s"],
+                    ["INR","₹",".",2,",", "%s%v", "-%s%v"],
+                    ["ISK","kr",",",2,".","%v %s", "-%v %s"],
+                    ["JPY","¥",".",0,",", "%s %v", "-%s %v"],
+                    ["KRW","₩",".",0,",","%s%v","-%s%v"],
+                    ["MXN","Mex$",".",2," ","%s%v","-%s%v"],
+                    ["MYR","RM",".",2,",", "%s %v", "-%s %v"],
+                    ["NOK","kr",",",2," ","%v %s", "-%v %s"],
+                    ["NZD","NZ$",".",2,",","%s%v", "-%s%v"],
+                    ["PHP","₱",".",2,",","%s%v", "-%s%v"],
+                    ["PLN","zł",".",2,",","%v %s", "-%v %s"],
+                    ["RON","lei",",",2,".","%v %s", "-%v %s"],
+                    ["RUB","₽.","",2," ","%s %v", "-%s %v"],
+                    ["SEK","kr",",",2,"", "%v %s", "-%v %s"],
+                    ["SGD","$",".",2,",","%s %v", "-%s %v"],
+                    ["THB","฿",".",2," ","%s %v", "-%s %v"],
+                    ["TRY","₺",",",2,".","%s%v", "-%s%v"],
+                    ["USD","$",".",2,",","%s%v", "-%s%v"],
+                    ["ZAR","R",".",2," ","%s %v", "-%s %v"]
+                ];
+                /*Apply Default Currency Format*/
+                accounting.settings = {currency: {symbol : "$",format: "%s%v",decimal : ".",thousand: ",",precision : 2},number: {precision : 0,thousand: ",",decimal : "."}};
+                accounting.settings.currency.format = {pos : "%s %v",neg : "%s (%v)",zero: "%s  -- "};
+                document.getElementById('Example_cur_pos').value = accounting.formatMoney(1234.578);
+                document.getElementById('Example_cur_neg').value = accounting.formatMoney(-1234.578);
+
+                /*Apply onchange Currency Format*/
+                document.getElementById('Currency_symbol').onchange=function(){
+                    accounting.settings.currency.symbol = Currency[document.getElementById('Currency_symbol').selectedIndex][1];
+                    accounting.settings.currency.decimal = Currency[document.getElementById('Currency_symbol').selectedIndex][2];
+                    accounting.settings.currency.precision = Currency[document.getElementById('Currency_symbol').selectedIndex][3];
+                    accounting.settings.currency.thousand = Currency[document.getElementById('Currency_symbol').selectedIndex][4];
+                    accounting.settings.currency.format.pos = Currency[document.getElementById('Currency_symbol').selectedIndex][5];
+                    accounting.settings.currency.format.zero = Currency[document.getElementById('Currency_symbol').selectedIndex][5];
+                    accounting.settings.currency.format.neg = Currency[document.getElementById('Currency_symbol').selectedIndex][6];
+	                
+	                document.getElementById('Example_cur_pos').value = accounting.formatMoney(1234.578);
+	                document.getElementById('Example_cur_neg').value = accounting.formatMoney(-1234.578);
+                };
+
                 window.table_vat = Table_VAT(JSON_VAT);
                 $("#Vat_del_model_submit").click(function(){
                     GrowlNotification.notify({title: 'Done', description: 'Tax type '+JSON_VAT[document.getElementById('Vat_del_index').value].tax_des+" has been deleted!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
@@ -265,13 +386,6 @@
                     }
                     $.modal.close();
                 });               
-                var JSON_Equity = [{  // replace with your own JSON data
-                    "equity_name": "Donovan R Fourie",
-                    "equity_int": 50
-                },{  // replace with your own JSON data
-                    "equity_name": "Charlize Fourie",
-                    "equity_int": 50
-                }];
                 window.table_equity = Table_Equity(JSON_Equity);
 
                 $("#Equity_del_model_submit").click(function(){
@@ -342,8 +456,39 @@
                         document.getElementById('Equaty_add_equity_int').value = "";
                     }
                     $.modal.close();
-                });                
+                }); 
+                /* Prevent Form Submit with Validation attribute*/
+                $('#SETBILLER').submit(function(e) {
+		            var target = "FormValidation";
+		            if (typeof window[target] == 'function') {
+			            if(!window[target]()){
+				            e.preventDefault();
+				            return false;
+			            }
+		            }
+	            });              
             });
+            FormValidation = function(){
+	            var ValidationVarible = true;
+                var TestError = false;
+	            $("#SETBILLER em").each(function() {
+		            if ( $(this).addClass("invalid") ){	
+			            TestError = true;
+		            }
+	            });
+	            if (TestError){
+		            GrowlNotification.notify({title: 'Warning!', description: 'Please clear errors before submitting form.',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});
+		            return false;
+	            }
+
+                //$('input[name=billerName]').parent().addClass("state-success");
+	            //if ($('input[name=billerName]').val() == '' ){ ValidationVarible = CreateError('billerName',"Biller/Company Name cannot be blank !" ,ValidationVarible); };
+	            //if (!BillerNameValidation($('input[name=billerName').val()) ){ ValidationVarible = CreateError('billerName',"Biller/Company Name Not valid !<br />don't start with space<br />don't end with space<br />atleast one alpha or numeric character<br />characters match a-z A-Z 0-9 '~?! <br />minimum 2 characters" ,ValidationVarible); };
+
+                //return ValidationVarible;
+                alert("Valisdation");
+                return false;
+            };
             function Equity_del_onload(index){
                 var json = JSON.parse($('#Equity_tag').text());
                 $("#Equity_del_index").val(index);
@@ -543,7 +688,7 @@
                     <br>
                     <div class="form-group">
                         <label>Invoice AUTOINCREMENT</label>
-                        <input type="text" name="Setting_job_slave_number">
+                        <input type="text" name="Setting_invoice_slave_number">
                         <p>If the value is 87900 you next Invoice that you generate will have the number 87901 as reference</p>
                     </div> 
                     <br><h3>Supplier Order Settings</h3>
@@ -943,7 +1088,6 @@
                         <input type="submit" value="Submit Information">
                     </div>                    
                 </form>
-
                 <div id="Vat_add_model" class="modal">
                     <h3>Add tax type</h3>
                     <div class="form-group">
