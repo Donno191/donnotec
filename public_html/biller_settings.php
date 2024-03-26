@@ -28,7 +28,6 @@
         <link href="css/jquery.modal.min.css" rel="stylesheet">
         <script src="javascript/jquery-3.7.1.min.js"></script>
         <script src="javascript/accounting.min.js"></script>
-        <script src="javascript/validation.js"></script>
         <script src="javascript/datatables.min.js?v=123123123"></script>
         <script src="javascript/growl-notification.min.js"></script>
         <script src="javascript/jquery.modal.min.js.js"></script>
@@ -318,6 +317,7 @@
 
                 window.table_vat = Table_VAT(JSON_VAT);
                 $("#Vat_del_model_submit").click(function(){
+                    ResetForm(); 
                     GrowlNotification.notify({title: 'Done', description: 'Tax type '+JSON_VAT[document.getElementById('Vat_del_index').value].tax_des+" has been deleted!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
                     JSON_VAT.splice(document.getElementById('Vat_del_index').value, 1);
                     $('#Vat_tag').text(JSON.stringify(JSON_VAT));
@@ -326,6 +326,7 @@
                     $.modal.close();
                 });
                 $("#Vat_edit_model_submit").click(function(){
+                    ResetForm(); 
                     var RegEXP_amount = /^(?:\d*\.\d{1,2}|\d+)$/;
                     if (document.getElementById('Vat_edit_amount').value == "" ){
                         GrowlNotification.notify({title: 'Warning!', description: 'Tax amount field cannot be blank!',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 8000});    
@@ -345,6 +346,7 @@
                     $.modal.close();
                 });   
                 $("#Vat_add_model_submit").click(function(){
+                    ResetForm(); 
                     var RegEXP_description = /^[- ':;,\./@\%\(\)a-zA-Z0-9]*$/;
                     var RegEXP_amount = /^(?:\d*\.\d{1,2}|\d+)$/;
                     function Duplication(Value){
@@ -397,7 +399,7 @@
                     $.modal.close();
                 });
                 $("#Equity_edit_model_submit").click(function(){
-                    var RegEXP_interest = /^(?:(?!.*\b\d{3}\b)(?:\d*\.\d{1,2}|\d+)|100)$/;
+                    var RegEXP_interest = /^(?:(?!.*\b\d{3}\b)(?:0\.\d{2}|[1-9]\d*(?:\.\d{1,2})?)|100)$/;
                     if (document.getElementById('Equity_edit_equity_int').value == "" ){
                         GrowlNotification.notify({title: 'Warning!', description: 'Interest value field cannot be blank!',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 8000});    
                         return false;
@@ -417,7 +419,7 @@
                 }); 
                 $("#Equity_add_model_submit").click(function(){
                     var RegEXP_name = /^[a-z ,.'-]+$/i;
-                    var RegEXP_interest = /^(?:(?!.*\b\d{3}\b)(?:\d*\.\d{1,2}|\d+)|100)$/;
+                    var RegEXP_interest = /^(?:(?!.*\b\d{3}\b)(?:0\.\d{2}|[1-9]\d*(?:\.\d{1,2})?)|100)$/;
                     function Duplication(Value){
                         if(JSON_Equity.length !=0){
                             for(var i=0; i<JSON_Equity.length; i++){
@@ -441,7 +443,7 @@
                         GrowlNotification.notify({title: 'Warning!', description: 'Interest field cannot be blank!',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 8000});    
                         return false;
                     }else if(!RegEXP_interest.test(document.getElementById('Equaty_add_equity_int').value)){
-                        GrowlNotification.notify({title: 'Warning!', description: 'Interest value invalid!<br>Interest value match with the following set:<br>Must be valid number<br>Can be up to two decimal places<br>Cannot be more that 100<br>Ex. 100, 75.45, 45.50',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});    
+                        GrowlNotification.notify({title: 'Warning!', description: 'Interest value invalid!<br>Interest value match with the following set:<br>Must be valid number<br>Can be up to two decimal places<br>Cannot be 0<br>Cannot be more that 100<br>Ex. 100, 75.45, 45.50',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});    
                         return false;
                     }else{
                         GrowlNotification.notify({title: 'Done', description: 'Owner '+document.getElementById('Equity_add_equity_name').value+" with interest "+document.getElementById('Equaty_add_equity_int').value+" has been added!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
@@ -466,8 +468,37 @@
 				            return false;
 			            }
 		            }
-	            });              
+	            }); 
+                $("#SETBILLER input:checkbox").change(function() {
+                    ResetForm();                  
+                });                
+                $("#SETBILLER input").keydown(function() {
+	                if($(this).parent().hasClass("state-success")){
+		                $(this).parent().removeClass("state-success");
+	                }
+	                if($(this).parent().hasClass("state-error")){
+		                $(this).parent().removeClass("state-error");
+		                $(this).parent().next().remove();
+	                }
+                });
+                $("#SETBILLER input").change(function() {
+	                if($(this).parent().hasClass("state-success")){
+		                $(this).parent().removeClass("state-success");
+	                }
+	                if($(this).parent().hasClass("state-error")){
+		                $(this).parent().removeClass("state-error");
+		                $(this).parent().next().remove();
+	                }
+                });                            
             });
+            function ResetForm(){
+                $("#SETBILLER em.invalid").each(function() {
+                    $(this).remove();
+                }); 
+                $('.state-error').each(function() {
+                    $(this).removeClass('state-error');
+                });  
+            }
             FormValidation = function(){
 	            var ValidationVarible = true;
                 var TestError = false;
@@ -477,18 +508,192 @@
 		            }
 	            });
 	            if (TestError){
+                    $('html, body').animate({ scrollTop: $('.state-error:first').offset().top}, 1000);
 		            GrowlNotification.notify({title: 'Warning!', description: 'Please clear errors before submitting form.',image: 'images/danger-outline.svg',type: 'error',position: 'top-center',closeTimeout: 5000});
 		            return false;
 	            }
+
+                var regex = '';
+                // Estimate | Pro Forma | Quotation
+                if ($("input[name=Setting_allow_estimates]").is(':checked')){
+                    $('input[name=Setting_prefix_estimate]').parent().addClass("state-success");  
+                    if ($('input[name=Setting_prefix_estimate]').val() == '' ){ ValidationVarible = CreateError('Setting_prefix_estimate',"Estimate prefix cannot be blank !" ,ValidationVarible); }; 
+                    regex = /^[a-zA-Z]{1,8}$/;
+                    if (!regex.test($('input[name=Setting_prefix_estimate]').val())){ValidationVarible = CreateError('Setting_prefix_estimate',"Estimate prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />" ,ValidationVarible);}
+                }
+                if ($("input[name=Setting_allow_proforma]").is(":checked")){
+                    $('input[name=Setting_prefix_proforma]').parent().addClass("state-success");  
+                    if ($('input[name=Setting_prefix_proforma]').val() == '' ){ ValidationVarible = CreateError('Setting_prefix_proforma',"Pro forma prefix cannot be blank !" ,ValidationVarible); }; 
+                    regex = /^[a-zA-Z]{1,8}$/;
+                    if (!regex.test($('input[name=Setting_prefix_proforma]').val())){ValidationVarible = CreateError('Setting_prefix_proforma',"Pro forma prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />" ,ValidationVarible);}
+                }
+                if ($("input[name=Setting_allow_quotation]").is(":checked")){
+                    $('input[name=Setting_prefix_quotation]').parent().addClass("state-success");  
+                    if ($('input[name=Setting_prefix_quotation]').val() == '' ){ ValidationVarible = CreateError('Setting_prefix_quotation',"Quotation prefix cannot be blank !" ,ValidationVarible); }; 
+                    regex = /^[a-zA-Z]{1,8}$/;
+                    if (!regex.test($('input[name=Setting_prefix_quotation]').val())){ValidationVarible = CreateError('Setting_prefix_quotation',"Quotation prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />" ,ValidationVarible);}
+                }                
+                if ($("input[name=Setting_allow_estimates]").is(':checked') || $("input[name=Setting_allow_proforma]").is(":checked") || $("input[name=Setting_allow_quotation]").is(":checked")){
+                    $('input[name=Setting_request_slave_number]').parent().addClass("state-success");  
+                    if ($('input[name=Setting_request_slave_number]').val() == '' ){ ValidationVarible = CreateError('Setting_request_slave_number',"Request AUTOINCREMENT cannot be blank !" ,ValidationVarible); }; 
+                    regex = /^[0-9]{1,6}$/;
+                    if (!regex.test($('input[name=Setting_request_slave_number]').val())){ValidationVarible = CreateError('Setting_request_slave_number',"Request AUTOINCREMENT Not valid !<br />Must be numbers only !<br />Number from 0 to 999999<br />" ,ValidationVarible);}
+                
+                }
+                //Delivery Note | Job Card
+                if ($("input[name=Setting_allow_delnote]").is(':checked')){
+                    $('input[name=Setting_prefix_delnote]').parent().addClass("state-success");  
+                    if ($('input[name=Setting_prefix_delnote]').val() == '' ){ ValidationVarible = CreateError('Setting_prefix_delnote',"Delivery Note prefix cannot be blank !" ,ValidationVarible); }; 
+                    regex = /^[a-zA-Z]{1,8}$/;
+                    if (!regex.test($('input[name=Setting_prefix_delnote]').val())){ValidationVarible = CreateError('Setting_prefix_delnote',"Delivery Note prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />" ,ValidationVarible);}
+                }
+                if ($("input[name=Setting_allow_jobcard]").is(":checked")){
+                    $('input[name=Setting_prefix_jobcard]').parent().addClass("state-success");  
+                    if ($('input[name=Setting_prefix_jobcard]').val() == '' ){ ValidationVarible = CreateError('Setting_prefix_jobcard',"Job Card prefix cannot be blank !" ,ValidationVarible); }; 
+                    regex = /^[a-zA-Z]{1,8}$/;
+                    if (!regex.test($('input[name=Setting_prefix_jobcard]').val())){ValidationVarible = CreateError('Setting_prefix_jobcard',"Job Card prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />" ,ValidationVarible);}
+                }                
+                if ($("input[name=Setting_allow_delnote]").is(':checked') || $("input[name=Setting_allow_jobcard]").is(":checked")){
+                    $('input[name=Setting_job_slave_number]').parent().addClass("state-success");  
+                    if ($('input[name=Setting_job_slave_number]').val() == '' ){ ValidationVarible = CreateError('Setting_job_slave_number',"Job/Del AUTOINCREMENT cannot be blank !" ,ValidationVarible); }; 
+                    regex = /^[0-9]{1,6}$/;
+                    if (!regex.test($('input[name=Setting_job_slave_number]').val())){ValidationVarible = CreateError('Setting_job_slave_number',"Job/Del AUTOINCREMENT Not valid !<br />Must be numbers only !<br />Number from 0 to 999999<br />" ,ValidationVarible);}
+                
+                } 
+                //Invoice
+                $('input[name=Setting_prefix_invoice]').parent().addClass("state-success");  
+                if ($('input[name=Setting_prefix_invoice]').val() == '' ){ ValidationVarible = CreateError('Setting_prefix_invoice',"Invoice prefix cannot be blank !" ,ValidationVarible); }; 
+                regex = /^[a-zA-Z]{1,8}$/;
+                if (!regex.test($('input[name=Setting_prefix_invoice]').val())){ValidationVarible = CreateError('Setting_prefix_invoice',"Invoice prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />" ,ValidationVarible);}
+                
+                $('input[name=Setting_invoice_slave_number]').parent().addClass("state-success");  
+                if ($('input[name=Setting_invoice_slave_number]').val() == '' ){ ValidationVarible = CreateError('Setting_invoice_slave_number',"Invoice AUTOINCREMENT cannot be blank !" ,ValidationVarible); }; 
+                regex = /^[0-9]{1,6}$/;
+                if (!regex.test($('input[name=Setting_invoice_slave_number]').val())){ValidationVarible = CreateError('Setting_invoice_slave_number',"Invoice AUTOINCREMENT Not valid !<br />Must be numbers only !<br />Number from 0 to 999999<br />" ,ValidationVarible);}
+                
+                //Supplier Order
+                if ($("input[name=Setting_allow_orders]").is(':checked')){
+                    $('input[name=Setting_prefix_orders]').parent().addClass("state-success");  
+                    if ($('input[name=Setting_prefix_orders]').val() == '' ){ ValidationVarible = CreateError('Setting_prefix_orders',"Order prefix cannot be blank !" ,ValidationVarible); }; 
+                    regex = /^[a-zA-Z]{1,8}$/;
+                    if (!regex.test($('input[name=Setting_prefix_orders]').val())){ValidationVarible = CreateError('Setting_prefix_orders',"Order prefix prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />" ,ValidationVarible);}
+                    
+                    $('input[name=Setting_order_slave_number]').parent().addClass("state-success");  
+                    if ($('input[name=Setting_order_slave_number]').val() == '' ){ ValidationVarible = CreateError('Setting_order_slave_number',"Order AUTOINCREMENT cannot be blank !" ,ValidationVarible); }; 
+                    regex = /^[0-9]{1,6}$/;
+                    if (!regex.test($('input[name=Setting_order_slave_number]').val())){ValidationVarible = CreateError('Setting_order_slave_number',"Order AUTOINCREMENT Not valid !<br />Must be numbers only !<br />Number from 0 to 999999<br />" ,ValidationVarible);}
+                }
+
+                //Supplier Invoice
+                $('input[name=Setting_prefix_sinvoice]').parent().addClass("state-success");  
+                if ($('input[name=Setting_prefix_sinvoice]').val() == '' ){ ValidationVarible = CreateError('Setting_prefix_sinvoice',"Invoice prefix cannot be blank !" ,ValidationVarible); }; 
+                regex = /^[a-zA-Z]{1,8}$/;
+                if (!regex.test($('input[name=Setting_prefix_sinvoice]').val())){ValidationVarible = CreateError('Setting_prefix_sinvoice',"Invoice prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />" ,ValidationVarible);}
+                
+                $('input[name=Setting_sinvoice_slave_number]').parent().addClass("state-success");  
+                if ($('input[name=Setting_sinvoice_slave_number]').val() == '' ){ ValidationVarible = CreateError('Setting_sinvoice_slave_number',"Invoice AUTOINCREMENT cannot be blank !" ,ValidationVarible); }; 
+                regex = /^[0-9]{1,6}$/;
+                if (!regex.test($('input[name=Setting_sinvoice_slave_number]').val())){ValidationVarible = CreateError('Setting_sinvoice_slave_number',"Invoice AUTOINCREMENT Not valid !<br />Must be numbers only !<br />Number from 0 to 999999<br />" ,ValidationVarible);}
+                
+                //VAT LIST
+                if ( $('#Vat_tag').text() == "" || $('#Vat_tag').text() == "[]" ){
+                    ValidationVarible = CreateError('Vat',"Need atleast one tax type !" ,ValidationVarible,'textarea'); 
+                } 
+                var jsonObject = JSON.parse($('#Vat_tag').text() );
+                var taxDesignationRegex = /^[- ':;,\./@\%\(\)a-zA-Z0-9]*$/;
+                var taxPercentageRegex = /^(?:\d*\.\d{1,2}|\d+)$/;
+                for (var i = 0; i < jsonObject.length; i++) {
+                    // Check if the tax designation is blank
+                    if (jsonObject[i].tax_des === '') {
+                        ValidationVarible = CreateError('Vat',"Tax description cannot be blank." ,ValidationVarible,'textarea'); 
+                    }
+                    // Check if the tax designation matches the regular expression
+                    if (!taxDesignationRegex.test(jsonObject[i].tax_des)) {
+                        ValidationVarible = CreateError('Vat',"Tax description invalid." ,ValidationVarible,'textarea');
+                    }
+                    // Check if the tax percentage is blank
+                    if (jsonObject[i].tax_per === '') {
+                        ValidationVarible = CreateError('Vat',"Amount % cannot be blank." ,ValidationVarible,'textarea');
+                    }
+
+                    // Check if the tax percentage matches the regular expression
+                    if (!taxPercentageRegex.test(jsonObject[i].tax_per)) {
+                        ValidationVarible = CreateError('Vat',"Amount % invalid." ,ValidationVarible,'textarea');
+                    }
+                    // Check if the tax designation is unique within the array
+                    for (var j = i + 1; j < jsonObject.length; j++) {
+                        if (jsonObject[i].tax_des === jsonObject[j].tax_des) {
+                            ValidationVarible = CreateError('Vat',"Tax description duplication." ,ValidationVarible,'textarea');
+                        }
+                    }
+                }
+                if ( $('#Equity_tag').text() == "" || $('#Equity_tag').text() == "[]" ){
+                    ValidationVarible = CreateError('Equity',"Need atleast one Owner !" ,ValidationVarible,'textarea'); 
+                } 
+                //Equity List
+                var jsonObject = JSON.parse($('#Equity_tag').text());
+                var equityNameRegex = /^[a-z ,.'-]+$/i;
+                var equityIntegerRegex = /^(?:(?!.*\b\d{3}\b)(?:0\.\d{2}|[1-9]\d*(?:\.\d{1,2})?)|100)$/;
+                var totalEquityInt = 0;
+                for (var i = 0; i < jsonObject.length; i++) {
+                    // Check if the equity name is blank
+                    if (jsonObject[i].equity_name === '') {
+                        ValidationVarible = CreateError('Equity',"Owner name cannot be blank." ,ValidationVarible,'textarea');
+                    }
+                    // Check if the equity name matches the regular expression
+                    if (!equityNameRegex.test(jsonObject[i].equity_name)) {
+                        ValidationVarible = CreateError('Equity',"Owner name invalid." ,ValidationVarible,'textarea');
+                    }
+                    // Check if the equity name is unique within the array
+                    for (var j = i + 1; j < jsonObject.length; j++) {
+                        if (jsonObject[i].equity_name === jsonObject[j].equity_name) {
+                            ValidationVarible = CreateError('Equity',"Owner name must be unique." ,ValidationVarible,'textarea');
+                        }
+                    }
+                    // Check if the equity integer is blank
+                    if (jsonObject[i].equity_int === '') {
+                        ValidationVarible = CreateError('Equity',"Interest % cannot be blank." ,ValidationVarible,'textarea');
+                    }
+                    // Check if the equity integer matches the regular expression
+                    if (!equityIntegerRegex.test(jsonObject[i].equity_int)) {
+                        ValidationVarible = CreateError('Equity',"Interest % invalid." ,ValidationVarible,'textarea');
+                    }
+
+                    // Add the equity integer to the total
+                    totalEquityInt += jsonObject[i].equity_int;
+                }
+
+                // Check if the total equity integer is equal to 100
+                if (totalEquityInt !== 100) {
+                    ValidationVarible = CreateError('Equity',"Total Interest % must be equal to 100." ,ValidationVarible,'textarea');
+                }
 
                 //$('input[name=billerName]').parent().addClass("state-success");
 	            //if ($('input[name=billerName]').val() == '' ){ ValidationVarible = CreateError('billerName',"Biller/Company Name cannot be blank !" ,ValidationVarible); };
 	            //if (!BillerNameValidation($('input[name=billerName').val()) ){ ValidationVarible = CreateError('billerName',"Biller/Company Name Not valid !<br />don't start with space<br />don't end with space<br />atleast one alpha or numeric character<br />characters match a-z A-Z 0-9 '~?! <br />minimum 2 characters" ,ValidationVarible); };
 
                 //return ValidationVarible;
-                alert("Valisdation");
-                return false;
+                //alert("Valisdation");
+
+                if(!ValidationVarible){
+                    $('html, body').animate({ scrollTop: $('.state-error:first').offset().top}, 1000);
+                }
+                return ValidationVarible;
             };
+            function CreateError(elem,msg,currentValidation,tag = 'input'){
+	            if(!$(tag+"[name="+elem+"]").parent().hasClass("state-error")){
+		            if($(tag+"[name="+elem+"]").parent().hasClass("state-success")){
+			            $(tag+"[name="+elem+"]").parent().removeClass("state-success");
+		            }
+		            $(tag+"[name="+elem+"]").parent().addClass("state-error");
+		            $("<em for="+elem+" class='invalid'>"+msg+"</em>").insertAfter($(tag+"[name="+elem+"]").parent());
+	            }else{
+		            if($(tag+"[name="+elem+"]").parent().hasClass("state-success")){
+			            $(tag+"[name="+elem+"]").parent().removeClass("state-success");
+		            }
+	            }
+	            return false;
+            }
             function Equity_del_onload(index){
                 var json = JSON.parse($('#Equity_tag').text());
                 $("#Equity_del_index").val(index);

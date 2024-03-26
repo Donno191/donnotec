@@ -235,7 +235,10 @@
                 $('input[name=billerName]').parent().addClass("state-success");
 	            if ($('input[name=billerName]').val() == '' ){ ValidationVarible = CreateError('billerName',"Biller/Company Name cannot be blank !" ,ValidationVarible); };
 	            if (!BillerNameValidation($('input[name=billerName').val()) ){ ValidationVarible = CreateError('billerName',"Biller/Company Name Not valid !<br />don't start with space<br />don't end with space<br />atleast one alpha or numeric character<br />characters match a-z A-Z 0-9 '~?! <br />minimum 2 characters" ,ValidationVarible); };
-
+                
+                if(!ValidationVarible){ 
+                    $('html, body').animate({ scrollTop: $('.state-error:first').offset().top}, 1000);
+                }
                 return ValidationVarible;
             };
 		</script>
