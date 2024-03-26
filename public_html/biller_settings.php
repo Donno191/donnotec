@@ -667,14 +667,49 @@
                 if (totalEquityInt !== 100) {
                     ValidationVarible = CreateError('Equity',"Total Interest % must be equal to 100." ,ValidationVarible,'textarea');
                 }
-
-                //$('input[name=billerName]').parent().addClass("state-success");
-	            //if ($('input[name=billerName]').val() == '' ){ ValidationVarible = CreateError('billerName',"Biller/Company Name cannot be blank !" ,ValidationVarible); };
-	            //if (!BillerNameValidation($('input[name=billerName').val()) ){ ValidationVarible = CreateError('billerName',"Biller/Company Name Not valid !<br />don't start with space<br />don't end with space<br />atleast one alpha or numeric character<br />characters match a-z A-Z 0-9 '~?! <br />minimum 2 characters" ,ValidationVarible); };
-
-                //return ValidationVarible;
-                //alert("Valisdation");
-
+                const account_names = [
+                    'Inventory',
+                    'Cash/Bank Account',
+                    'Account Payable',
+                    'Retained Earnings',
+                    'Capital Contrubition',
+                    'Capital Account',
+                    'Net Income',
+                    'Withdraw',
+                    'Revenue',
+                    'Expenses',
+                    'Cost of Goods Sold',
+                    'Tax Payable',
+                    'Deferred Income Tax',
+                    'Sales',
+                    'Allowance Uncollectible Accounts Expense',
+                    'Account Receivable',
+                    'Unallocated Account/Temporary account',
+                    'VAT Payable',
+                    'Discount Allowed',
+                    'Discount Received'
+                ];
+                regex = /^(?=.*[a-zA-Z])[a-zA-Z\s-\/]{0,100}$/;
+                for (let i = 1; i <= 20; i++) {
+                    if ($('input[name=Account_System_num_'+i+']').val() == '' ){
+                        ValidationVarible = CreateError('Account_System_num_'+i, account_names[i-1]+" cannot be blank." ,ValidationVarible); 
+                    }
+                    if (!regex.test($('input[name=Account_System_num_'+i+']').val())){
+                        ValidationVarible = CreateError('Account_System_num_'+i,account_names[i-1]+" Not valid !<br />Must be Alphabetic letters only !<br />No number<br />Characters allowed:<br>Space ( )<br>Hyphen (-)<br>Forward Slash (/)" ,ValidationVarible);
+                    }
+                
+                }
+                regex = /^[a-zA-Z0-9]{0,10}$/;
+                for (let i = 1; i <= 20; i++) {
+                    if ($('input[name=Account_System_anum_'+i+']').val() == '' ){
+                        ValidationVarible = CreateError('Account_System_anum_'+i, account_names[i-1]+" cannot be blank." ,ValidationVarible); 
+                    }
+                    if (!regex.test($('input[name=Account_System_anum_'+i+']').val())){
+                        ValidationVarible = CreateError('Account_System_anum_'+i,account_names[i-1]+" Not valid !<br />Must be Alphabetic letters and Numbers only !<br />No special characters allowed !<br>No more than 10 characters !" ,ValidationVarible);
+                    }
+                
+                }                
+                
                 if(!ValidationVarible){
                     $('html, body').animate({ scrollTop: $('.state-error:first').offset().top}, 1000);
                 }
