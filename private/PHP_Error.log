@@ -159,3 +159,43 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 54
+[27-Mar-2024 11:30:55 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_message in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 177
+[27-Mar-2024 11:35:34 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_type in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 179
+[27-Mar-2024 11:35:34 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_type in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 179
+[27-Mar-2024 11:35:59 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_type in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 179
+[27-Mar-2024 11:35:59 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_type in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 179
+[27-Mar-2024 11:36:02 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_type in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 179
+[27-Mar-2024 11:36:02 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_type in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 179
+[27-Mar-2024 11:36:13 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_type in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 179
+[27-Mar-2024 11:36:13 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_type in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 179
+[27-Mar-2024 11:36:15 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_type in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 179
+[27-Mar-2024 11:36:15 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_type in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 179
+[27-Mar-2024 11:36:33 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_type in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 179
+[27-Mar-2024 11:36:33 Africa/Johannesburg] PHP Warning:  Undefined variable $output_notification_type in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 179
+[27-Mar-2024 13:13:26 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimate in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 246
+[27-Mar-2024 13:13:26 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimate in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 246
+[27-Mar-2024 13:14:50 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimate in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 245
+[27-Mar-2024 13:14:50 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimate in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 245
+[27-Mar-2024 13:14:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimate in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 245
+[27-Mar-2024 13:14:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimate in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 245
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimates in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 246
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimates in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 246
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_proforma in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 257
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_proforma in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 257
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_quotation in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 268
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_quotation in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 268
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_delnote in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 279
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_delnote in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 279
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_jobcard in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 290
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_jobcard in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 290
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_prefix_invoice in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 301
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_invoice_slave_number in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 302
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_orders in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 303
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_orders in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 303
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_prefix_sinvoice in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 314
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_sinvoice_slave_number in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 315
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Currency_id in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 316
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Time_zone in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 317
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Vat in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 318
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined variable $Equity in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 319
+[27-Mar-2024 14:03:21 Africa/Johannesburg] PHP Warning:  Undefined array key "biller_id" in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 982

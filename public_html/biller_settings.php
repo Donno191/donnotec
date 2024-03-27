@@ -12,6 +12,57 @@
         header("Location: login.php");
         exit();
     }
+
+    $Fail = False;
+    $ERROR = "";
+    if (isset($_REQUEST['biller_id'])) { //TEST is there biller_id
+        if(is_numeric($_REQUEST['biller_id'])) { //TEST is biller_id a number 
+            $database = new SQLite3('../private/database.db');
+            $stmt = $database->prepare("SELECT * FROM donnotec_biller WHERE biller_id=? AND system_del = 0 AND system_user_id=?");
+            $stmt->bindParam(1, $_REQUEST['biller_id']);
+            $stmt->bindParam(2, $_SESSION['user_id']);
+            $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+            if ($result) {  // Check if a record was found in the database
+                $billerName = $result['biller_name'];
+                if(isset($_REQUEST['Currency_id'])){$Currency_id = $_REQUEST['Currency_id'];}else{$Currency_id = $result['Currency_id'];}
+                if(isset($_REQUEST['Time_zone'])){$Time_zone = $_REQUEST['Time_zone'];}else{$Time_zone = $result['Time_zone'];}
+                //SLAVE Numbers
+                if(isset($_REQUEST['Setting_request_slave_number'])){$Setting_request_slave_number = $_REQUEST['Setting_request_slave_number'];}else{$Setting_request_slave_number = $result['Setting_request_slave_number'];}
+                if(isset($_REQUEST['Setting_job_slave_number'])){$Setting_job_slave_number = $_REQUEST['Setting_job_slave_number'];}else{$Setting_job_slave_number = $result['Setting_job_slave_number'];}
+                if(isset($_REQUEST['Setting_invoice_slave_number'])){$Setting_invoice_slave_number = $_REQUEST['Setting_invoice_slave_number'];}else{$Setting_invoice_slave_number = $result['Setting_invoice_slave_number'];}                
+                if(isset($_REQUEST['Setting_order_slave_number'])){$Setting_order_slave_number = $_REQUEST['Setting_order_slave_number'];}else{$Setting_order_slave_number = $result['Setting_order_slave_number'];}
+                if(isset($_REQUEST['Setting_sinvoice_slave_number'])){$Setting_sinvoice_slave_number = $_REQUEST['Setting_sinvoice_slave_number'];}else{$Setting_sinvoice_slave_number = $result['Setting_sinvoice_slave_number'];}
+                //ALLOW
+                if(isset($_REQUEST['Setting_allow_estimates'])){$Setting_allow_estimates = $_REQUEST['Setting_allow_estimates'];}else{$Setting_allow_estimates = $result['Setting_allow_estimates'];}
+                if(isset($_REQUEST['Setting_allow_proforma'])){$Setting_allow_proforma = $_REQUEST['Setting_allow_proforma'];}else{$Setting_allow_proforma = $result['Setting_allow_proforma'];}
+                if(isset($_REQUEST['Setting_allow_quotation'])){$Setting_allow_quotation = $_REQUEST['Setting_allow_quotation'];}else{$Setting_allow_quotation = $result['Setting_allow_quotation'];}
+                if(isset($_REQUEST['Setting_allow_delnote'])){$Setting_allow_delnote = $_REQUEST['Setting_allow_delnote'];}else{$Setting_allow_delnote = $result['Setting_allow_delnote'];}
+                if(isset($_REQUEST['Setting_allow_jobcard'])){$Setting_allow_jobcard = $_REQUEST['Setting_allow_jobcard'];}else{$Setting_allow_jobcard = $result['Setting_allow_jobcard'];}
+                if(isset($_REQUEST['Setting_allow_orders'])){$Setting_allow_orders = $_REQUEST['Setting_allow_orders'];}else{$Setting_allow_orders = $result['Setting_allow_orders'];}
+                //Prefix
+                if(isset($_REQUEST['Setting_prefix_estimate'])){$Setting_prefix_estimate = $_REQUEST['Setting_prefix_estimate'];}else{$Setting_prefix_estimate = $result['Setting_prefix_estimate'];}
+                if(isset($_REQUEST['Setting_prefix_proforma'])){$Setting_prefix_proforma = $_REQUEST['Setting_prefix_proforma'];}else{$Setting_prefix_proforma = $result['Setting_prefix_proforma'];}
+                if(isset($_REQUEST['Setting_prefix_quotation'])){$Setting_prefix_quotation = $_REQUEST['Setting_prefix_quotation'];}else{$Setting_prefix_quotation = $result['Setting_prefix_quotation'];}
+                if(isset($_REQUEST['Setting_prefix_delnote'])){$Setting_prefix_delnote = $_REQUEST['Setting_prefix_delnote'];}else{$Setting_prefix_delnote = $result['Setting_prefix_delnote'];}
+                if(isset($_REQUEST['Setting_prefix_jobcard'])){$Setting_prefix_jobcard = $_REQUEST['Setting_prefix_jobcard'];}else{$Setting_prefix_jobcard = $result['Setting_prefix_jobcard'];}
+                if(isset($_REQUEST['Setting_prefix_invoice'])){$Setting_prefix_invoice = $_REQUEST['Setting_prefix_invoice'];}else{$Setting_prefix_invoice = $result['Setting_prefix_invoice'];}
+                if(isset($_REQUEST['Setting_prefix_orders'])){$Setting_prefix_orders = $_REQUEST['Setting_prefix_orders'];}else{$Setting_prefix_orders = $result['Setting_prefix_orders'];}
+                if(isset($_REQUEST['Setting_prefix_sinvoice'])){$Setting_prefix_sinvoice = $_REQUEST['Setting_prefix_sinvoice'];}else{$Setting_prefix_sinvoice = $result['Setting_prefix_sinvoice'];}
+                //JSON
+                if(isset($_REQUEST['Vat'])){$Vat = $_REQUEST['Vat'];}else{$Vat = $result['Setting_vat_list'];}
+                if(isset($_REQUEST['Equity'])){$Equity = $_REQUEST['Equity'];}else{$Equity = $result['Setting_owner_list'];}
+            } else {
+                $Fail = True;
+                $ERROR = "<b style='color:red;'>ERROR No matching records were found in the database.</b>";
+            }                                       
+        }else{
+            $Fail = True;
+            $ERROR = "<b style='color:red;'>ERROR No Biller/Company ID must be a number</b>";
+        }
+    } else {
+        $Fail = True;
+        $ERROR = "<b style='color:red;'>ERROR No Biller/Company ID was provided in the request.</b>";
+    }      
 ?>
 
 <!DOCTYPE html>
@@ -189,20 +240,84 @@
         </style>
         <script>  
             $(document).ready(function() {
-                var JSON_VAT = [{  // replace with your own JSON data
-                    "tax_des": "VAT",
-                    "tax_per": 15
-                }, {
-                    "tax_des": "Export",
-                    "tax_per": 0
-                }];
-                var JSON_Equity = [{  // replace with your own JSON data
-                    "equity_name": "Donovan R Fourie",
-                    "equity_int": 50
-                },{  // replace with your own JSON data
-                    "equity_name": "Charlize Fourie",
-                    "equity_int": 50
-                }];
+                //Initialize Variables
+                window.history.replaceState({}, '', window.location.href.split('?')[0]);
+                <?php
+                if($Setting_allow_estimates == "on" || $Setting_allow_estimates == "1"){
+                    echo '$("input[name=Setting_allow_estimates]").prop("checked", true);';
+                    echo '$("input[name=Setting_prefix_estimate]").prop("disabled", false);';
+                    echo '$("input[name=Setting_prefix_estimate]").val("'.$Setting_prefix_estimate.'");';
+                    echo '$("input[name=Setting_request_slave_number]").prop("disabled", false);';
+                    echo '$("input[name=Setting_request_slave_number]").val("'.$Setting_request_slave_number.'");';
+                }else{
+                    echo '$("input[name=Setting_allow_estimates]").prop("checked", false);';
+                    echo '$("input[name=Setting_prefix_estimate]").prop("disabled", true);';
+                    echo '$("input[name=Setting_request_slave_number]").prop("disabled", true);';
+                }
+                if($Setting_allow_proforma == "on" || $Setting_allow_proforma == "1"){
+                    echo '$("input[name=Setting_allow_proforma]").prop("checked", true);';
+                    echo '$("input[name=Setting_prefix_proforma]").prop("disabled", false);';
+                    echo '$("input[name=Setting_prefix_proforma]").val("'.$Setting_prefix_proforma.'");';
+                    echo '$("input[name=Setting_request_slave_number]").prop("disabled", false);';
+                    echo '$("input[name=Setting_request_slave_number]").val("'.$Setting_request_slave_number.'");';
+                }else{
+                    echo '$("input[name=Setting_allow_proforma]").prop("checked", false);';
+                    echo '$("input[name=Setting_prefix_proforma]").prop("disabled", true);';
+                    echo '$("input[name=Setting_request_slave_number]").prop("disabled", true);';
+                }
+                if($Setting_allow_quotation == "on" || $Setting_allow_quotation == "1"){
+                    echo '$("input[name=Setting_allow_quotation]").prop("checked", true);';
+                    echo '$("input[name=Setting_prefix_quotation]").prop("disabled", false);';
+                    echo '$("input[name=Setting_prefix_quotation]").val("'.$Setting_prefix_quotation.'");';
+                    echo '$("input[name=Setting_request_slave_number]").prop("disabled", false);';
+                    echo '$("input[name=Setting_request_slave_number]").val("'.$Setting_request_slave_number.'");';
+                }else{
+                    echo '$("input[name=Setting_allow_quotation]").prop("checked", false);';
+                    echo '$("input[name=Setting_prefix_quotation]").prop("disabled", true);';
+                    echo '$("input[name=Setting_request_slave_number]").prop("disabled", true);';
+                } 
+                if($Setting_allow_delnote == "on" || $Setting_allow_delnote == "1"){
+                    echo '$("input[name=Setting_allow_delnote]").prop("checked", true);';
+                    echo '$("input[name=Setting_prefix_delnote]").prop("disabled", false);';
+                    echo '$("input[name=Setting_prefix_delnote]").val("'.$Setting_prefix_delnote.'");';
+                    echo '$("input[name=Setting_job_slave_number]").prop("disabled", false);';
+                    echo '$("input[name=Setting_job_slave_number]").val("'.$Setting_job_slave_number.'");';
+                }else{
+                    echo '$("input[name=Setting_allow_delnote]").prop("checked", false);';
+                    echo '$("input[name=Setting_prefix_delnote]").prop("disabled", true);';
+                    echo '$("input[name=Setting_job_slave_number]").prop("disabled", true);';
+                }   
+                if($Setting_allow_jobcard == "on" || $Setting_allow_jobcard == "1"){
+                    echo '$("input[name=Setting_allow_jobcard]").prop("checked", true);';
+                    echo '$("input[name=Setting_prefix_jobcard]").prop("disabled", false);';
+                    echo '$("input[name=Setting_prefix_jobcard]").val("'.$Setting_prefix_jobcard.'");';
+                    echo '$("input[name=Setting_job_slave_number]").prop("disabled", false);';
+                    echo '$("input[name=Setting_job_slave_number]").val("'.$Setting_job_slave_number.'");';
+                }else{
+                    echo '$("input[name=Setting_allow_jobcard]").prop("checked", false);';
+                    echo '$("input[name=Setting_prefix_jobcard]").prop("disabled", true);';
+                    echo '$("input[name=Setting_job_slave_number]").prop("disabled", true);';
+                }   
+                echo '$("input[name=Setting_prefix_invoice]").val("'.$Setting_prefix_invoice.'");';  
+                echo '$("input[name=Setting_invoice_slave_number]").val("'.$Setting_invoice_slave_number.'");'; 
+                if($Setting_allow_orders == "on" || $Setting_allow_orders == "1"){
+                    echo '$("input[name=Setting_allow_orders]").prop("checked", true);';
+                    echo '$("input[name=Setting_prefix_orders]").prop("disabled", false);';
+                    echo '$("input[name=Setting_prefix_orders]").val("'.$Setting_prefix_orders.'");';
+                    echo '$("input[name=Setting_order_slave_number]").prop("disabled", false);';
+                    echo '$("input[name=Setting_order_slave_number]").val("'.$Setting_order_slave_number.'");';
+                }else{
+                    echo '$("input[name=Setting_allow_orders]").prop("checked", false);';
+                    echo '$("input[name=Setting_prefix_orders]").prop("disabled", true);';
+                    echo '$("input[name=Setting_order_slave_number]").prop("disabled", true);';
+                }     
+                echo '$("input[name=Setting_prefix_sinvoice]").val("'.$Setting_prefix_sinvoice.'");';  
+                echo '$("input[name=Setting_sinvoice_slave_number]").val("'.$Setting_sinvoice_slave_number.'");';    
+                echo '$("#Currency_symbol").prop("selectedIndex", '.$Currency_id.');';   
+                echo '$("#System_time_zone").val("'.$Time_zone.'");';   
+                echo "var JSON_VAT = JSON.parse('".$Vat."');";  
+                echo "var JSON_Equity = JSON.parse('".$Equity."');";          
+                ?>
                 //ALLOW ESTIMATES
                 if($("input[name='Setting_allow_estimates']").is(":checked")) { $("input[name='Setting_prefix_estimate']").prop("disabled", false);}else{ $("input[name='Setting_prefix_estimate']").prop("disabled", true);};
                 $("input[name='Setting_allow_estimates']").on("change", function() {
@@ -300,6 +415,8 @@
                 accounting.settings.currency.format = {pos : "%s %v",neg : "%s (%v)",zero: "%s  -- "};
                 document.getElementById('Example_cur_pos').value = accounting.formatMoney(1234.578);
                 document.getElementById('Example_cur_neg').value = accounting.formatMoney(-1234.578);
+
+                
 
                 /*Apply onchange Currency Format*/
                 document.getElementById('Currency_symbol').onchange=function(){
@@ -851,13 +968,18 @@
             <!-- END sidebar INCLUDE -->
             <div class="content">
             <div class="content_header">
-                    <h2>Settings For</h2>
+                    <?php if($Fail){
+                        echo "<h2>".$ERROR."</h2>";
+                    }else{
+                        echo "<h2>Settings For <b>".$billerName."</b></h2>";
+                    } ?>
                     <!-- Button with fixed width -->
                     <a href="biller.php">Back</a>
                 </div>
                 
-                <form action='/biller.php' id="SETBILLER">
+                <form action='/biller.php' id="SETBILLER" <?php if($Fail){echo "style=display:none;";} ?> >
                     <input type='hidden' name="FORM" value="SETBILLER">
+                    <input type='hidden' name="biller_id" value="<?php echo $_REQUEST['biller_id']; ?>">
                     <h3>Client Request Settings</h3>
                     <div class="form-group">
                         <label>Allow estimates </label>
@@ -1402,4 +1524,3 @@
         </div>
     </body>
 </html>
-

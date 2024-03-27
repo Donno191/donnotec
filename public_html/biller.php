@@ -81,6 +81,28 @@
             $output_notification = true;
             $output_notification_message = $ValidationTest;
         }
+        if($_REQUEST['FORM'] == "SETBILLER"){
+            // Validate form fields
+            $output_notification = true;
+            $output_notification_type = 'error'; 
+            $output_notification_message = '';
+            //Allow Estimate
+            $Setting_allow_estimates = 0;
+			if(isset($_REQUEST['Setting_allow_estimates'])){
+				if($_REQUEST['Setting_allow_estimates'] == '1' || $_REQUEST['Setting_allow_estimates'] == 'on'){
+					$Setting_allow_estimates = 1;
+                    if (!isset($_REQUEST['Setting_prefix_estimate']) || trim($_REQUEST['Setting_prefix_estimate']) === '') {
+                        $output_notification_message = 'Estimate prefix cannot be blank !<br><a href="'.str_replace("biller.php","biller_settings.php",$_SERVER['REQUEST_URI']).'">Back to form</a>';
+                        $output_notification_type = 'error'; 
+                    }else{
+                        if (strlen($_REQUEST['Setting_prefix_estimate']) > 8 || !preg_match('/^[a-zA-Z]{1,8}$/', $_REQUEST['Setting_prefix_estimate'])) {
+                            $output_notification_message = 'Estimate prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br /><a href="'.str_replace("biller.php","biller_settings.php",$_SERVER['REQUEST_URI']).'">Back to form</a>';
+                            $output_notification_type = 'error'; 
+                        }
+				    }
+			    }
+            }
+        }
     }
 
 ?>
@@ -149,11 +171,11 @@
             // Initialize the DataTable with id "example"
             $(document).ready(function() {
                 /* */
-                <?php if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?> 
+                <?php //if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?>
                 <?php 
                     if ($output_notification){
                         echo "GrowlNotification.notify({title: '".$output_notification_type."!', description: '".$output_notification_message."',image: 'images/danger-outline.svg',type: '".$output_notification_type."',position: 'top-center',closeTimeout: 0});";
-                        echo "window.history.replaceState({}, '', window.location.href.split('?')[0]);";
+                        //echo "window.history.replaceState({}, '', window.location.href.split('?')[0]);";
                     }
                 ?>
                 new DataTable('#example', {
@@ -243,6 +265,69 @@
         return "PASS";
     }
     function AddBiller($billerName,$Currency_symbol,$Account_type){
+        $Currency = [
+            ["AUD", "AUD$", ".", 2, "", "%s%v", "-%s%v"],
+            ["BGN", "лв", ",", 2, "", "%v %s", "-%v %s"],
+            ["BRL", "R$", ".", 2, ".","%s%v","-%s%v"],
+            ["CAD", "$", ",", 2, "", "%v %s", "-%v %s"],
+            ["CHF", "CHF", ".", 2, "'","'%s %v','-%s %v"],
+            ["CNY", "¥", ".", 2, ",", "%s %v", "-%s %v"],
+            ["CZK", "Kč", ",", 2, "", "%v %s", "-%v %s"],
+            ["DKK", "kr.","", 2, ".", "%s%v","-%s%v"],
+            ["EUR", "€", ".", 2, "", "%s %v", "-%s %v"],
+            ["GBP", "£", ".", 2, "", "%s%v","-%s%v"],
+            ["HKD", "HK$", ".", 2, ",","%s%v","-%s%v"],
+            ["HRK", "kn", ",", 2, ".","%v %s","-%v %s"],
+            ["HUF", "Ft", ",", 2, "", "%v %s","-%v %s"],
+            ["IDR", "Rp", ".", 0, "", "%s%v", "-%s%v"],
+            ["ILS", "₪", ".", 2, ",","%v %s", "-%v %s"],
+            ["INR", "₹", ".", 2, ",", "%s%v", "-%s%v"],
+            ["ISK", "kr", ",", 2, ".","%v %s", "-%v %s"],
+            ["JPY", "¥", ".", 0, ",", "%s %v", "-%s %v"],
+            ["KRW", "₩", ".", 0, ",","%s%v","-%s%v"],
+            ["MXN", "Mex$", ".", 2, "", "%s%v","-%s%v"],
+            ["MYR", "RM", ".", 2, ",", "%s %v", "-%s %v"],
+            ["NOK", "kr", ",", 2, "", "%v %s", "-%v %s"],
+            ["NZD", "NZ$", ".", 2, ",","%s%v", "-%s%v"],
+            ["PHP", "₱", ".", 2, ",","%s%v", "-%s%v"],
+            ["PLN", "zł", ".", 2, ",","%v %s", "-%v %s"],
+            ["RON", "lei", ",", 2, ".","%v %s", "-%v %s"],
+            ["RUB", "₽.","", 2, "", "%s %v", "-%s %v"],
+            ["SEK", "kr", ",", 2, "", "%v %s", "-%v %s"],
+            ["SGD", "$", ".", 2, ",","%s %v", "-%s %v"],
+            ["THB", "฿", ".", 2, "", "%s %v", "-%s %v"],
+            ["TRY", "₺", ",", 2, ".","%s%v", "-%s%v"],
+            ["USD", "$", ".", 2, ",","%s%v", "-%s%v"],
+            ["ZAR", "R", ".", 2, " ","%s %v", "-%s %v"],
+        ];
+        // Database connection
+        $database = new SQLite3('../private/database.db');
+        // Prepare the INSERT statement with parameterized query to prevent SQL injection
+        $stmt_insert = $database->prepare("INSERT INTO donnotec_biller (biller_name, Currency_symbol, Currency_decimal_symbol, 
+                           Currency_decimal_digit, Currency_digital_grouping, Currency_pos_format, Currency_neg_format, Account_type,System_user_id) VALUES (:billerName, :currencySymbol, 
+                            :currencyDecimalSymbol, :currencyDecimalDigit, :currencyDigitalGrouping, :posFormat, :negFormat, :accountType, :user_id)");
+
+        // Set the parameters for the prepared statement
+        $stmt_insert->bindParam(':billerName', $billerName);
+        $stmt_insert->bindParam(':currencySymbol', $Currency[$Currency_symbol][1]);
+        $stmt_insert->bindParam(':currencyDecimalSymbol', $Currency[$Currency_symbol][2]);
+        $stmt_insert->bindParam(':currencyDecimalDigit', $Currency[$Currency_symbol][3]);
+        $stmt_insert->bindParam(':currencyDigitalGrouping', $Currency[$Currency_symbol][4]);
+        $stmt_insert->bindParam(':posFormat', $Currency[$Currency_symbol][5]);
+        $stmt_insert->bindParam(':negFormat', $Currency[$Currency_symbol][6]);
+        $stmt_insert->bindParam(':accountType', $Account_type);
+        $stmt_insert->bindParam(':user_id', $_SESSION['user_id']);
+
+        // Execute the prepared statement with provided URL parameters and get last inserted row id
+        if ($stmt_insert->execute()) {
+            $billerId = $database->lastInsertRowID(); // Get the ID of the newly inserted record
+            return "PASS";
+            //echo "The biller id for the newly inserted record is: " . $billerId;
+        } else {
+            return "An error occurred while creating Biller/Company.";
+        }
+    }
+    function SetBiller($billerName,$Currency_symbol,$Account_type){
         $Currency = [
             ["AUD", "AUD$", ".", 2, "", "%s%v", "-%s%v"],
             ["BGN", "лв", ",", 2, "", "%v %s", "-%v %s"],
