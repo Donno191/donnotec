@@ -314,3 +314,287 @@ Stack trace:
 #1 /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php(38): AddBiller()
 #2 {main}
   thrown in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 402
+[29-Mar-2024 08:24:16 Africa/Johannesburg] PHP Warning:  SQLite3Stmt::execute(): Unable to execute statement: database is locked in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 318
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_2 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_2 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_3 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_3 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_4 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_4 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_5 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_5 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_6 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_6 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_7 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_7 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_8 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_8 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_9 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_9 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_10 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_10 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_11 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_11 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_12 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_12 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_13 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_13 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_14 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_14 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_15 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_15 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_16 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_16 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_17 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_17 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_18 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_18 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_19 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_19 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_20 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:24:33 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_20 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_2 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_2 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_3 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_3 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_4 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_4 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_5 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_5 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_6 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_6 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_7 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_7 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_8 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_8 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_9 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_9 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_10 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_10 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_11 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_11 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_12 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_12 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_13 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_13 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_14 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_14 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_15 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_15 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_16 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_16 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_17 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_17 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_18 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_18 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_19 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_19 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_20 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 334
+[29-Mar-2024 08:26:52 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_20 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 335
+[29-Mar-2024 08:32:26 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Call to undefined method SQLite3Result::numRows() in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php:64
+Stack trace:
+#0 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 64
+[29-Mar-2024 08:33:02 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Cannot use object of type SQLite3Result as array in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php:66
+Stack trace:
+#0 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 66
+[29-Mar-2024 08:34:07 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_1 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 337
+[29-Mar-2024 08:34:07 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_1 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 338
+[29-Mar-2024 11:24:32 Africa/Johannesburg] PHP Warning:  Undefined array key "Setting_prefix_estimate" in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 540
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimates in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 316
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimates in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 316
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_proforma in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 327
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_proforma in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 327
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_quotation in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 338
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_quotation in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 338
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_delnote in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 349
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_delnote in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 349
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_jobcard in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 360
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_jobcard in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 360
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_prefix_invoice in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 371
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_invoice_slave_number in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 372
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_orders in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 373
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_orders in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 373
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_prefix_sinvoice in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 384
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_sinvoice_slave_number in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 385
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Currency_id in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 386
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Time_zone in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 387
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Vat in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 388
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Equity in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 389
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_1 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_1 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_2 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_2 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_3 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_3 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_4 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_4 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_5 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_5 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_6 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_6 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_7 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_7 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_8 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_8 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_9 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_9 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_10 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_10 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_11 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_11 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_12 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_12 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_13 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_13 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_14 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_14 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_15 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_15 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_16 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_16 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_17 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_17 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_18 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_18 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_19 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_19 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_20 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_20 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:02:09 Africa/Johannesburg] PHP Warning:  Undefined array key "biller_id" in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 999
+[29-Mar-2024 14:09:01 Africa/Johannesburg] PHP Warning:  preg_match(): Unknown modifier '@' in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 716
+[29-Mar-2024 14:15:01 Africa/Johannesburg] PHP Warning:  preg_match(): Unknown modifier '@' in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 716
+[29-Mar-2024 14:15:25 Africa/Johannesburg] PHP Warning:  preg_match(): Unknown modifier '@' in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 716
+[29-Mar-2024 14:16:13 Africa/Johannesburg] PHP Warning:  preg_match(): Unknown modifier '\' in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 716
+[29-Mar-2024 14:16:23 Africa/Johannesburg] PHP Warning:  preg_match(): Unknown modifier '@' in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 716
+[29-Mar-2024 14:17:00 Africa/Johannesburg] PHP Warning:  preg_match(): No ending delimiter '^' found in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 716
+[29-Mar-2024 14:17:15 Africa/Johannesburg] PHP Warning:  preg_match(): Unknown modifier '@' in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 716
+[29-Mar-2024 14:20:25 Africa/Johannesburg] PHP Warning:  preg_match(): Unknown modifier '@' in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 716
+[29-Mar-2024 14:21:01 Africa/Johannesburg] PHP Warning:  preg_match(): Unknown modifier '@' in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 716
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimates in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 316
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimates in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 316
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_proforma in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 327
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_proforma in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 327
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_quotation in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 338
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_quotation in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 338
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_delnote in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 349
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_delnote in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 349
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_jobcard in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 360
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_jobcard in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 360
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_prefix_invoice in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 371
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_invoice_slave_number in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 372
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_orders in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 373
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_orders in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 373
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_prefix_sinvoice in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 384
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_sinvoice_slave_number in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 385
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Currency_id in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 386
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Time_zone in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 387
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Vat in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 388
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Equity in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 389
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_1 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_1 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_2 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_2 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_3 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_3 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_4 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_4 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_5 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_5 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_6 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_6 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_7 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_7 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_8 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_8 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_9 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_9 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_10 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_10 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_11 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_11 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_12 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_12 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_13 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_13 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_14 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_14 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_15 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_15 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_16 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_16 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_17 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_17 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_18 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_18 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_19 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_19 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_20 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_20 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:21:02 Africa/Johannesburg] PHP Warning:  Undefined array key "biller_id" in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 999
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimates in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 316
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_estimates in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 316
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_proforma in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 327
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_proforma in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 327
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_quotation in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 338
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_quotation in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 338
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_delnote in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 349
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_delnote in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 349
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_jobcard in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 360
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_jobcard in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 360
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_prefix_invoice in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 371
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_invoice_slave_number in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 372
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_orders in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 373
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_allow_orders in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 373
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_prefix_sinvoice in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 384
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Setting_sinvoice_slave_number in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 385
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Currency_id in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 386
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Time_zone in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 387
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Vat in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 388
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Equity in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 389
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_1 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_1 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_2 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_2 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_3 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_3 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_4 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_4 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_5 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_5 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_6 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_6 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_7 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_7 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_8 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_8 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_9 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_9 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_10 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_10 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_11 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_11 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_12 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_12 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_13 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_13 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_14 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_14 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_15 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_15 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_16 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_16 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_17 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_17 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_18 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_18 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_19 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_19 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_num_20 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 391
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined variable $Account_System_anum_20 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 392
+[29-Mar-2024 14:22:45 Africa/Johannesburg] PHP Warning:  Undefined array key "biller_id" in /home/donno/Documents/Donno_projects/donnotec/public_html/biller_settings.php on line 999
+[29-Mar-2024 14:23:56 Africa/Johannesburg] PHP Warning:  preg_match(): Compilation failed: invalid range in character class at offset 24 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 769
+[29-Mar-2024 14:25:32 Africa/Johannesburg] PHP Warning:  preg_match(): Compilation failed: invalid range in character class at offset 24 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 769
+[29-Mar-2024 14:27:15 Africa/Johannesburg] PHP Warning:  preg_match(): Compilation failed: invalid range in character class at offset 24 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 769
+[29-Mar-2024 14:28:17 Africa/Johannesburg] PHP Warning:  preg_match(): Compilation failed: invalid range in character class at offset 24 in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 769

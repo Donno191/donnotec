@@ -82,27 +82,25 @@
             $output_notification_message = $ValidationTest;
         }
         if($_REQUEST['FORM'] == "SETBILLER"){
-            // Validate form fields
-            $output_notification = true;
-            $output_notification_type = 'error'; 
-            $output_notification_message = '';
-            //Allow Estimate
-            $Setting_allow_estimates = 0;
-			if(isset($_REQUEST['Setting_allow_estimates'])){
-				if($_REQUEST['Setting_allow_estimates'] == '1' || $_REQUEST['Setting_allow_estimates'] == 'on'){
-					$Setting_allow_estimates = 1;
-                    if (!isset($_REQUEST['Setting_prefix_estimate']) || trim($_REQUEST['Setting_prefix_estimate']) === '') {
-                        $output_notification_message = 'Estimate prefix cannot be blank !<br><a href="'.str_replace("biller.php","biller_settings.php",$_SERVER['REQUEST_URI']).'">Back to form</a>';
-                        $output_notification_type = 'error'; 
-                    }else{
-                        if (strlen($_REQUEST['Setting_prefix_estimate']) > 8 || !preg_match('/^[a-zA-Z]{1,8}$/', $_REQUEST['Setting_prefix_estimate'])) {
-                            $output_notification_message = 'Estimate prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br /><a href="'.str_replace("biller.php","biller_settings.php",$_SERVER['REQUEST_URI']).'">Back to form</a>';
-                            $output_notification_type = 'error'; 
-                        }
-				    }
-			    }
+            $ValidationTest = SetBillerValidation();
+            if ($ValidationTest == "PASS"){
+                $output_notification_type = 'success';
+                $ValidationTest = " has been successfully edited !";               
+                //$ValidationTest = AddBiller($_REQUEST['billerName'],$_REQUEST['Currency_symbol']);
+                //if($ValidationTest == "PASS"){
+                //    $output_notification_type = 'success';
+                //}else{
+                //    $output_notification_type = 'error';    
+                //}
+            }else{
+                $output_notification_type = 'error';
             }
-
+            $output_notification = true;
+            if($output_notification_type == 'success'){
+                $output_notification_message = $ValidationTest;
+            }else{
+                $output_notification_message = $ValidationTest."<br><a href=\'".str_replace("biller.php","biller_settings.php",$_SERVER['REQUEST_URI'])."\' >Resubmit form</a>";
+            }
         }
     }
 
@@ -172,7 +170,7 @@
             // Initialize the DataTable with id "example"
             $(document).ready(function() {
                 /* */
-                <?php //if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?>
+                <?php if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?>
                 <?php 
                     if ($output_notification){
                         echo "GrowlNotification.notify({title: '".$output_notification_type."!', description: '".$output_notification_message."',image: 'images/danger-outline.svg',type: '".$output_notification_type."',position: 'top-center',closeTimeout: 0});";
@@ -329,7 +327,7 @@
             $LastROW = AddBillerAccounts($billerId,"5100","Capital Contrubition","Capital received from investors for stock, equal to capital stock plus contributed capital. also called contributed capital. also called paid-in capital.",5,0,5,"e",1,"p");
             $LastROW = AddBillerAccounts($billerId,"5400","Capital Account","In financial accounting, the capital account is one of the accounts in shareholders' equity. Sole proprietorships have a single capital account in the owner's equity. Partnerships maintain a capital account for each of the partners.",5,0,6,"e",1,"p");
             $LastROW3 = AddBillerAccounts($billerId,"M40","Net Income","In business, Net income also referred to as the bottom line, net profit, or net earnings is an entity's income minus expenses for an accounting period.",0,$LastROW2,7,"e",1,"p");
-            $LastROW = AddBillerAccounts($billerId,"I35","Withdraw","Withdraw by business owner(s) of the companies earnings.",0,"",$LastROW2,"Retained Earnings",8,"e",1,"n");
+            $LastROW = AddBillerAccounts($billerId,"I35","Withdraw","Withdraw by business owner(s) of the companies earnings.",0,$LastROW2,8,"e",1,"n");
             $LastROW5 = AddBillerAccounts($billerId,"I10","Revenue","In business, revenue or turnover is income that a company receives from its normal business activities, usually from the sale of goods and services to customers.",0,$LastROW3,9,"e",1,"p");
             $LastROW4 = AddBillerAccounts($billerId,"I25","Expenses","Technically, an expense is an event in which an asset is used up or a liability is incurred. In terms of the accounting equation, expenses reduce owners' equity.",0,$LastROW3,10,"e",1,"n");
             $LastROW = AddBillerAccounts($billerId,"I15","Cost of Goods Sold","Cost of goods sold (COGS) refer to the inventory costs of those goods a business has sold during a particular period. Costs are associated with particular goods using one of several formulas, including specific identification, first-in first-out (FIFO), or average cost.",0,$LastROW4,11,"e",1,"n");
@@ -367,7 +365,7 @@
             $LastROW = AddBillerAccounts($billerId,"8600","Staff Loans","Current Asset",1,0,0,"a",1,"p");
             $LastROW = AddBillerAccounts($billerId,"4600","Telephone and Internet","Expense",0,$LastROW4,0,"e",1,"n");
             $LastROW = AddBillerAccounts($billerId,"4650","Travel and Accommodation","Expense",0,$LastROW4,0,"e",1,"n");
-            return "PASS";
+            return "Created Company ".$billerName;
             //echo "The biller id for the newly inserted record is: " . $billerId;
         } else {
             return "An error occurred while creating Biller/Company.";
@@ -423,7 +421,7 @@
         if ($stmt->execute()) {
             return $database->lastInsertRowID();
         } else {
-            return "An error occurred while creating Client Category ".$name;
+            return "An error occurred while creating Client Category ".$cat_name;
         }        
     }
     function AddSupplier($account,$supplier_name,$biller_id, $category_id,$account_id){
@@ -454,10 +452,10 @@
         if ($stmt->execute()) {
             return $database->lastInsertRowID();
         } else {
-            return "An error occurred while creating Supplier Category ".$name;
+            return "An error occurred while creating Supplier Category ".$cat_name;
         }        
     }
-    function SetBiller($billerName,$Currency_symbol,$Account_type){
+    function SetBiller($billerName,$Currency_symbol){
         $Currency = [
             ["AUD", "AUD$", ".", 2, "", "%s%v", "-%s%v"],
             ["BGN", "лв", ",", 2, "", "%v %s", "-%v %s"],
@@ -519,5 +517,263 @@
         } else {
             return "An error occurred while creating Biller/Company.";
         }
+    }
+    function SETBillerValidation(){
+
+        $database = new SQLite3('../private/database.db');
+        if ($_REQUEST['biller_id'] == ""){
+            return "Biller/Company Name cannot be blank !";
+        }
+
+        $query = "SELECT * FROM donnotec_biller WHERE id=? and del = 0 and user_id = '".$_SESSION['user_id']."'";
+        $stmt = $database->prepare($query);
+        $stmt->bindValue(1, $_REQUEST['biller_id']);
+        $result = $stmt->execute();
+        if (!$result) { return "Cannot access Biller/Company Name in database";}
+
+        if (isset($_REQUEST['Setting_allow_estimates'])){if ($_REQUEST['Setting_allow_estimates'] == 'on' || $_REQUEST['Setting_allow_estimates'] == '1'){ $_REQUEST['Setting_allow_estimates'] = 1; }}
+        if (isset($_REQUEST['Setting_allow_estimates']) && !isset($_REQUEST['Setting_prefix_estimate'])){return "Estimate prefix Not set !";}
+        if (!isset($_REQUEST['Setting_allow_estimates']) && isset($_REQUEST['Setting_prefix_estimate'])){return "Estimate prefix Not allowed !";}
+        if (isset($_REQUEST['Setting_allow_estimates']) && isset($_REQUEST['Setting_prefix_estimate'])){
+            if($_REQUEST['Setting_prefix_estimate'] == ""){ return "Estimate prefix cannot be blank !"; }
+            $regex = '/^[a-zA-Z]{1,8}$/';
+            if (preg_match($regex, $_REQUEST['Setting_prefix_estimate']) !== 1){
+                return "Estimate prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />";
+            }
+        }
+        if (isset($_REQUEST['Setting_allow_proforma'])){if ($_REQUEST['Setting_allow_proforma'] == 'on' || $_REQUEST['Setting_allow_proforma'] == '1'){ $_REQUEST['Setting_allow_proforma'] = 1; }}
+        if (isset($_REQUEST['Setting_allow_proforma']) && !isset($_REQUEST['Setting_prefix_proforma'])){return "Pro forma prefix Not set !";}
+        if (!isset($_REQUEST['Setting_allow_proforma']) && isset($_REQUEST['Setting_prefix_proforma'])){return "Pro forma prefix Not allowed !";}
+        if (isset($_REQUEST['Setting_allow_proforma']) && isset($_REQUEST['Setting_prefix_proforma'])){
+            if($_REQUEST['Setting_prefix_proforma'] == ""){ return "Pro forma prefix cannot be blank !"; }
+            $regex = '/^[a-zA-Z]{1,8}$/';
+            if (preg_match($regex, $_REQUEST['Setting_prefix_proforma']) !== 1){
+                return "Pro forma prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />";
+            }
+        }
+        if (isset($_REQUEST['Setting_allow_quotation'])){if ($_REQUEST['Setting_allow_quotation'] == 'on' || $_REQUEST['Setting_allow_quotation'] == '1'){ $_REQUEST['Setting_allow_quotation'] = 1; }}
+        if (isset($_REQUEST['Setting_allow_quotation']) && !isset($_REQUEST['Setting_prefix_quotation'])){return "Quotation prefix Not set !";}
+        if (!isset($_REQUEST['Setting_allow_quotation']) && isset($_REQUEST['Setting_prefix_quotation'])){return "Quotation prefix Not allowed !";}
+        if (isset($_REQUEST['Setting_allow_quotation']) && isset($_REQUEST['Setting_prefix_quotation'])){
+            if($_REQUEST['Setting_prefix_quotation'] == ""){ return "Quotation prefix cannot be blank !"; }
+            $regex = '/^[a-zA-Z]{1,8}$/';
+            if (preg_match($regex, $_REQUEST['Setting_prefix_quotation']) !== 1){
+                return "Quotation prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />";
+            }
+        }
+        if (isset($_REQUEST['Setting_allow_estimates']) || isset($_REQUEST['Setting_allow_proforma']) || isset($_REQUEST['Setting_allow_quotation'])){
+            if (!isset($_REQUEST['Setting_request_slave_number'])){
+                return "Request AUTOINCREMENT Not set !";
+            }
+        }
+        if (isset($_REQUEST['Setting_request_slave_number'])){
+            if($_REQUEST['Setting_request_slave_number'] == ""){ return "Request AUTOINCREMENT cannot be blank !"; }
+            $regex = '/^[0-9]{1,6}$/';
+            if (preg_match($regex, $_REQUEST['Setting_request_slave_number']) !== 1){
+                return "Request AUTOINCREMENT Not valid !<br />Must be numbers only !<br />Number from 0 to 999999<br />";
+            }
+        }
+
+        if (isset($_REQUEST['Setting_allow_delnote'])){if ($_REQUEST['Setting_allow_delnote'] == 'on' || $_REQUEST['Setting_allow_delnote'] == '1'){ $_REQUEST['Setting_allow_delnote'] = 1; }}
+        if (isset($_REQUEST['Setting_allow_delnote']) && !isset($_REQUEST['Setting_prefix_delnote'])){return "Delivery Note prefix Not set !";}
+        if (!isset($_REQUEST['Setting_allow_delnote']) && isset($_REQUEST['Setting_prefix_delnote'])){return "Delivery Note prefix Not allowed !";}
+        if (isset($_REQUEST['Setting_allow_delnote']) && isset($_REQUEST['Setting_prefix_delnote'])){
+            if($_REQUEST['Setting_prefix_delnote'] == ""){ return "Delivery Note prefix cannot be blank !"; }
+            $regex = '/^[a-zA-Z]{1,8}$/';
+            if (preg_match($regex, $_REQUEST['Setting_prefix_delnote']) !== 1){
+                return "Delivery Note prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />";
+            }
+        }
+        if (isset($_REQUEST['Setting_allow_jobcard'])){if ($_REQUEST['Setting_allow_jobcard'] == 'on' || $_REQUEST['Setting_allow_jobcard'] == '1'){ $_REQUEST['Setting_allow_jobcard'] = 1; }}
+        if (isset($_REQUEST['Setting_allow_jobcard']) && !isset($_REQUEST['Setting_prefix_jobcard'])){return "Job Card prefix Not set !";}
+        if (!isset($_REQUEST['Setting_allow_jobcard']) && isset($_REQUEST['Setting_prefix_jobcard'])){return "Job Card prefix Not allowed !";}
+        if (isset($_REQUEST['Setting_allow_jobcard']) && isset($_REQUEST['Setting_prefix_jobcard'])){
+            if($_REQUEST['Setting_prefix_jobcard'] == ""){ return "Job Card prefix cannot be blank !"; }
+            $regex = '/^[a-zA-Z]{1,8}$/';
+            if (preg_match($regex, $_REQUEST['Setting_prefix_jobcard']) !== 1){
+                return "Job Card prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />";
+            }
+        }
+        if (isset($_REQUEST['Setting_allow_delnote']) || isset($_REQUEST['Setting_allow_jobcard']) ){
+            if (!isset($_REQUEST['Setting_job_slave_number'])){
+                return "Job/Del AUTOINCREMENT Not set !";
+            }
+        }
+        if (isset($_REQUEST['Setting_job_slave_number'])){
+            if($_REQUEST['Setting_job_slave_number'] == ""){ return "Job/Del AUTOINCREMENT cannot be blank !"; }
+            $regex = '/^[0-9]{1,6}$/';
+            if (preg_match($regex, $_REQUEST['Setting_job_slave_number']) !== 1){
+                return "Job/Del AUTOINCREMENT Not valid !<br />Must be numbers only !<br />Number from 0 to 999999<br />";
+            }
+        }
+
+        if (!isset($_REQUEST['Setting_prefix_invoice'])){return "Invoice prefix Not set !"; }
+        if (!isset($_REQUEST['Setting_invoice_slave_number'])){return "Invoice AUTOINCREMENT Not set !"; }
+        if($_REQUEST['Setting_prefix_invoice'] == ""){ return "Invoice prefix cannot be blank !"; }
+        $regex = '/^[a-zA-Z]{1,8}$/';
+        if (preg_match($regex, $_REQUEST['Setting_prefix_invoice']) !== 1){
+            return "Invoice prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />";
+        }
+        if($_REQUEST['Setting_invoice_slave_number'] == ""){ return "Invoice AUTOINCREMENT cannot be blank !"; }
+        $regex = '/^[0-9]{1,6}$/';
+        if (preg_match($regex, $_REQUEST['Setting_invoice_slave_number']) !== 1){
+            return "Invoice AUTOINCREMENT Not valid !<br />Must be numbers only !<br />Number from 0 to 999999<br />";
+        }
+
+        if (isset($_REQUEST['Setting_allow_orders'])){if ($_REQUEST['Setting_allow_orders'] == 'on' || $_REQUEST['Setting_allow_orders'] == '1'){ $_REQUEST['Setting_allow_orders'] = 1; }}
+        if (isset($_REQUEST['Setting_allow_orders']) && !isset($_REQUEST['Setting_prefix_orders'])){return "Order prefix Not set !";}
+        if (!isset($_REQUEST['Setting_allow_orders']) && isset($_REQUEST['Setting_prefix_orders'])){return "Order prefix Not allowed !";}
+        if (isset($_REQUEST['Setting_allow_orders']) && isset($_REQUEST['Setting_prefix_orders'])){
+            if($_REQUEST['Setting_prefix_orders'] == ""){ return "Order prefix cannot be blank !"; }
+            $regex = '/^[a-zA-Z]{1,8}$/';
+            if (preg_match($regex, $_REQUEST['Setting_prefix_orders']) !== 1){
+                return "Order prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />";
+            }
+        }
+        if (isset($_REQUEST['Setting_allow_orders'])){
+            if (!isset($_REQUEST['Setting_order_slave_number'])){
+                return "Order AUTOINCREMENT Not set !";
+            }
+        }
+        if (isset($_REQUEST['Setting_order_slave_number'])){
+            if($_REQUEST['Setting_order_slave_number'] == ""){ return "Order AUTOINCREMENT cannot be blank !"; }
+            $regex = '/^[0-9]{1,6}$/';
+            if (preg_match($regex, $_REQUEST['Setting_order_slave_number']) !== 1){
+                return "Order AUTOINCREMENT Not valid !<br />Must be numbers only !<br />Number from 0 to 999999<br />";
+            }
+        }
+
+        if (!isset($_REQUEST['Setting_prefix_sinvoice'])){return "Supplier invoice prefix Not set !"; }
+        if (!isset($_REQUEST['Setting_sinvoice_slave_number'])){return "Supplier invoice AUTOINCREMENT Not set !"; }
+        if($_REQUEST['Setting_prefix_sinvoice'] == ""){ return "Invoice prefix cannot be blank !"; }
+        $regex = '/^[a-zA-Z]{1,8}$/';
+        if (preg_match($regex, $_REQUEST['Setting_prefix_sinvoice']) !== 1){
+            return "Supplier invoice prefix Not valid !<br />Must be Alphabetic letters only !<br />Cannot be more than 8 characters<br />";
+        }
+
+        $currencyArray = array(  
+            array("AUD", "AUD$", ".", 2, " ", "%s%v", "-%s%v"),  
+            array("BGN", "лв", ",", 2, " ", "%v %s", "-%v %s"),  
+            array("BRL", "R$", ".", 2, ".", "%s%v", "-%s%v"),  
+            array("CAD", "$", ",", 2, " ", "%v %s", "-%v %s"),  
+            array("CHF", "CHF", ".", 2, "'", "'%s %v','-%s %v"),  
+            array("CNY", "¥", ".", 2, ",", "%s %v", "-%s %v"),  
+            array("CZK", "Kč", ",", 2, " ", "%v %s", "-%v %s"),  
+            array("DKK", "kr.", "", 2, ".", "%s%v", "-%s%v"),  
+            array("EUR", "€", ".", 2, " ", "%s %v", "-%s %v"),  
+            array("GBP", "£", ".", 2, " ", "%s%v", "-%s%v"),  
+            array("HKD", "HK$", ".", 2, ",", "%s%v", "-%s%v"),  
+            array("HRK", "kn", ",", 2, ".", "%v %s", "-%v %s"),  
+            array("HUF", "Ft", ",", 2, " ", "%v %s", "-%v %s"),  
+            array("IDR", "Rp", ".", 0, ".", "%s%v", "-%s%v"),  
+            array("ILS", "₪", ".", 2, ",", "%v %s", "-%v %s"),  
+            array("INR", "₹", ".", 2, ",", "%s%v", "-%s%v"),  
+            array("ISK", "kr", ",", 2, ".", "%v %s", "-%v %s"),  
+            array("JPY", "¥", ".", 0, ",", "%s %v", "-%s %v"),  
+            array("KRW", "₩", ".", 0, ",", "%s%v", "-%s%v"),  
+            array("MXN", "Mex$", ".", 2, " ", "%s%v", "-%s%v"),  
+            array("MYR", "RM", ".", 2, ",", "%s %v", "-%s %v"),  
+            array("NOK", "kr", ",", 2, " ", "%v %s", "-%v %s"),  
+            array("NZD", "NZ$", ".", 2, ",", "%s%v", "-%s%v"),  
+            array("PHP", "₱", ".", 2, ",", "%s%v", "-%s%v"),  
+            array("PLN", "zł", ".", 2, ",", "%v %s", "-%v %s"),  
+            array("RON", "lei", ",", 2, ".", "%v %s", "-%v %s"),  
+            array("RUB", "₽.", "", 2, " ", "%s %v", "-%s %v"),  
+            array("SEK", "kr", ",", 2, "", "%v %s", "-%v %s"),  
+            array("SGD", "$", ".", 2, ",", "%s %v", "-%s %v"),  
+            array("THB", "฿", ".", 2, " ", "%s %v", "-%s %v"),  
+            array("TRY", "₺", ",", 2, ".", "%s%v", "-%s%v"),  
+            array("USD", "$", ".", 2, ",", "%s%v", "-%s%v"),  
+            array("ZAR", "R", ".", 2, " ", "%s %v", "-%s %v")
+        );
+        if (!isset($_REQUEST['Currency_symbol'])){return "Currency symbol Not set !"; }
+        if($_REQUEST['Currency_symbol'] == ""){ return "Currency symbol cannot be blank !"; }
+        $regex = '/^(0|[1-2][0-9]|3[0-2])$/';
+        if (preg_match($regex, $_REQUEST['Currency_symbol']) !== 1){
+            return "Currency symbol Not valid !<br />Must be numbers only !<br />Number from 0 to 32<br />";
+        }
+        $_REQUEST['Currency_symbol_symbol'] = $currencyArray[$_REQUEST['Currency_symbol']][0];
+        $_REQUEST['Currency_symbol_decimal'] = $currencyArray[$_REQUEST['Currency_symbol']][1];
+        $_REQUEST['Currency_symbol_precision'] = $currencyArray[$_REQUEST['Currency_symbol']][2];
+        $_REQUEST['Currency_symbol_thousand'] = $currencyArray[$_REQUEST['Currency_symbol']][3];
+        $_REQUEST['Currency_symbol_formatpos'] = $currencyArray[$_REQUEST['Currency_symbol']][4];
+        $_REQUEST['Currency_symbol_formatneg'] = $currencyArray[$_REQUEST['Currency_symbol']][5];
+
+        if (!isset($_REQUEST['System_time_zone'])){return "Timezone Not set !"; }
+        if($_REQUEST['System_time_zone'] == ""){ return "Timezone cannot be blank !"; }
+        $validTimezones = DateTimeZone::listIdentifiers();
+        if (!in_array($_REQUEST['System_time_zone'], $validTimezones)) {
+            return "Timezone not valid !";
+        }
+
+        if (!isset($_REQUEST['Vat'])){return "Value Added Tax List Not set !"; }
+        $jsonObject = json_decode($_REQUEST['Vat'], true);
+        if (!is_array($jsonObject)) {return 'Value Added Tax List Invalid JSON format';}
+        $taxDesignationRegex = '/^[- \'_:;,\.\/@%()a-zA-Z0-9]*$/';
+        $taxPercentageRegex = '/^\d*\.\d{1,2}$|^\d+$/';
+        foreach ($jsonObject as $index => $entry) {
+            if (empty($entry['tax_des'])) {return 'Value Added Tax List : Tax description cannot be blank.';}
+            if (!preg_match($taxDesignationRegex, $entry['tax_des'])) {return 'Value Added Tax List : Tax description invalid.';}
+            if ($entry['tax_per'] == '') {return 'Value Added Tax List : Amount % cannot be blank.';}
+            if (!preg_match($taxPercentageRegex, $entry['tax_per'])) {return 'Value Added Tax List : Amount % invalid.';}
+            for ($j = $index + 1; $j < count($jsonObject); $j++) {
+                if ($entry['tax_des'] === $jsonObject[$j]['tax_des']) {
+                    return 'Value Added Tax List : Tax description duplication.';
+                }
+            }
+        }
+
+        if (!isset($_REQUEST['Equity'])){return "Owners Interest List Not set !"; }
+        $jsonObject = json_decode($_REQUEST['Equity'], true);
+        if (!is_array($jsonObject)) {return 'Owners Interest List Invalid JSON format';}
+        $equityNameRegex = '/^[a-z ,.\'-]+$/i';
+        $equityIntegerRegex = '/^(?:(?!.*\b\d{3}\b)(?:0\.\d{2}|[1-9]\d*(?:\.\d{1,2})?)|100)$/';
+        $totalEquityInt = 0;
+        foreach ($jsonObject as $index => $entry) {
+            if (empty($entry['equity_name'])) {return 'Owners Interest List : Owner name cannot be blank.';}
+            if (!preg_match($equityNameRegex, $entry['equity_name'])) {return 'Owners Interest List : Owner name invalid.';}
+            for ($j = $index + 1; $j < count($jsonObject); $j++) {if ($entry['equity_name'] === $jsonObject[$j]['equity_name']) {return 'Owners Interest List : Owner name must be unique.';}}
+            if (empty($entry['equity_int'])) {return 'Owners Interest List : Interest % cannot be blank.';}
+            if (!preg_match($equityIntegerRegex, $entry['equity_int'])) {return 'Owners Interest List : Interest % invalid.';}
+            $totalEquityInt += $entry['equity_int'];
+        }
+        if ($totalEquityInt !== 100) {return 'Owners Interest List : Total Interest % must be equal to 100.';}
+
+        $account_names = [
+            'Inventory',
+            'Cash/Bank Account',
+            'Account Payable',
+            'Retained Earnings',
+            'Capital Contrubition',
+            'Capital Account',
+            'Net Income',
+            'Withdraw',
+            'Revenue',
+            'Expenses',
+            'Cost of Goods Sold',
+            'Tax Payable',
+            'Deferred Income Tax',
+            'Sales',
+            'Allowance Uncollectible Accounts Expense',
+            'Account Receivable',
+            'Unallocated Account/Temporary account',
+            'VAT Payable',
+            'Discount Allowed',
+            'Discount Received'
+        ];
+        $accountSystemRegexAlpha = '/^(?=.*[a-zA-Z])[a-zA-Z\s\-\/]{0,100}$/';
+        $accountSystemRegexAlphanumeric = '/^[a-zA-Z0-9]{0,10}$/';
+        for ($i = 1; $i <= 20; $i++) {
+            if (!isset($_REQUEST['Account_System_num_'.$i])) {return "System Account Names ".$account_names[$i-1]." Not set !";}            
+            if (empty($_REQUEST['Account_System_num_'.$i])) {return "System Account Names ".$account_names[$i-1]." cannot be blank.";}
+            if (!preg_match($accountSystemRegexAlpha, $_REQUEST['Account_System_num_' . $i])) {return "System Account Names ".$account_names[$i-1]." Not valid !<br />Must be Alphabetic letters only !<br />No number<br />Characters allowed:<br>Space ( )<br>Hyphen (-)<br>Forward Slash (/)";}
+        }
+        for ($i = 1; $i <= 20; $i++) {
+            if (!isset($_REQUEST['Account_System_anum_'.$i])) {return "System Account Number ".$account_names[$i-1]." Not set !";}  
+            if (empty($_REQUEST['Account_System_anum_'.$i])) {return "System Account Number ".$account_names[$i-1]." cannot be blank.";}
+            if (!preg_match($accountSystemRegexAlphanumeric, $_REQUEST['Account_System_anum_' . $i])) {return "System Account Number ".$account_names[$i-1]." Not valid !<br />Must be Alphabetic letters and Numbers only !<br />No special characters allowed !<br>No more than 10 characters !";}
+        }
+
+        return "PASS";
     }
 ?>

@@ -54,7 +54,23 @@
             } else {
                 $Fail = True;
                 $ERROR = "<b style='color:red;'>ERROR No matching records were found in the database.</b>";
-            }                                       
+            }   
+
+            $stmt = $database->prepare("SELECT * FROM donnotec_accounts WHERE biller_id=? AND del=0 AND user_id=? AND system_account_num != 0");
+            $stmt->bindParam(1, $_REQUEST['biller_id']);
+            $stmt->bindParam(2, $_SESSION['user_id']);
+            $result = $stmt->execute();
+
+            if ($result) {
+                while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                    if(isset($_REQUEST['Account_System_num_'.$row['system_account_num'] ])){${'Account_System_num_'.$row['system_account_num']} = $_REQUEST['Account_System_num_'.$row['system_account_num']];}else{${'Account_System_num_'.$row['system_account_num']} = $row['account_name'];}
+                    if(isset($_REQUEST['Account_System_anum_'.$row['system_account_num'] ])){${'Account_System_anum_'.$row['system_account_num']} = $_REQUEST['Account_System_anum_'.$row['system_account_num']];}else{${'Account_System_anum_'.$row['system_account_num']} = $row['num'];}
+                }
+            } else {
+                $Fail = True;
+                $ERROR = "<b style='color:red;'>ERROR No matching records were found in the database.</b>";
+            }        
+
         }else{
             $Fail = True;
             $ERROR = "<b style='color:red;'>ERROR No Biller/Company ID must be a number</b>";
@@ -242,6 +258,60 @@
             $(document).ready(function() {
                 //Initialize Variables
                 window.history.replaceState({}, '', window.location.href.split('?')[0]);
+                let Currency = [
+                    ["AUD","AUD$",".",2," ","%s%v","-%s%v"],
+                    ["BGN","лв",",",2," ","%v %s","-%v %s"],
+                    ["BRL","R$",".",2,".","%s%v","-%s%v"],
+                    ["CAD","$",",",2," ","%v %s","-%v %s"],
+                    ["CHF","CHF",".",2,"'","'%s %v','-%s %v"],
+                    ["CNY","¥",".",2,",", "%s %v", "-%s %v"],
+                    ["CZK","Kč",",",2," ","%v %s","-%v %s"],
+                    ["DKK","kr.","",2,".", "%s%v","-%s%v"],
+                    ["EUR","€",".",2," ","%s %v", "-%s %v"],
+                    ["GBP","£",".",2," ","%s%v","-%s%v"],
+                    ["HKD","HK$",".",2,",","%s%v","-%s%v"],
+                    ["HRK","kn",",",2,".","%v %s","-%v %s"],
+                    ["HUF","Ft",",",2," ","%v %s","-%v %s"],
+                    ["IDR","Rp",".",0,".", "%s%v", "-%s%v"],
+                    ["ILS","₪",".",2,",","%v %s", "-%v %s"],
+                    ["INR","₹",".",2,",", "%s%v", "-%s%v"],
+                    ["ISK","kr",",",2,".","%v %s", "-%v %s"],
+                    ["JPY","¥",".",0,",", "%s %v", "-%s %v"],
+                    ["KRW","₩",".",0,",","%s%v","-%s%v"],
+                    ["MXN","Mex$",".",2," ","%s%v","-%s%v"],
+                    ["MYR","RM",".",2,",", "%s %v", "-%s %v"],
+                    ["NOK","kr",",",2," ","%v %s", "-%v %s"],
+                    ["NZD","NZ$",".",2,",","%s%v", "-%s%v"],
+                    ["PHP","₱",".",2,",","%s%v", "-%s%v"],
+                    ["PLN","zł",".",2,",","%v %s", "-%v %s"],
+                    ["RON","lei",",",2,".","%v %s", "-%v %s"],
+                    ["RUB","₽.","",2," ","%s %v", "-%s %v"],
+                    ["SEK","kr",",",2,"", "%v %s", "-%v %s"],
+                    ["SGD","$",".",2,",","%s %v", "-%s %v"],
+                    ["THB","฿",".",2," ","%s %v", "-%s %v"],
+                    ["TRY","₺",",",2,".","%s%v", "-%s%v"],
+                    ["USD","$",".",2,",","%s%v", "-%s%v"],
+                    ["ZAR","R",".",2," ","%s %v", "-%s %v"]
+                ];
+                /*Apply Default Currency Format*/
+                accounting.settings = {currency: {symbol : "$",format: "%s%v",decimal : ".",thousand: ",",precision : 2},number: {precision : 0,thousand: ",",decimal : "."}};
+                accounting.settings.currency.format = {pos : "%s %v",neg : "%s (%v)",zero: "%s  -- "};
+                document.getElementById('Example_cur_pos').value = accounting.formatMoney(1234.578);
+                document.getElementById('Example_cur_neg').value = accounting.formatMoney(-1234.578);
+
+                /*Apply onchange Currency Format*/
+                document.getElementById('Currency_symbol').onchange=function(){
+                    accounting.settings.currency.symbol = Currency[document.getElementById('Currency_symbol').selectedIndex][1];
+                    accounting.settings.currency.decimal = Currency[document.getElementById('Currency_symbol').selectedIndex][2];
+                    accounting.settings.currency.precision = Currency[document.getElementById('Currency_symbol').selectedIndex][3];
+                    accounting.settings.currency.thousand = Currency[document.getElementById('Currency_symbol').selectedIndex][4];
+                    accounting.settings.currency.format.pos = Currency[document.getElementById('Currency_symbol').selectedIndex][5];
+                    accounting.settings.currency.format.zero = Currency[document.getElementById('Currency_symbol').selectedIndex][5];
+                    accounting.settings.currency.format.neg = Currency[document.getElementById('Currency_symbol').selectedIndex][6];
+	                
+	                document.getElementById('Example_cur_pos').value = accounting.formatMoney(1234.578);
+	                document.getElementById('Example_cur_neg').value = accounting.formatMoney(-1234.578);
+                };
                 <?php
                 if($Setting_allow_estimates == "on" || $Setting_allow_estimates == "1"){
                     echo '$("input[name=Setting_allow_estimates]").prop("checked", true);';
@@ -313,10 +383,14 @@
                 }     
                 echo '$("input[name=Setting_prefix_sinvoice]").val("'.$Setting_prefix_sinvoice.'");';  
                 echo '$("input[name=Setting_sinvoice_slave_number]").val("'.$Setting_sinvoice_slave_number.'");';    
-                echo '$("#Currency_symbol").prop("selectedIndex", '.$Currency_id.');';   
+                echo '$("#Currency_symbol").prop("selectedIndex", '.$Currency_id.');$("#Currency_symbol").trigger("onchange");';   
                 echo '$("#System_time_zone").val("'.$Time_zone.'");';   
                 echo "var JSON_VAT = JSON.parse('".$Vat."');";  
-                echo "var JSON_Equity = JSON.parse('".$Equity."');";          
+                echo "var JSON_Equity = JSON.parse('".$Equity."');";     
+                for ($i = 1; $i <= 20; $i++) {
+                    echo "$('input[name=Account_System_num_".$i."]').val('".${'Account_System_num_'.$i}."');";
+                    echo "$('input[name=Account_System_anum_".$i."]').val('".${'Account_System_anum_'.$i}."');";
+                }    
                 ?>
                 //ALLOW ESTIMATES
                 if($("input[name='Setting_allow_estimates']").is(":checked")) { $("input[name='Setting_prefix_estimate']").prop("disabled", false);}else{ $("input[name='Setting_prefix_estimate']").prop("disabled", true);};
@@ -374,63 +448,6 @@
                 $("input[name='Setting_allow_orders']").on("change", function() {
                     if($("input[name='Setting_allow_orders']").is(":checked")) {$("input[name='Setting_prefix_orders'], input[name='Setting_order_slave_number']").prop("disabled", false);}else{$("input[name='Setting_prefix_orders'], input[name='Setting_order_slave_number']").prop("disabled", true);};
                 }); 
-
-                let Currency = [
-                    ["AUD","AUD$",".",2," ","%s%v","-%s%v"],
-                    ["BGN","лв",",",2," ","%v %s","-%v %s"],
-                    ["BRL","R$",".",2,".","%s%v","-%s%v"],
-                    ["CAD","$",",",2," ","%v %s","-%v %s"],
-                    ["CHF","CHF",".",2,"'","'%s %v','-%s %v"],
-                    ["CNY","¥",".",2,",", "%s %v", "-%s %v"],
-                    ["CZK","Kč",",",2," ","%v %s","-%v %s"],
-                    ["DKK","kr.","",2,".", "%s%v","-%s%v"],
-                    ["EUR","€",".",2," ","%s %v", "-%s %v"],
-                    ["GBP","£",".",2," ","%s%v","-%s%v"],
-                    ["HKD","HK$",".",2,",","%s%v","-%s%v"],
-                    ["HRK","kn",",",2,".","%v %s","-%v %s"],
-                    ["HUF","Ft",",",2," ","%v %s","-%v %s"],
-                    ["IDR","Rp",".",0,".", "%s%v", "-%s%v"],
-                    ["ILS","₪",".",2,",","%v %s", "-%v %s"],
-                    ["INR","₹",".",2,",", "%s%v", "-%s%v"],
-                    ["ISK","kr",",",2,".","%v %s", "-%v %s"],
-                    ["JPY","¥",".",0,",", "%s %v", "-%s %v"],
-                    ["KRW","₩",".",0,",","%s%v","-%s%v"],
-                    ["MXN","Mex$",".",2," ","%s%v","-%s%v"],
-                    ["MYR","RM",".",2,",", "%s %v", "-%s %v"],
-                    ["NOK","kr",",",2," ","%v %s", "-%v %s"],
-                    ["NZD","NZ$",".",2,",","%s%v", "-%s%v"],
-                    ["PHP","₱",".",2,",","%s%v", "-%s%v"],
-                    ["PLN","zł",".",2,",","%v %s", "-%v %s"],
-                    ["RON","lei",",",2,".","%v %s", "-%v %s"],
-                    ["RUB","₽.","",2," ","%s %v", "-%s %v"],
-                    ["SEK","kr",",",2,"", "%v %s", "-%v %s"],
-                    ["SGD","$",".",2,",","%s %v", "-%s %v"],
-                    ["THB","฿",".",2," ","%s %v", "-%s %v"],
-                    ["TRY","₺",",",2,".","%s%v", "-%s%v"],
-                    ["USD","$",".",2,",","%s%v", "-%s%v"],
-                    ["ZAR","R",".",2," ","%s %v", "-%s %v"]
-                ];
-                /*Apply Default Currency Format*/
-                accounting.settings = {currency: {symbol : "$",format: "%s%v",decimal : ".",thousand: ",",precision : 2},number: {precision : 0,thousand: ",",decimal : "."}};
-                accounting.settings.currency.format = {pos : "%s %v",neg : "%s (%v)",zero: "%s  -- "};
-                document.getElementById('Example_cur_pos').value = accounting.formatMoney(1234.578);
-                document.getElementById('Example_cur_neg').value = accounting.formatMoney(-1234.578);
-
-                
-
-                /*Apply onchange Currency Format*/
-                document.getElementById('Currency_symbol').onchange=function(){
-                    accounting.settings.currency.symbol = Currency[document.getElementById('Currency_symbol').selectedIndex][1];
-                    accounting.settings.currency.decimal = Currency[document.getElementById('Currency_symbol').selectedIndex][2];
-                    accounting.settings.currency.precision = Currency[document.getElementById('Currency_symbol').selectedIndex][3];
-                    accounting.settings.currency.thousand = Currency[document.getElementById('Currency_symbol').selectedIndex][4];
-                    accounting.settings.currency.format.pos = Currency[document.getElementById('Currency_symbol').selectedIndex][5];
-                    accounting.settings.currency.format.zero = Currency[document.getElementById('Currency_symbol').selectedIndex][5];
-                    accounting.settings.currency.format.neg = Currency[document.getElementById('Currency_symbol').selectedIndex][6];
-	                
-	                document.getElementById('Example_cur_pos').value = accounting.formatMoney(1234.578);
-	                document.getElementById('Example_cur_neg').value = accounting.formatMoney(-1234.578);
-                };
 
                 window.table_vat = Table_VAT(JSON_VAT);
                 $("#Vat_del_model_submit").click(function(){
@@ -806,7 +823,7 @@
                     'Discount Allowed',
                     'Discount Received'
                 ];
-                regex = /^(?=.*[a-zA-Z])[a-zA-Z\s-\/]{0,100}$/;
+                regex = "/^(?=.*[a-zA-Z])[a-zA-Z\s\/-]{0,100}$/";
                 for (let i = 1; i <= 20; i++) {
                     if ($('input[name=Account_System_num_'+i+']').val() == '' ){
                         ValidationVarible = CreateError('Account_System_num_'+i, account_names[i-1]+" cannot be blank." ,ValidationVarible); 
