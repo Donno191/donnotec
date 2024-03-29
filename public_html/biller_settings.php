@@ -18,12 +18,12 @@
     if (isset($_REQUEST['biller_id'])) { //TEST is there biller_id
         if(is_numeric($_REQUEST['biller_id'])) { //TEST is biller_id a number 
             $database = new SQLite3('../private/database.db');
-            $stmt = $database->prepare("SELECT * FROM donnotec_biller WHERE biller_id=? AND system_del = 0 AND system_user_id=?");
+            $stmt = $database->prepare("SELECT * FROM donnotec_biller WHERE id=? AND del = 0 AND user_id=?");
             $stmt->bindParam(1, $_REQUEST['biller_id']);
             $stmt->bindParam(2, $_SESSION['user_id']);
             $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
             if ($result) {  // Check if a record was found in the database
-                $billerName = $result['biller_name'];
+                $billerName = $result['name'];
                 if(isset($_REQUEST['Currency_id'])){$Currency_id = $_REQUEST['Currency_id'];}else{$Currency_id = $result['Currency_id'];}
                 if(isset($_REQUEST['Time_zone'])){$Time_zone = $_REQUEST['Time_zone'];}else{$Time_zone = $result['Time_zone'];}
                 //SLAVE Numbers

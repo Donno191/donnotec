@@ -319,14 +319,6 @@
                         </select>
                         <br>
                     </div>
-                    <h3>Accounting Details</h3>
-                    <div class="form-group">
-                        <label>Business Type</label>
-                        <select class="element select medium" name="Account_type" id="Account_type">
-                            <option value="0">Sole proprietor/Partnership</option>
-                            <option value="1">Corporation</option>
-                        </select><br>
-                    </div>
                     <div class="form-submit">
                         <input type="submit" value="Submit Information">
                     </div>
