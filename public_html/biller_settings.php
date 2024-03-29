@@ -470,7 +470,7 @@
                         return false;
                     }else{
                         GrowlNotification.notify({title: 'Done', description: 'Tax type '+document.getElementById('Vat_edit_tax_des').value+" has been Edited!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
-                        JSON_VAT[document.getElementById('Vat_edit_index').value].tax_per = document.getElementById('Vat_edit_amount').value;
+                        JSON_VAT[document.getElementById('Vat_edit_index').value].tax_per = Number(document.getElementById('Vat_edit_amount').value);
                         $('#Vat_tag').text(JSON.stringify(JSON_VAT));
                         JSON_VAT_processed = processJsonData(JSON.stringify(JSON_VAT));
                         window.table_vat = Table_VAT(JSON_VAT);
@@ -512,7 +512,7 @@
                         GrowlNotification.notify({title: 'Done', description: 'Tax type '+document.getElementById('Vat_add_tax_des').value+" has been added!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
                         JSON_VAT.push({
                             "tax_des": document.getElementById('Vat_add_tax_des').value,
-                            "tax_per": document.getElementById('Vat_add_amount').value
+                            "tax_per": Number(document.getElementById('Vat_add_amount').value)
                         });
                         $('#Vat_tag').text(JSON.stringify(JSON_VAT));
                         JSON_VAT_processed = processJsonData(JSON.stringify(JSON_VAT));
@@ -542,7 +542,7 @@
                         return false;
                     }else{
                         GrowlNotification.notify({title: 'Done', description: 'Tax type '+document.getElementById('Equity_edit_equity_name').value+" has been Edited!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
-                        JSON_Equity[document.getElementById('Equity_edit_index').value].equity_int = document.getElementById('Equity_edit_equity_int').value;
+                        JSON_Equity[document.getElementById('Equity_edit_index').value].equity_int = Number(document.getElementById('Equity_edit_equity_int').value);
                         $('#Equity_tag').text(JSON.stringify(JSON_Equity));
                         JSON_Equity_processed = processJsonData(JSON.stringify(JSON_Equity),"Equity");
                         window.table_equity = Table_Equity(JSON_Equity);
@@ -583,7 +583,7 @@
                         GrowlNotification.notify({title: 'Done', description: 'Owner '+document.getElementById('Equity_add_equity_name').value+" with interest "+document.getElementById('Equaty_add_equity_int').value+" has been added!",image: 'images/danger-outline.svg',type: 'success',position: 'top-center',closeTimeout: 5000});
                         JSON_Equity.push({
                             "equity_name": document.getElementById('Equity_add_equity_name').value,
-                            "equity_int": document.getElementById('Equaty_add_equity_int').value
+                            "equity_int": Number(document.getElementById('Equaty_add_equity_int').value)
                         });
                         $('#Equity_tag').text(JSON.stringify(JSON_Equity));
                         JSON_Equity_processed = processJsonData(JSON.stringify(JSON_Equity));
@@ -823,7 +823,7 @@
                     'Discount Allowed',
                     'Discount Received'
                 ];
-                regex = "/^(?=.*[a-zA-Z])[a-zA-Z\s\/-]{0,100}$/";
+                regex = /^(?=.*[a-zA-Z])[a-zA-Z\s\/-]{0,100}$/;
                 for (let i = 1; i <= 20; i++) {
                     if ($('input[name=Account_System_num_'+i+']').val() == '' ){
                         ValidationVarible = CreateError('Account_System_num_'+i, account_names[i-1]+" cannot be blank." ,ValidationVarible); 

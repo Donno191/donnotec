@@ -56,7 +56,7 @@
                     $stmt->bindParam(2, $_SESSION['user_id']);
                     $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
                     if ($result) {  // Check if a record was found in the database
-                        $billerName = $result['biller_name'];
+                        $billerName = $result['name'];
                         $database = new SQLite3('../private/database.db');
                         $stmt = $database->prepare("UPDATE donnotec_biller SET del = 1 WHERE id = ".$_REQUEST['biller_id']);
                         if ($stmt->execute()) {
@@ -84,14 +84,24 @@
         if($_REQUEST['FORM'] == "SETBILLER"){
             $ValidationTest = SetBillerValidation();
             if ($ValidationTest == "PASS"){
-                $output_notification_type = 'success';
-                $ValidationTest = " has been successfully edited !";               
-                //$ValidationTest = AddBiller($_REQUEST['billerName'],$_REQUEST['Currency_symbol']);
-                //if($ValidationTest == "PASS"){
-                //    $output_notification_type = 'success';
-                //}else{
-                //    $output_notification_type = 'error';    
-                //}
+                $output_notification_type = 'success'; 
+
+                $database = new SQLite3('../private/database.db');
+                $stmt = $database->prepare("SELECT * FROM donnotec_biller WHERE id=? AND del = 0 AND user_id=?");
+                $stmt->bindParam(1, $_REQUEST['biller_id']);
+                $stmt->bindParam(2, $_SESSION['user_id']);
+                $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+                if ($result) {  // Check if a record was found in the database
+                    $billerName = $result['name'];
+                }
+
+                $ValidationTest = SetBiller();
+                if($ValidationTest == "PASS"){
+                    $output_notification_type = 'success';
+                    $ValidationTest = $billerName." Updated successfully";
+                }else{
+                    $output_notification_type = 'error';    
+                }
             }else{
                 $output_notification_type = 'error';
             }
@@ -170,11 +180,11 @@
             // Initialize the DataTable with id "example"
             $(document).ready(function() {
                 /* */
-                <?php if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?>
+                <?php //if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?>
                 <?php 
                     if ($output_notification){
                         echo "GrowlNotification.notify({title: '".$output_notification_type."!', description: '".$output_notification_message."',image: 'images/danger-outline.svg',type: '".$output_notification_type."',position: 'top-center',closeTimeout: 0});";
-                        //echo "window.history.replaceState({}, '', window.location.href.split('?')[0]);";
+                        echo "window.history.replaceState({}, '', window.location.href.split('?')[0]);";
                     }
                 ?>
                 new DataTable('#example', {
@@ -455,69 +465,6 @@
             return "An error occurred while creating Supplier Category ".$cat_name;
         }        
     }
-    function SetBiller($billerName,$Currency_symbol){
-        $Currency = [
-            ["AUD", "AUD$", ".", 2, "", "%s%v", "-%s%v"],
-            ["BGN", "лв", ",", 2, "", "%v %s", "-%v %s"],
-            ["BRL", "R$", ".", 2, ".","%s%v","-%s%v"],
-            ["CAD", "$", ",", 2, "", "%v %s", "-%v %s"],
-            ["CHF", "CHF", ".", 2, "'","'%s %v','-%s %v"],
-            ["CNY", "¥", ".", 2, ",", "%s %v", "-%s %v"],
-            ["CZK", "Kč", ",", 2, "", "%v %s", "-%v %s"],
-            ["DKK", "kr.","", 2, ".", "%s%v","-%s%v"],
-            ["EUR", "€", ".", 2, "", "%s %v", "-%s %v"],
-            ["GBP", "£", ".", 2, "", "%s%v","-%s%v"],
-            ["HKD", "HK$", ".", 2, ",","%s%v","-%s%v"],
-            ["HRK", "kn", ",", 2, ".","%v %s","-%v %s"],
-            ["HUF", "Ft", ",", 2, "", "%v %s","-%v %s"],
-            ["IDR", "Rp", ".", 0, "", "%s%v", "-%s%v"],
-            ["ILS", "₪", ".", 2, ",","%v %s", "-%v %s"],
-            ["INR", "₹", ".", 2, ",", "%s%v", "-%s%v"],
-            ["ISK", "kr", ",", 2, ".","%v %s", "-%v %s"],
-            ["JPY", "¥", ".", 0, ",", "%s %v", "-%s %v"],
-            ["KRW", "₩", ".", 0, ",","%s%v","-%s%v"],
-            ["MXN", "Mex$", ".", 2, "", "%s%v","-%s%v"],
-            ["MYR", "RM", ".", 2, ",", "%s %v", "-%s %v"],
-            ["NOK", "kr", ",", 2, "", "%v %s", "-%v %s"],
-            ["NZD", "NZ$", ".", 2, ",","%s%v", "-%s%v"],
-            ["PHP", "₱", ".", 2, ",","%s%v", "-%s%v"],
-            ["PLN", "zł", ".", 2, ",","%v %s", "-%v %s"],
-            ["RON", "lei", ",", 2, ".","%v %s", "-%v %s"],
-            ["RUB", "₽.","", 2, "", "%s %v", "-%s %v"],
-            ["SEK", "kr", ",", 2, "", "%v %s", "-%v %s"],
-            ["SGD", "$", ".", 2, ",","%s %v", "-%s %v"],
-            ["THB", "฿", ".", 2, "", "%s %v", "-%s %v"],
-            ["TRY", "₺", ",", 2, ".","%s%v", "-%s%v"],
-            ["USD", "$", ".", 2, ",","%s%v", "-%s%v"],
-            ["ZAR", "R", ".", 2, " ","%s %v", "-%s %v"],
-        ];
-        // Database connection
-        $database = new SQLite3('../private/database.db');
-        // Prepare the INSERT statement with parameterized query to prevent SQL injection
-        $stmt_insert = $database->prepare("INSERT INTO donnotec_biller (biller_name, Currency_symbol, Currency_decimal_symbol, 
-                           Currency_decimal_digit, Currency_digital_grouping, Currency_pos_format, Currency_neg_format, Account_type,System_user_id) VALUES (:billerName, :currencySymbol, 
-                            :currencyDecimalSymbol, :currencyDecimalDigit, :currencyDigitalGrouping, :posFormat, :negFormat, :accountType, :user_id)");
-
-        // Set the parameters for the prepared statement
-        $stmt_insert->bindParam(':billerName', $billerName);
-        $stmt_insert->bindParam(':currencySymbol', $Currency[$Currency_symbol][1]);
-        $stmt_insert->bindParam(':currencyDecimalSymbol', $Currency[$Currency_symbol][2]);
-        $stmt_insert->bindParam(':currencyDecimalDigit', $Currency[$Currency_symbol][3]);
-        $stmt_insert->bindParam(':currencyDigitalGrouping', $Currency[$Currency_symbol][4]);
-        $stmt_insert->bindParam(':posFormat', $Currency[$Currency_symbol][5]);
-        $stmt_insert->bindParam(':negFormat', $Currency[$Currency_symbol][6]);
-        $stmt_insert->bindParam(':accountType', $Account_type);
-        $stmt_insert->bindParam(':user_id', $_SESSION['user_id']);
-
-        // Execute the prepared statement with provided URL parameters and get last inserted row id
-        if ($stmt_insert->execute()) {
-            $billerId = $database->lastInsertRowID(); // Get the ID of the newly inserted record
-            return "PASS";
-            //echo "The biller id for the newly inserted record is: " . $billerId;
-        } else {
-            return "An error occurred while creating Biller/Company.";
-        }
-    }
     function SETBillerValidation(){
 
         $database = new SQLite3('../private/database.db');
@@ -692,12 +639,12 @@
         if (preg_match($regex, $_REQUEST['Currency_symbol']) !== 1){
             return "Currency symbol Not valid !<br />Must be numbers only !<br />Number from 0 to 32<br />";
         }
-        $_REQUEST['Currency_symbol_symbol'] = $currencyArray[$_REQUEST['Currency_symbol']][0];
-        $_REQUEST['Currency_symbol_decimal'] = $currencyArray[$_REQUEST['Currency_symbol']][1];
-        $_REQUEST['Currency_symbol_precision'] = $currencyArray[$_REQUEST['Currency_symbol']][2];
-        $_REQUEST['Currency_symbol_thousand'] = $currencyArray[$_REQUEST['Currency_symbol']][3];
-        $_REQUEST['Currency_symbol_formatpos'] = $currencyArray[$_REQUEST['Currency_symbol']][4];
-        $_REQUEST['Currency_symbol_formatneg'] = $currencyArray[$_REQUEST['Currency_symbol']][5];
+        $_REQUEST['Currency_symbol_symbol'] = $currencyArray[$_REQUEST['Currency_symbol']][1];
+        $_REQUEST['Currency_symbol_decimal'] = $currencyArray[$_REQUEST['Currency_symbol']][2];
+        $_REQUEST['Currency_symbol_precision'] = $currencyArray[$_REQUEST['Currency_symbol']][3];
+        $_REQUEST['Currency_symbol_thousand'] = $currencyArray[$_REQUEST['Currency_symbol']][4];
+        $_REQUEST['Currency_symbol_formatpos'] = $currencyArray[$_REQUEST['Currency_symbol']][5];
+        $_REQUEST['Currency_symbol_formatneg'] = $currencyArray[$_REQUEST['Currency_symbol']][6];
 
         if (!isset($_REQUEST['System_time_zone'])){return "Timezone Not set !"; }
         if($_REQUEST['System_time_zone'] == ""){ return "Timezone cannot be blank !"; }
@@ -775,5 +722,58 @@
         }
 
         return "PASS";
+    }
+    function SetBiller(){
+        $database = new SQLite3('../private/database.db');
+
+        $query = "UPDATE donnotec_biller SET ";
+        if ($_REQUEST['Setting_allow_estimates'] == 1){
+            $query .= "Setting_allow_estimates = ".$_REQUEST['Setting_allow_estimates'].",";
+            $query .= "Setting_prefix_estimate = '".$_REQUEST['Setting_prefix_estimate']."',";    
+        }
+        if ($_REQUEST['Setting_allow_proforma'] == 1){
+            $query .= "Setting_allow_proforma = ".$_REQUEST['Setting_allow_proforma'].", ";
+            $query .= "Setting_prefix_proforma =  '".$_REQUEST['Setting_prefix_proforma']."', ";    
+        }
+        if ($_REQUEST['Setting_allow_quotation'] == 1){
+            $query .= "Setting_allow_quotation = ".$_REQUEST['Setting_allow_quotation'].", ";
+            $query .= "Setting_prefix_quotation =  '".$_REQUEST['Setting_prefix_quotation']."', ";    
+        }
+        if ($_REQUEST['Setting_allow_estimates'] == 1 || $_REQUEST['Setting_allow_proforma'] == 1|| $_REQUEST['Setting_allow_quotation'] == 1){
+            $query .= "Setting_request_slave_number = ".$_REQUEST['Setting_request_slave_number'].", ";  
+        }      
+        if ($_REQUEST['Setting_allow_delnote'] == 1){
+            $query .= "Setting_allow_delnote = ".$_REQUEST['Setting_allow_delnote'].", ";
+            $query .= "Setting_prefix_delnote =  '".$_REQUEST['Setting_prefix_delnote']."', ";    
+        }
+        if ($_REQUEST['Setting_allow_jobcard'] == 1){
+            $query .= "Setting_allow_jobcard = ".$_REQUEST['Setting_allow_jobcard'].", ";
+            $query .= "Setting_prefix_jobcard =  '".$_REQUEST['Setting_prefix_jobcard']."', ";    
+        }  
+        if ($_REQUEST['Setting_allow_delnote'] == 1 || $_REQUEST['Setting_allow_jobcard'] == 1){
+            $query .= "Setting_job_slave_number = ".$_REQUEST['Setting_job_slave_number'].", ";  
+        }
+        $query .= "Setting_prefix_invoice = '".$_REQUEST['Setting_prefix_invoice']."', Setting_invoice_slave_number =".$_REQUEST['Setting_invoice_slave_number'].", ";
+        if ($_REQUEST['Setting_allow_orders'] == 1){
+            $query .= "Setting_allow_orders = ".$_REQUEST['Setting_allow_orders'].", ";
+            $query .= "Setting_prefix_orders =  '".$_REQUEST['Setting_prefix_orders']."', ";  
+            $query .= "Setting_order_slave_number = ".$_REQUEST['Setting_order_slave_number'].", ";  
+        }
+        $query .= "Currency_id = ".$_REQUEST['Currency_symbol'].", Currency_symbol = '".$_REQUEST['Currency_symbol_symbol']."', Currency_decimal_symbol = '".$_REQUEST['Currency_symbol_decimal']."', Currency_decimal_digit = ".$_REQUEST['Currency_symbol_precision'].", Currency_digital_grouping = '".$_REQUEST['Currency_symbol_thousand']."', Currency_pos_format = '".$_REQUEST['Currency_symbol_formatpos']."', Currency_neg_format = '".$_REQUEST['Currency_symbol_formatneg']."', Time_zone = '".$_REQUEST['System_time_zone']."', ";
+        $query .= "Setting_prefix_sinvoice = '".$_REQUEST['Setting_prefix_sinvoice']."', Setting_sinvoice_slave_number = ".$_REQUEST['Setting_sinvoice_slave_number'].", Setting_vat_list = :Setting_vat_list, Setting_owner_list = :Setting_owner_list ";
+        $query .= "WHERE id = ".$_REQUEST['biller_id'];
+        $stmt_insert = $database->prepare($query);
+        $stmt_insert->bindValue(':Setting_vat_list', json_decode(json_encode($_REQUEST['Vat'],true)));
+        $stmt_insert->bindValue(':Setting_owner_list', json_decode(json_encode($_REQUEST['Equity'],true)));
+        if ($stmt_insert->execute()) {
+            for ($i = 1; $i <= 20; $i++) {
+                $stmt = $database->prepare("UPDATE donnotec_accounts SET num = '".$_REQUEST['Account_System_anum_'.$i]."', account_name = '".$_REQUEST['Account_System_num_'.$i]."' WHERE system_account_num = ".$i." and biller_id = ".$_REQUEST['biller_id']);
+                $stmt->execute();
+            }
+            return "PASS";
+            //echo "The biller id for the newly inserted record is: " . $billerId;
+        } else {
+            return "An error occurred while creating Biller/Company.";
+        }
     }
 ?>
