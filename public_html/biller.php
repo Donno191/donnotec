@@ -36,7 +36,7 @@
             $ValidationTest = AddBillerValidation($_REQUEST['billerName'],$_REQUEST['Currency_symbol']);
             if ($ValidationTest == "PASS"){
                 $ValidationTest = AddBiller($_REQUEST['billerName'],$_REQUEST['Currency_symbol']);
-                if($ValidationTest == "PASS"){
+                if(str_starts_with($ValidationTest, 'Created Company')){
                     $output_notification_type = 'success';
                 }else{
                     $output_notification_type = 'error';    
@@ -52,7 +52,7 @@
                 if(is_numeric($_REQUEST['biller_id'])) { //TEST is biller_id a number 
                     $database = new SQLite3('../private/database.db');
                     $stmt = $database->prepare("SELECT * FROM donnotec_biller WHERE id=? AND del = 0 AND user_id=?");
-                    $stmt->bindParam(1, $_REQUEST['id']);
+                    $stmt->bindParam(1, $_REQUEST['biller_id']);
                     $stmt->bindParam(2, $_SESSION['user_id']);
                     $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
                     if ($result) {  // Check if a record was found in the database
@@ -60,6 +60,16 @@
                         $database = new SQLite3('../private/database.db');
                         $stmt = $database->prepare("UPDATE donnotec_biller SET del = 1 WHERE id = ".$_REQUEST['biller_id']);
                         if ($stmt->execute()) {
+                            $stmt = $database->prepare("UPDATE donnotec_accounts SET del = 1 WHERE biller_id = ".$_REQUEST['biller_id']);
+                            $stmt->execute();
+                            $stmt = $database->prepare("UPDATE donnotec_client_category SET del = 1 WHERE id = ".$_REQUEST['biller_id']);
+                            $stmt->execute();
+                            $stmt = $database->prepare("UPDATE donnotec_client SET del = 1 WHERE id = ".$_REQUEST['biller_id']);
+                            $stmt->execute();
+                            $stmt = $database->prepare("UPDATE donnotec_supplier_category SET del = 1 WHERE id = ".$_REQUEST['biller_id']);
+                            $stmt->execute();
+                            $stmt = $database->prepare("UPDATE donnotec_supplier SET del = 1 WHERE id = ".$_REQUEST['biller_id']);
+                            $stmt->execute();
                             $output_notification_type = 'success';
                             $ValidationTest = $billerName." has been successfully deleted !";
                         } else {

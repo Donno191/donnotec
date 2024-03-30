@@ -772,3 +772,8 @@ Stack trace:
 #1 {main}
   thrown in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 757
 [29-Mar-2024 22:36:51 Africa/Johannesburg] PHP Warning:  Undefined array key "biller_name" in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 95
+[30-Mar-2024 06:41:01 Africa/Johannesburg] PHP Warning:  SQLite3::prepare(): Unable to prepare statement: 1, no such column: biller_id in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 61
+[30-Mar-2024 06:41:01 Africa/Johannesburg] PHP Fatal error:  Uncaught Error: Call to a member function execute() on bool in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php:62
+Stack trace:
+#0 {main}
+  thrown in /home/donno/Documents/Donno_projects/donnotec/public_html/biller.php on line 62
