@@ -1,14 +1,14 @@
             <div class="sidebar">
                 <b>Accounting</b>
-                <a href="#">Financials</a>
-                <a href="#">Accounts</a>
+                <a href="accounts.php">Accounts</a>
                 <a href="#">Cash/Bank Accounts</a>
+                <a href="#">Financials</a>
                 <br>
                 <b>Management</b>
                 <a href="biller.php">Company/Biller</a>
                 <a href="#">Document Editor</a>
-                <a href="#">User/Staff</a>
                 <a href="#">Report Generator</a>
+                <a href="#">User/Staff</a>
                 <br>
                 <b>Client</b>
                 <a href="clients.php">Clients</a>
@@ -21,10 +21,7 @@
                 <a href="#">Suppliers Orders</a>
                 <a href="#">Suppliers Invoice</a>
                 <br>
-                <b>Stock</b>
-                <a href="#">Inventory</a>
-                <a href="#">Cost Item</a>
                 <footer>
-                    &copy; 2023 donnotec.com. All rights reserved.
+                    &copy; <?php echo date("Y"); ?> donnotec.com. All rights reserved.
                 </footer>
             </div>
