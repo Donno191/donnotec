@@ -73,13 +73,13 @@
                         if ($stmt->execute()) {
                             $stmt = $database->prepare("UPDATE donnotec_accounts SET del = 1 WHERE biller_id = ".$_REQUEST['biller_id']);
                             $stmt->execute();
-                            $stmt = $database->prepare("UPDATE donnotec_client_category SET del = 1 WHERE id = ".$_REQUEST['biller_id']);
+                            $stmt = $database->prepare("UPDATE donnotec_client_category SET del = 1 WHERE biller_id = ".$_REQUEST['biller_id']);
                             $stmt->execute();
-                            $stmt = $database->prepare("UPDATE donnotec_client SET del = 1 WHERE id = ".$_REQUEST['biller_id']);
+                            $stmt = $database->prepare("UPDATE donnotec_client SET del = 1 WHERE biller_id = ".$_REQUEST['biller_id']);
                             $stmt->execute();
-                            $stmt = $database->prepare("UPDATE donnotec_supplier_category SET del = 1 WHERE id = ".$_REQUEST['biller_id']);
+                            $stmt = $database->prepare("UPDATE donnotec_supplier_category SET del = 1 WHERE biller_id = ".$_REQUEST['biller_id']);
                             $stmt->execute();
-                            $stmt = $database->prepare("UPDATE donnotec_supplier SET del = 1 WHERE id = ".$_REQUEST['biller_id']);
+                            $stmt = $database->prepare("UPDATE donnotec_supplier SET del = 1 WHERE biller_id = ".$_REQUEST['biller_id']);
                             $stmt->execute();
                             $output_notification_type = 'success';
                             $ValidationTest = $billerName." has been successfully deleted !";
@@ -368,7 +368,7 @@
             $LastROW = AddBillerAccounts($billerId,"I20","Allowance Uncollectible Accounts Expense","The allowance account is shown as an offset (contra) to gross accounts receivable in order to arrive at net accounts receivable. The net figure is the realizable value of the receivable",0,$LastROW4,15,"e",1,"n");
             $LastROW6 = AddBillerAccounts($billerId,"B55","Account Receivable","Accounts receivable also known as Debtors, is money owed to a business by its clients (customers) and shown on its balance sheet as an asset. It is one of a series of accounting transactions dealing with the billing of a customer for goods and services that the customer has ordered.",1,0,16,"a",1,"p");
             $LastROW7 = AddBillerAccounts($billerId,"#CC","No Client Category","Client Account Category None. Description : Clients with no account information",0,$LastROW6,0,"a",0,"p");
-            $LastROW = AddClientCAT("None","Clients with no account information",$billerId, $LastROW);
+            $LastROW = AddClientCAT("None","Clients with no account information",$billerId, $LastROW7);
             $LastROW8 = AddBillerAccounts($billerId,"#C","Clients with no account information","Client Account : Clients with no account information",0,$LastROW7,0,"a",0,"p");
             $LastROW = AddClient("None","None",$billerId, $LastROW,$LastROW8);
             $LastROW = AddBillerAccounts($billerId,"M13","Unallocated Account/Temporary account","Unallocated Account/Temporary account (one not included in financial statements) created to record disbursements or receipts associated with yet-unconcluded transactions until their conclusion, or discrepancies between totals of other accounts until their rectification or correct classification.",6,0,17,"e",1,"p");

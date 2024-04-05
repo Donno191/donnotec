@@ -55,7 +55,22 @@
             echo '{"data": '.json_encode($data).'}';
             die();
         }
-        //TEST_URL_STRING : http://localhost:8001/biller.php?FORM=ADDBILLER&billerName=VRC+Prospects+cc&Currency_symbol=32&Account_type=1
+        //TEST_URL_STRING : http://localhost:8001/clients.php?FORM=ADDCLIENT&biller_id=4&category_id=4&account=test&client_name=test&extra=asdasd%0D%0Aas%0D%0Ada%0D%0Asda%0D%0Asd%0D%0Aa%0D%0As%0D%0Ad%0D%0Aasdasd
+        if($_REQUEST['FORM'] == "ADDCLIENT"){
+            $ValidationTest = AddClientValidation($_REQUEST['biller_id'],$_REQUEST['category_id'],$_REQUEST['account'],$_REQUEST['client_name'],$_REQUEST['extra']);
+            if ($ValidationTest == "PASS"){
+                $ValidationTest = AddClient($_REQUEST['biller_id'],$_REQUEST['category_id'],$_REQUEST['account'],$_REQUEST['client_name'],$_REQUEST['extra']);
+                if(str_starts_with($ValidationTest, 'Created client')){
+                    $output_notification_type = 'success';
+                }else{
+                    $output_notification_type = 'error';    
+                }
+            }else{
+                $output_notification_type = 'error';
+            }
+            $output_notification = true;
+            $output_notification_message = $ValidationTest;
+        }
     }
 ?>
 
@@ -245,3 +260,99 @@
         </div>
     </body>
 </html>
+<?php
+    function AddClientValidation($biller_id,$category_id,$account,$client_name,$extra){
+        $database = new SQLite3('../private/database.db');
+        //Validate Biller_id
+        $result = $database->prepare("SELECT COUNT(*) as count FROM donnotec_biller WHERE id = ? AND del = 0 AND user_id = ?");
+        $result->bindParam(1, $biller_id);
+        $result->bindParam(2, $_SESSION['user_id']);
+        $row = $result->execute()->fetchArray(SQLITE3_ASSOC);
+        if ($row) { if($row['count'] == 0){return "Client can not be linked to Biller/Company, is Biller/Company deleted ?";}}else{return "Biller/Company is an invalid query.";} 
+        //Validate Category_id
+        $result = $database->prepare("SELECT COUNT(*) as count FROM donnotec_client_category WHERE id = ? AND del = 0 AND biller_id = ? AND user_id = ?");
+        $result->bindParam(1, $category_id);
+        $result->bindParam(2, $biller_id);
+        $result->bindParam(3, $_SESSION['user_id']);
+        $row = $result->execute()->fetchArray(SQLITE3_ASSOC);
+        if ($row) { if($row['count'] == 0){return "Client can not be linked to Client category, is Client category deleted ?";}}else{return "Client category is an invalid query.";}
+        //Validate client account
+        $result = $database->prepare("SELECT COUNT(*) as count FROM donnotec_client WHERE account = ? AND del = 0 AND biller_id = ? AND user_id = ?");
+        $result->bindParam(1, $account);
+        $result->bindParam(2, $biller_id);
+        $result->bindParam(3, $_SESSION['user_id']);
+        $row = $result->execute()->fetchArray(SQLITE3_ASSOC);
+        if ($row) { if($row['count'] != 0){return "Client account already exists !";} };
+        $regexp = '/^[A-Za-z0-9]{1,20}$/';
+        if (!isset($account)) {return "Client Account Not set !";}            
+        if (empty($account)) {return "Client Account cannot be blank.";}
+        if (!preg_match($regexp, $account)) {return "Client Account Not valid !<br />characters match a-z A-Z 0-9<br />not more than 20 characters";}
+        //Validate client name
+        $regexp = "/^(?!\s)(?!.*\s$)(?=.*[a-zA-Z0-9])[a-zA-Z0-9 '~?!]{2,50}$/";
+        if (!isset($client_name)) {return "Client name Not set !";}            
+        if (empty($client_name)) {return "Client name cannot be blank.";}
+        if (!preg_match($regexp, $client_name)) {return "Client Name Not valid !<br />don't start with space<br />don't end with space<br />atleast one alpha or numeric character<br />characters match a-z A-Z 0-9 '~?! <br />minimum 2 characters<br />max 50 characters";}
+        return "PASS";
+    }
+    function AddClient($biller_id,$category_id,$account,$client_name,$extra){
+        $database = new SQLite3('../private/database.db');
+
+        //Get biller_name
+        $result = $database->prepare("SELECT name FROM donnotec_biller WHERE id = ? AND del = 0 AND user_id = ?");
+        $result->bindParam(1, $biller_id);
+        $result->bindParam(2, $_SESSION['user_id']);
+        $row = $result->execute()->fetchArray(SQLITE3_ASSOC);
+        if ($result) { 
+            $biller_name = $row['name'];
+        }
+
+        //Get account_id for Client_category
+        $result = $database->prepare("SELECT account_id FROM donnotec_client_category WHERE id = ? AND del = 0 AND biller_id = ? AND user_id = ?");
+        $result->bindParam(1, $category_id);
+        $result->bindParam(2, $biller_id);
+        $result->bindParam(3, $_SESSION['user_id']);
+        $row = $result->execute()->fetchArray(SQLITE3_ASSOC);
+        if ($result) { 
+            $account_cat_id = $row['account_id'];
+        }
+        //Add Client account using client_category_account_id
+        $account_id = AddBillerAccounts($biller_id,"#C",$account,"Client Account : ".$client_name,0,$account_cat_id,0,"a",0,"p");
+
+        //Add Client using client__account_id
+        $stmt_insert = $database->prepare("INSERT INTO donnotec_client (account, client_name, extra, biller_id, user_id, category_id, account_id ) VALUES (:account, :client_name, :extra, :biller_id, :user_id, :category_id, :account_id)");
+        $stmt_insert->bindParam(':account', $account);
+        $stmt_insert->bindParam(':client_name', $client_name);
+        $stmt_insert->bindParam(':exstra', $extra);
+        $stmt_insert->bindParam(':biller_id', $biller_id);
+        $stmt_insert->bindParam(':user_id', $_SESSION['user_id']);
+        $stmt_insert->bindParam(':category_id', $category_id);
+        $stmt_insert->bindParam(':account_id', $account_id);
+        if ($stmt_insert->execute()) {
+            return "Created client (".$account.")".$client_name." for ".$biller_name;
+        } else {
+            return "An error occurred while creating client.";
+        }
+    }    
+    function AddBillerAccounts($biller_id,$num,$account_name,$account_description,$category_id,$sub_id,$system_account_num,$inherit,$isVisible,$sign){
+        $database = new SQLite3('../private/database.db');
+        $stmt = $database->prepare("INSERT INTO donnotec_accounts (num, account_name, account_description, category_id, biller_id, sub_id, del, user_id, system_account_num, inherit,isVisible,sign)
+    VALUES (:num, :account_name, :account_description, :category_id, :biller_id, :sub_id, :del, :user_id, :system_account_num, :inherit, :isVisible, :sign)");
+        $stmt->bindValue(':num', $num);
+        $stmt->bindValue(':account_name', $account_name);
+        $stmt->bindValue(':account_description', $account_description);
+        $stmt->bindValue(':category_id', $category_id);
+        $stmt->bindValue(':biller_id', $biller_id);
+        $stmt->bindValue(':sub_id', $sub_id);
+        $stmt->bindValue(':del', 0);
+        $stmt->bindValue(':user_id', $_SESSION['user_id']);
+        $stmt->bindValue(':system_account_num', $system_account_num);
+        $stmt->bindValue(':inherit', $inherit);
+        $stmt->bindValue(':isVisible', $isVisible);
+        $stmt->bindValue(':sign', $sign);
+        if ($stmt->execute()) {
+            return $database->lastInsertRowID();
+        } else {
+            return "An error occurred while creating ".$num." ".$account_name;
+        }
+    }    
+?>
