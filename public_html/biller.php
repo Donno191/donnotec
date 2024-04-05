@@ -12,6 +12,17 @@
         exit();
     }
     $output_notification = false;
+
+    $database = new SQLite3('../private/database.db');
+    $result = $database->query("SELECT * FROM donnotec_biller WHERE del = 0 and user_id = '".$_SESSION['user_id']."'");
+    $data = array();
+    $FAIL = true;
+    $option = '';
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) { // Use fetchArray() instead of fetch()
+        $option .= "<option value='".$row['id']."' >".$row['name']."</option>";
+        $FAIL = false;
+    }
+
     //REQUEST
     if (isset($_REQUEST['FORM'])) {
         if($_REQUEST['FORM'] == "PRIVATE"){

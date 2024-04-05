@@ -251,7 +251,7 @@
                 transition: background-color 0.3s;   
                 float:right; 
                 text-decoration: none;            
-            }                          
+            }                       
         </style>
         <script>  
             $(document).ready(function() {
