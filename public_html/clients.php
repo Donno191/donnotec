@@ -322,7 +322,7 @@
         $stmt_insert = $database->prepare("INSERT INTO donnotec_client (account, client_name, extra, biller_id, user_id, category_id, account_id ) VALUES (:account, :client_name, :extra, :biller_id, :user_id, :category_id, :account_id)");
         $stmt_insert->bindParam(':account', $account);
         $stmt_insert->bindParam(':client_name', $client_name);
-        $stmt_insert->bindParam(':exstra', $extra);
+        $stmt_insert->bindParam(':extra', $extra);
         $stmt_insert->bindParam(':biller_id', $biller_id);
         $stmt_insert->bindParam(':user_id', $_SESSION['user_id']);
         $stmt_insert->bindParam(':category_id', $category_id);
