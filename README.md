@@ -20,19 +20,22 @@ Welcome to the Donnotec System - Small Business
 - User and staff management with varying permission levels.
 - Unique report generation with custom criteria.
 - Efficient client management with real-time history and statement creation.
-- Simplified creation of estimates, job cards, and invoices with integration to the inventory system.
+- Simplified creation of estimates, job cards, and invoices.
 - Streamlined supplier interactions from categorization to order creation and invoice management.
-- Comprehensive inventory system for tracking and categorization.
 
 In essence, our platform offers a holistic solution for businesses, encompassing both management and accounting needs, designed with years of expertise and a commitment to operational excellence.
 
-Current System Release : Version 0.1.3
+  Current System Release : Version 0.2.1
 
 # Run Server
-php -S localhost:8001 -t public_html
+  php -S localhost:8001 -t public_html
+
+# Log in
+  username : admin
+  Password : password
 
 # License
-This file is part of Donnotec System - Small Business, licensed under the MIT License. See the LICENSE file in the project root for full license information.
+  This file is part of Donnotec System - Small Business, licensed under the MIT License. See the LICENSE file in the project root for full license information.
 
 # Copyright:
-Donnotec 2024
+  Donnotec 2024
