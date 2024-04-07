@@ -248,6 +248,7 @@
                     <form action="biller_add.php" method="post">
                         <input type="submit" name="add_biller" value="Add Biller/Company" class="custom-btn">
                     </form>
+                    
                 </div><hr>
                 <!-- Assume you have this in your HTML, it could be anywhere before the </body> tag -->
                 <table id="example" class="display" style="width:100%">

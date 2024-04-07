@@ -4,7 +4,7 @@
 </div>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![GitHub issues](https://img.shields.io/github/issues/Donno191/donnotec)
+![GitHub issues](https://img.shields.io/github/issues/Donno191/donnotec) 
 ![GitHub stars](https://img.shields.io/github/stars/Donno191/donnotec)
 ![GitHub forks](https://img.shields.io/github/forks/Donno191/donnotec)
 
@@ -28,14 +28,14 @@ In essence, our platform offers a holistic solution for businesses, encompassing
   Current System Release : Version 0.2.1
 
 # Run Server
-  php -S localhost:8001 -t public_html
+php -S localhost:8001 -t public_html
 
 # Log in
-  username : admin
-  Password : password
+username : admin
+Password : password
 
 # License
-  This file is part of Donnotec System - Small Business, licensed under the MIT License. See the LICENSE file in the project root for full license information.
+This file is part of Donnotec System - Small Business, licensed under the MIT License. See the LICENSE file in the project root for full license information.
 
 # Copyright:
-  Donnotec 2024
+Donnotec 2024

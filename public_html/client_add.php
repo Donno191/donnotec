@@ -255,7 +255,7 @@
                         <label for="client_name">Client Name</label>
                         <input type="text" id="client_name" name="client_name" maxlength="50">
                     </div>
-                    <h3>Exstra Information</h3>
+                    <h3>Extra Information</h3>
                     <div class="form-group">
                         <textarea id="extra" name="extra"></textarea>
                     </div>

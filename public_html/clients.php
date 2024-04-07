@@ -30,14 +30,14 @@
                 if ($_REQUEST['biller_id'] == 0 || $_REQUEST['biller_id'] == '0'){
                     $BillerString = "";    
                 }else{
-                    $BillerString = " and biller_id = ".$_REQUEST['biller_id'];
+                    $BillerString = " AND biller_id = ".$_REQUEST['biller_id'];
                 }    
             }else{
                 $BillerString = "";
             }
             // Database configuration
             $database = new SQLite3('../private/database.db');
-            $result = $database->query("SELECT * FROM donnotec_client WHERE del = 0 ".$BillerString." and user_id = '".$_SESSION['user_id']."'");
+            $result = $database->query("SELECT * FROM donnotec_client WHERE del = 0 ".$BillerString." AND user_id = '".$_SESSION['user_id']."'");
             $data = array();
             while ($row = $result->fetchArray(SQLITE3_ASSOC)) { // Use fetchArray() instead of fetch()
                 if ($row['client_name'] == 'None'){
@@ -46,8 +46,8 @@
                     $editButton = '1';
                     $data[] = [
                         'client_name' => $row['client_name'],
-                        'action' => '<form class="inline_form" action="client_edit.php"><input type="hidden" name="biller_id" value="'.$row['id'].'"><input type="submit" value="Settings" /></form>
-                        <form class="inline_form" action="client.php" onSubmit="return confirm(\'Are you sure to delete '.$row['client_name'].'?\')" ><input type="hidden" name="FORM" value="DELBILLER"><input type="hidden" name="biller_id" value="'.$row['id'].'"><input type="submit" value="Delete"></form>',
+                        'action' => '<form class="inline_form" action="client_edit.php"><input type="hidden" name="client_id" value="'.$row['id'].'"><input type="submit" value="Edit" /></form>
+                        <form class="inline_form" action="clients.php" onSubmit="return confirm(\'Are you sure to delete '.$row['client_name'].'?\')" ><input type="hidden" name="FORM" value="DELCLIENT"><input type="hidden" name="client_id" value="'.$row['id'].'"><input type="submit" value="Delete"></form>',
                     ];
                 }
             }
@@ -66,6 +66,71 @@
                     $output_notification_type = 'error';    
                 }
             }else{
+                $output_notification_type = 'error';
+            }
+            $output_notification = true;
+            $output_notification_message = $ValidationTest;
+        }
+        if($_REQUEST['FORM'] == "EDITCLIENT"){
+            $ValidationTest = EditClientValidation();
+            if ($ValidationTest == "PASS"){
+                $output_notification_type = 'success'; 
+
+                $database = new SQLite3('../private/database.db');
+                $stmt = $database->prepare("SELECT * FROM donnotec_client WHERE id=? AND del = 0 AND user_id=?");
+                $stmt->bindParam(1, $_REQUEST['client_id']);
+                $stmt->bindParam(2, $_SESSION['user_id']);
+                $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+                if ($result) {  // Check if a record was found in the database
+                    $clientName = $result['client_name'];
+                }
+
+                $ValidationTest = EditClient();
+                if($ValidationTest == "PASS"){
+                    $output_notification_type = 'success';
+                    $ValidationTest = $clientName." Updated successfully";
+                }else{
+                    $output_notification_type = 'error';    
+                }
+            }else{
+                $output_notification_type = 'error';
+            }
+            $output_notification = true;
+            if($output_notification_type == 'success'){
+                $output_notification_message = $ValidationTest;
+            }else{
+                $output_notification_message = $ValidationTest."<br><a href=\'".str_replace("biller.php","biller_settings.php",$_SERVER['REQUEST_URI'])."\' >Resubmit form</a>";
+            }
+        }
+        if($_REQUEST['FORM'] == "DELCLIENT"){
+            if (isset($_REQUEST['client_id'])) {
+                if(is_numeric($_REQUEST['client_id'])) {
+                    $database = new SQLite3('../private/database.db');
+                    $stmt = $database->prepare("SELECT * FROM donnotec_client WHERE id=? AND del = 0 AND user_id=?");
+                    $stmt->bindParam(1, $_REQUEST['client_id']);
+                    $stmt->bindParam(2, $_SESSION['user_id']);
+                    $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+                    if ($result) {
+                        $clientName = $result['client_name'];
+                        $database = new SQLite3('../private/database.db');
+                        $stmt = $database->prepare("UPDATE donnotec_client SET del = 1 WHERE id = ".$_REQUEST['client_id']);
+                        if ($stmt->execute()) {
+                            $output_notification_type = 'success';
+                            $ValidationTest = $clientName." has been successfully deleted !";
+                        } else {
+                            $ValidationTest = "An error occurred while updating the database";
+                            $output_notification_type = 'error';                            
+                        }
+                    } else {
+                        $ValidationTest = "No matching records were found in the database.";
+                        $output_notification_type = 'error';
+                    }                                       
+                }else{
+                    $ValidationTest = "Client ID must be a number";
+                    $output_notification_type = 'error';
+                }
+            } else {
+                $ValidationTest = "No Client ID was provided in the request.";
                 $output_notification_type = 'error';
             }
             $output_notification = true;
@@ -156,7 +221,7 @@
         <script>
             $(document).ready(function() {
                 /* */
-                <?php if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?>
+                <?php //if (isset($_SERVER['REQUEST_URI'])) { echo "alert('".$_SERVER['REQUEST_URI']."');"; }; ?>
                 <?php 
                     if ($output_notification){
                         echo "GrowlNotification.notify({title: '".$output_notification_type."!', description: '".$output_notification_message."',image: 'images/danger-outline.svg',type: '".$output_notification_type."',position: 'top-center',closeTimeout: 0});";
@@ -226,27 +291,28 @@
             <!-- BEGIN sidebar INCLUDE -->
             <?php include "../private/sidebar.php"; ?>
             <!-- END sidebar INCLUDE -->
-            <div class="content">
-                <?php if($FAIL){ echo "<h2 style='color:red;'>Please <a href='biller_add.php' style='text-decoration:none;color:#007BFF;'>create Company/Biller<a> first to the system before managing clients.</h2>";}; ?>
+            <?php if($FAIL){ echo "<h2 style='color:red;margin:10px;'>Please <a href='biller_add.php' style='text-decoration:none;color:#007BFF;'>create Company/Biller<a> first to the system before managing clients.</h2>";}; ?>
+            <div class="content" <?php if($FAIL){echo "style=display:none;";} ?>>
+                
                 <div style="margin-bottom:10px;padding-bottom:10px;">
-                    <form action="client_add.php" method="post" class="custom-frm" <?php if($FAIL){echo "style=display:none;";} ?> >
+                    <form action="client_add.php" method="post" class="custom-frm"  >
                         <input type="submit" name="add_biller" value="Add Client" class="custom-btn">
                     </form>
-                    <form action="client_category.php" method="post" class="custom-frm" <?php if($FAIL){echo "style=display:none;";} ?> >
+                    <form action="client_category.php" method="post" class="custom-frm" >
                         <input type="submit" name="add_biller" value="Client Category" class="custom-btn">
                     </form>
-                    <form action="client_statements.php" method="post" class="custom-frm" <?php if($FAIL){echo "style=display:none;";} ?> >
+                    <form action="client_statements.php" method="post" class="custom-frm" >
                         <input type="submit" name="add_biller" value="Client Statements" class="custom-btn">
                     </form>
-                </div><hr <?php if($FAIL){echo "style=display:none;";} ?> >
+                </div><hr>
                 <div id="biller_select" style="float:left;">
                     <b>Biller/Company : </b>
-                    <select id="biller_id" onchange="BillerID_change(this);" <?php if($FAIL){echo "style=display:none;";} ?> >
+                    <select id="biller_id" onchange="BillerID_change(this);">
                         <?php echo $option; ?>
                     </select>
                 </div>
                 <!-- Assume you have this in your HTML, it could be anywhere before the </body> tag -->
-                <table id="Clients" class="display" style="width:100%;<?php if($FAIL){echo "display:none;";} ?>" >
+                <table id="Clients" class="display" style="width:100%;" >
                     <thead>
                         <tr>
                             <th>Client Name</th>
@@ -354,5 +420,40 @@
         } else {
             return "An error occurred while creating ".$num." ".$account_name;
         }
-    }    
+    } 
+    function EditClientValidation(){
+
+        $database = new SQLite3('../private/database.db');
+        if ($_REQUEST['client_id'] == ""){
+            return "CLient ID cannot be blank !";
+        }
+
+        $query = "SELECT * FROM donnotec_client WHERE id=? and del = 0 and user_id = '".$_SESSION['user_id']."'";
+        $stmt = $database->prepare($query);
+        $stmt->bindValue(1, $_REQUEST['client_id']);
+        $result = $stmt->execute();
+        if (!$result) { return "Cannot access Client id in database";}
+
+        if (!isset($_REQUEST['client_name'])){return "Currency symbol Not set !"; }
+        if($_REQUEST['client_name'] == ""){ return "Currency symbol cannot be blank !"; }
+        $regex = "/^(?!\s)(?!.*\s$)(?=.*[a-zA-Z0-9])[a-zA-Z0-9 '~?!]{2,50}$/";
+        if (preg_match($regex, $_REQUEST['client_name']) !== 1){
+            return "Client Name Not valid !<br />don't start with space<br />don't end with space<br />atleast one alpha or numeric character<br />characters match a-z A-Z 0-9 '~?! <br />minimum 2 characters<br />max 50 characters";
+        }
+
+        return "PASS";
+    } 
+    function EditClient(){
+        $database = new SQLite3('../private/database.db');
+
+        $query = "UPDATE donnotec_client SET client_name = '".$_REQUEST['client_name']."', extra = '".$_REQUEST['extra']."' WHERE id = ".$_REQUEST['client_id'];
+        $stmt_insert = $database->prepare($query);
+        $stmt_insert->bindValue(':client_name', $_REQUEST['client_name'] );
+        $stmt_insert->bindValue(':extra', $_REQUEST['extra'] );
+        if ($stmt_insert->execute()) {
+            return "PASS";
+        } else {
+            return "An error occurred while editing Client.";
+        }
+    }
 ?>
